@@ -31,5 +31,3 @@ class StatusText(Text):
     async def loop(self):
         self.handle_value()
         await super().loop()
-
-

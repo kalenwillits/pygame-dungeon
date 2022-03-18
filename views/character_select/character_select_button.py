@@ -15,6 +15,7 @@ class CharacterSelectButton(Button):
                 row=self.row,
                 col=self.col,
             ),
+            size=(200, 200),
             **GRID,
         )
         super().build()

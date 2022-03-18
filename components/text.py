@@ -41,7 +41,8 @@ class Text(Interface):
         )
 
     def build_rect(self):
-        self.size = self.sprite.get_size()
+        # TODO recheck this moving forward, since size comes from rect, we don't need this anymore
+        # self.size = self.sprite.get_size()
         self.rect = self.sprite.get_rect(**self.get_rect_params())
 
     def handle_value_change(self):

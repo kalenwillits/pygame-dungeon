@@ -17,7 +17,6 @@ character_select = CharacterSelectView(
     CharacterSelectButton(
         'character_select_button',
         row=3,
-        size=(200, 200),
     ),
     StatusText(
         'status_text',

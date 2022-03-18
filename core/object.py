@@ -18,15 +18,26 @@ ANCHORS = {
 
 
 class Object(Node):
-    size: tuple[int, int] = None
     rect: Rect = None
     anchor: str = 'center'
     offset: Vector = None
     area: Rect = None
 
-    def __init__(self, name, *children, **kwargs):
+    def __init__(self, name: str, *children, **kwargs):
         self.rect = Rect(kwargs.get('position', (0, 0)), kwargs.get('size', (0, 0)))
         super().__init__(name, *children, **kwargs)
+
+    def __call__(self, name: str, *children, **kwargs):
+        self.rect = Rect(kwargs.get('position', self.position), kwargs.get('size', self.size))
+        super().__call__(name, *children, **kwargs)
+
+    @property
+    def size(self) -> tuple[int, int]:
+        return self.rect.size
+
+    @size.setter
+    def size(self, value: tuple[int, int]):
+        self.rect.size = value
 
     @property
     def position(self) -> Vector:
