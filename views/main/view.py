@@ -10,7 +10,7 @@ GRID = {
     'rows': 7,
 }
 BUTTON = {
-    'size': (300, 30),
+    'size': (500, 30),
 }
 
 STATIC_VIEWS = {'quit_button', 'settings_button'}
@@ -20,6 +20,12 @@ CHARACTER_NOT_CREATED_VIEW = {'character_create_button', *STATIC_VIEWS}
 
 
 class CharacterButton(Button):
+    def handle_populate(self):
+        if self.get_root().data.get('character') is not None:
+            self.text.set_value(self.get_root().data.get('character', {}).get('name', ''))
+        else:
+            self.text.set_value('Create New Character')
+
     def build(self):
         self(
             self.name,
@@ -30,9 +36,9 @@ class CharacterButton(Button):
         )
         super().build()
 
-    def handle_populate(self):
-        if self.get_root().data.get('character') is not None:
-            self.text.value = self.get_root().data.get('character', {}).get('name', '')
+    def fit(self):
+        super().fit()
+        self.handle_populate()
 
     async def loop(self):
         if self['../character_trigger'].handle():
