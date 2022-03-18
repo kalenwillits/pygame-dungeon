@@ -1,5 +1,5 @@
 from core.interface import Interface
-from core.trigger import Trigger
+from components.trigger import Trigger
 from components.text import Text
 from components.timer import Timer
 

@@ -1,6 +1,6 @@
 from pygame import Color
 from core.interface import Interface
-from core.trigger import Trigger
+from components.trigger import Trigger
 
 
 class Text(Interface):

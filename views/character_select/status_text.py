@@ -1,5 +1,5 @@
 from components.text import Text
-from core.trigger import Trigger
+from components.trigger import Trigger
 
 
 class StatusText(Text):

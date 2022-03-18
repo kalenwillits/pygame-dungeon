@@ -17,7 +17,7 @@ class StartView(Object):
 
     def close(self):
         self.get_root().events.disconnect('on_key_down', 'enter')
-        self['..'].set_view({'character_select'})
+        self['..'].set_view({'main'})
 
 
 start = StartView(

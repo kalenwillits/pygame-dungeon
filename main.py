@@ -8,7 +8,7 @@ from engine.events import events
 from engine.tasks import tasks
 
 from views.start.view import start
-from views.character_select.view import character_select
+from views.main.view import MainMenu
 
 from components.data import Data
 
@@ -24,7 +24,7 @@ app = App(
     Node(
         'menu',
         start,
-        character_select,
+        MainMenu('main'),
     ),
 
     events,
