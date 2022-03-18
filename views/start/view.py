@@ -11,17 +11,17 @@ GRID = {
 
 class StartView(Object):
     def fit(self):
-        self.get_parent().set_view({'start_view'})
+        self.get_parent().set_view({'start'})
         self.get_root().events.connect('on_key_down', 'enter', f'{self.get_path()}/close')
         super().fit()
 
     def close(self):
         self.get_root().events.disconnect('on_key_down', 'enter')
-        self['..'].set_view({'character_select_view'})
+        self['..'].set_view({'character_select'})
 
 
-start_view = StartView(
-    'start_view',
+start = StartView(
+    'start',
     Interface(
         'padding',
         Text(

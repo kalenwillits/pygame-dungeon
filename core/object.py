@@ -120,7 +120,6 @@ class Object(Node):
         elif self.anchor in ('top', 'bottom'):
             return {'centerx': self.position[0], self.anchor: self.position[1]}
 
-
     def startup(self):
         super().startup()
 
