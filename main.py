@@ -7,6 +7,8 @@ from engine.cursor import cursor
 from engine.events import events
 from engine.tasks import tasks
 
+from start.start import start_view
+
 
 app = App(
     'app',
@@ -14,7 +16,12 @@ app = App(
     style,
     cursor,
     Keybinds('keybinds'),
-    # Enter content here
+
+    Node(
+        'menu',
+        start_view,
+    ),
+
     events,
     tasks,
 )

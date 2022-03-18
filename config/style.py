@@ -32,13 +32,13 @@ class Style(Node):
         self.add_child(
             Node(
                 'text',
-                source='assets/fonts/UbuntuMono-R.ttf',
+                source='resources/fonts/m5x7.ttf',
                 margin=int((self.get_root().settings.resolution.x / 200)),
-                size_xs=int((self.get_root().settings.resolution.x / 100)),
-                size_sm=int((self.get_root().settings.resolution.x / 80)),
-                size_md=int((self.get_root().settings.resolution.x / 60)),
-                size_lg=int((self.get_root().settings.resolution.x / 40)),
-                size_xl=int((self.get_root().settings.resolution.x / 20)),
+                size_xs=int((self.get_root().settings.resolution.x / 80)),
+                size_sm=int((self.get_root().settings.resolution.x / 60)),
+                size_md=int((self.get_root().settings.resolution.x / 40)),
+                size_lg=int((self.get_root().settings.resolution.x / 20)),
+                size_xl=int((self.get_root().settings.resolution.x / 10)),
 
             )
         )
