@@ -34,7 +34,6 @@ class App(Node):
         border_width: int = None,
         outline_color: tuple[int, int, int] = None,
     ):
-
         offset_rect = node.rect.move(-node.offset)
         if self.display_rect.colliderect(offset_rect):
             if fill_color is None:

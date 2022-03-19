@@ -17,6 +17,9 @@ class GameView(Node):
 
 
 class Player(Actor):
+    animations = {
+        'idle': [168, 169, 170, 171]
+    }
 
     def fit(self):
         super().fit()
@@ -36,7 +39,11 @@ class Player(Actor):
         return False
 
     def handle_animation(self):
-        ...
+        animation = self.animations['idle']
+        frame_index = int(
+            (getattr(self, f'{self.frame_types[self.state]}_frames') / self.framerate) % len(animation)
+        )
+        self.set_index(animation[frame_index])
 
     def move_up(self):
         self.impulse((0, -self.acceleration * self.get_root().delta))
@@ -55,7 +62,15 @@ class Player(Actor):
         self.set_radial((self.velocity.x, 1))
 
     async def loop(self):
+        self.handle_frames()
+        self.handle_animation()
         await super().loop()
+
+
+class Tile(Sprite):
+
+    def fit(self):
+        super().fit()
 
 
 game = GameView(
@@ -68,10 +83,13 @@ game = GameView(
             #     'tilemap',
             #     matrix=[],
             # ),
-            Sprite(
-                'test',
+            Tile('test',
+                 anchor='topleft',
+                position=(300, 300),
                 resource='../../../../../resources/spritesheet',
-            ),
+                  size=(512, 512)
+                ),
+
             Player(
                 'player',
                 resource='../../../../../resources/spritesheet',
