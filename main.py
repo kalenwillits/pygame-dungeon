@@ -6,9 +6,9 @@ from config.style import style
 from engine.cursor import cursor
 from engine.events import events
 from engine.tasks import tasks
+from core.resource import Resource
 
 from views.start.view import start
-from views.main.view import MainMenu
 
 from components.data import Data
 
@@ -20,13 +20,17 @@ app = App(
     style,
     cursor,
     Keybinds('keybinds'),
-
+    Resource(
+        'spritesheet',
+        source='resources/spritesheet.png',
+    ),
     Node(
         'menu',
         start,
-        MainMenu('main'),
     ),
-
+    Node(
+        'main',
+    ),
     events,
     tasks,
 )
