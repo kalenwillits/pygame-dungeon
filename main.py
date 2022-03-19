@@ -12,6 +12,8 @@ from views.start.view import start
 
 from components.data import Data
 
+from views.game.view import game
+
 
 app = App(
     'app',
@@ -30,6 +32,7 @@ app = App(
     ),
     Node(
         'main',
+        game,
     ),
     events,
     tasks,

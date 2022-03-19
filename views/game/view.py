@@ -27,8 +27,6 @@ class Player(Actor):
         self.get_root().events.connect('on_key_pressed', 'move_right', f'{self.get_path()}/move_right')
         self.get_root().events.connect('on_key_pressed', 'move_down', f'{self.get_path()}/move_down')
 
-        self.set_index(10)
-
     def build(self):
         self(
             self.name,
@@ -73,9 +71,11 @@ game = GameView(
             ),
             Player(
                 'player',
-                resource='spritesheet',
+                resource='../../../../../spritesheet',
                 position=(500, 500),
                 density=1,
+                size=(16, 16),
+                scale=6,
             ),
             gravity=[0, 0],
         ),
