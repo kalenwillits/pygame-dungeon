@@ -17,8 +17,6 @@ class GameView(Node):
 
 
 class Player(Actor):
-    sync_rotation = False
-    animation_state: str = None
 
     def fit(self):
         super().fit()
@@ -26,6 +24,7 @@ class Player(Actor):
         self.get_root().events.connect('on_key_pressed', 'move_left', f'{self.get_path()}/move_left')
         self.get_root().events.connect('on_key_pressed', 'move_right', f'{self.get_path()}/move_right')
         self.get_root().events.connect('on_key_pressed', 'move_down', f'{self.get_path()}/move_down')
+        self.set_index(168)
 
     def build(self):
         self(
@@ -34,7 +33,7 @@ class Player(Actor):
         super().build()
 
     def on_collision(self, arbiter, space, data):
-        return True
+        return False
 
     def handle_animation(self):
         ...
@@ -65,17 +64,22 @@ game = GameView(
         'camera',
         Space(
             'collision_layer',
-            TileMap(
-                'tilemap',
-                matrix=[],
+            # TileMap(
+            #     'tilemap',
+            #     matrix=[],
+            # ),
+            Sprite(
+                'test',
+                resource='../../../../../resources/spritesheet',
             ),
             Player(
                 'player',
-                resource='../../../../../spritesheet',
+                resource='../../../../../resources/spritesheet',
                 position=(500, 500),
                 density=1,
-                size=(16, 16),
-                scale=6,
+                size=(16, 32),
+                cols=32,
+                rows=16,
             ),
             gravity=[0, 0],
         ),

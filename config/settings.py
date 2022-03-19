@@ -14,11 +14,11 @@ settings = Settings(
     Node(
         'physics',
         gravity=(0.0, 0.0),
-        density=0.1,
-        mass=0.1,
-        max_velocity=20,  # Max speed
-        acceleration=10,  # How quickly you get to max speed
-        damping=0.95,
+        density=1,
+        mass=1,
+        max_velocity=30,  # Max speed
+        acceleration=20,  # How quickly you get to max speed
+        damping=0.9,
         elasticity=1,
         friction=1,
         moment=1,
@@ -71,7 +71,7 @@ settings = Settings(
     ),
     target_framerate=100,
     max_framerate=72,
-    resolution=Vector(int(1920), int(1080)),
+    resolution=Vector(int(640), int(360)),
     full_screen=False,
     hide_cursor=False,
     debug=True,

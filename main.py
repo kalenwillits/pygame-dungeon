@@ -22,9 +22,12 @@ app = App(
     style,
     cursor,
     Keybinds('keybinds'),
-    Resource(
-        'spritesheet',
-        source='resources/spritesheet.png',
+    Node(
+        'resources',
+        Resource(
+            'spritesheet',
+            source='resources/spritesheet.png',
+        ),
     ),
     Node(
         'menu',
