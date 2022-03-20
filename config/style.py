@@ -61,6 +61,12 @@ class Style(Node):
         self.text.xl_character_size = self.text.xl.render('_', True, (0, 0, 0)).get_size()
         super().startup()
 
+        def build(self):
+            self(
+                self.name,
+            )
+            super().build()
+
 
 style = Style(
     'style',

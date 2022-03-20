@@ -16,9 +16,9 @@ settings = Settings(
         gravity=(0.0, 0.0),
         density=1,
         mass=1,
-        max_velocity=30,  # Max speed
-        acceleration=20,  # How quickly you get to max speed
-        damping=0.9,
+        max_velocity=20,  # Max speed
+        acceleration=10,  # How quickly you get to max speed
+        damping=0.95,
         elasticity=1,
         friction=1,
         moment=1,
@@ -26,11 +26,11 @@ settings = Settings(
     ),
     Node(
         'tilemap',
-        tilesize=(64, 64)
+        tilesize=(16, 16)
     ),
     Node(
         'animation',
-        framerate=10,
+        framerate=20,
         radial='S',
         state='idle',
         radial_precision=1,

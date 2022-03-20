@@ -27,6 +27,7 @@ class Sprite(Object):
     fill_color: Color = None
     border_color: Color = None
     area: Rect = None
+    area_offset: tuple[int, int] = (0, 0)
     index: int = None
     cols: int = 1
     rows: int = 1
@@ -60,16 +61,16 @@ class Sprite(Object):
 
     def set_index(self, index: int):
         self.area.topleft = (
-                self.size[0] * self.scale * (index % self.cols),
-                self.size[1] * self.scale * (index // self.cols)
+                (self.size[0] * self.scale * (index % self.cols)) + self.area_offset[0],
+                (self.size[1] * self.scale * (index // self.cols)) + self.area_offset[1]
         )
 
     def get_index(self) -> int:
         return int((
             (
-                self.area.topleft[0] / (self.size[0] * self.scale)) * self.cols
+                (self.area.topleft[0] - self.area_offset[0]) / (self.size[0] * self.scale)) * self.cols
             ) + (
-                self.area.topleft[1] / (self.size[1] * self.scale)
+                (self.area.topleft[1] - self.area_offset[1]) / (self.size[1] * self.scale)
         ))
 
     def get_sprite_offset(self) -> Vector:
@@ -130,6 +131,10 @@ class Sprite(Object):
 
     def mirror(self, x: bool = True, y: bool = False):
         self.sprite = flip(self[self.resource].content, x, y)
+        self.scale_and_size()
+
+    def reset(self):
+        self.sprite = self[self.resource].content
         self.scale_and_size()
 
     async def draw(self):
