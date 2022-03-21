@@ -111,7 +111,24 @@ class FloorTile(Sprite):
         self.set_index(choice([129, 130, 131, 161, 162, 163]))
 
 
-class TopWallTile(Actor):
+class VerticalWallEdgeTile(Sprite):
+    def build(self):
+        self(
+            self.name,
+            body_type='static',
+            anchor='topleft',
+            size=(16, 16),
+            cols=32,
+            rows=32,
+            resource='../../../../../../resources/spritesheet',
+        )
+
+    def fit(self):
+        super().fit()
+        self.set_index(2)
+
+
+class VerticalWallTile(Body, Sprite):
     def build(self):
         self(
             self.name,
@@ -126,7 +143,34 @@ class TopWallTile(Actor):
 
     def fit(self):
         super().fit()
-        self.set_index(2)
+        self.set_index(34)
+
+
+class HorizontalWallTile(Body, Sprite):
+    def build(self):
+        self(
+            self.name,
+            body_type='static',
+            anchor='topleft',
+            size=(16, 16),
+            cols=32,
+            rows=32,
+            resource='../../../../../../resources/spritesheet',
+            vertices=[[-8, -8], [-8, 8], [8, 8], [8, -8]],
+        )
+
+    def fit(self):
+        super().fit()
+        self.set_index(289)
+
+
+TILESET = {
+    1: FloorTile,
+    3: VerticalWallEdgeTile,
+    4: HorizontalWallTile,
+    2: VerticalWallTile,
+    0: Node,
+}
 
 
 game = GameView(
@@ -136,22 +180,19 @@ game = GameView(
         Space(
             'collision_layer',
             TileMap(
-                'tilemap',
-                tileset={
-                    'f': FloorTile,
-                    'tw': TopWallTile,
-                    ' ': Node,
-                },
+                'tilemap_layer_1',
+                tileset=TILESET,
                 matrix=[
-                    ['tw', 'tw', 'tw', 'tw'],
-                    ['f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f'],
-                    ['f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f'],
-                    ['f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f'],
-                    ['f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f'],
-                    ['f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f'],
-                    ['f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f'],
-                    ['f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f'],
-                    ['f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f'],
+                    [0 for _ in range(20)],
+                    [2 for _ in range(20)],
+                    [1 for _ in range(20)],
+                    [1 for _ in range(20)],
+                    [1 for _ in range(20)],
+                    [1 for _ in range(20)],
+                    [1 for _ in range(20)],
+                    [1 for _ in range(20)],
+                    [1 for _ in range(20)],
+                    [1 for _ in range(20)],
                 ],
                 position=(0, 0),
             ),
@@ -163,8 +204,27 @@ game = GameView(
                 size=(16, 32),
                 cols=32,
                 rows=16,
-                vertices=[[-5, 0], [5, 0], [5, 13], [-5, 13]],
+                vertices=[[-5, 3], [5, 3], [5, 13], [-5, 13]],
             ),
+            TileMap(
+                'tilemap_layer_2',
+                tileset=TILESET,
+                matrix=[
+                    [0, *[3 for _ in range(20)]],
+                    [4, *[0 for _ in range(20)]],
+                    [4, *[0 for _ in range(20)]],
+                    [0 for _ in range(20)],
+                    [0 for _ in range(20)],
+                    [0 for _ in range(20)],
+                    [0 for _ in range(20)],
+                    [0 for _ in range(20)],
+                    [0 for _ in range(20)],
+                    [3 for _ in range(20)],
+                    [2 for _ in range(20)]
+                ],
+                position=(0, 0),
+            ),
+
             gravity=[0, 0],
         ),
         target='collision_layer/player'
