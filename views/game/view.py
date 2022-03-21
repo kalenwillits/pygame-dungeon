@@ -5,7 +5,6 @@ from core.sprite import Sprite
 from core.body import Body
 from components.tilemap import TileMap
 from components.camera import Camera
-from core.resource import Resource
 
 from random import choice
 
@@ -13,9 +12,6 @@ from random import choice
 class GameView(Node):
     def fit(self):
         super().fit()
-
-    async def loop(self):
-        await super().loop()
 
 
 class Player(Actor):
@@ -210,9 +206,9 @@ game = GameView(
                 'tilemap_layer_2',
                 tileset=TILESET,
                 matrix=[
-                    [0, *[3 for _ in range(20)]],
-                    [4, *[0 for _ in range(20)]],
-                    [4, *[0 for _ in range(20)]],
+                    [3 for _ in range(20)],
+                    [0 for _ in range(20)],
+                    [0 for _ in range(20)],
                     [0 for _ in range(20)],
                     [0 for _ in range(20)],
                     [0 for _ in range(20)],
@@ -227,6 +223,8 @@ game = GameView(
 
             gravity=[0, 0],
         ),
+        smoothing=0.01,
+        lookahead=100,
         target='collision_layer/player'
     ),
 )

@@ -1,6 +1,7 @@
 from collections import defaultdict
 from core.body import Body
 from core.sprite import Sprite
+from pygame.math import Vector2 as Vector
 
 
 class Actor(Body, Sprite):
@@ -68,7 +69,11 @@ class Actor(Body, Sprite):
         self.position -= self.get_body_offset()
 
     def get_body_offset(self):
-        return self.position - self.body.position
+        return Vector(
+            int(self.position.x - self.body.position.x),
+            int(self.position.y - self.body.position.y)
+        )
+
 
     def fit(self):
         self.initattr('state', self.get_root().settings.animation.state)

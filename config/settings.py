@@ -16,9 +16,9 @@ settings = Settings(
         gravity=(0.0, 0.0),
         density=1,
         mass=1,
-        max_velocity=5,  # Max speed
-        acceleration=3,  # How quickly you get to max speed
-        damping=0.95,
+        max_velocity=10,  # Max speed
+        acceleration=2,  # How quickly you get to max speed
+        damping=0.96,
         elasticity=1,
         friction=1,
         moment=1,
@@ -68,6 +68,11 @@ settings = Settings(
     Node(
         'text',
         text_size='sm',
+    ),
+    Node(
+        'camera',
+        smoothing=0.0,
+        lookahead=0.0,
     ),
     target_framerate=100,
     max_framerate=72,

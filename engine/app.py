@@ -126,7 +126,7 @@ class App(Node):
         frame = scale(self.display, self.settings.user.resolution)
         self.window.blit(frame, frame.get_rect())
         self.display.fill(self.style.color.background)
-        pygame.display.update()
+        pygame.display.flip()
         await super().draw()
 
     async def main_loop(self):
