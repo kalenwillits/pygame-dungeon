@@ -23,11 +23,17 @@ class Camera(Object):
         self(
             self.name,
             Sprite(
-                'lookahead_point',
+                'target_point',
+                fill_color=(255, 255, 0),
+                size=(4, 4),
                 draw_rect=True,
-                fill_color=(255, 0, 0),
-                size=(2, 2)
             ),
+            Sprite(
+                'cp',
+                fill_color=(255, 0, 0),
+                size=(4, 4),
+                draw_rect=True,
+            )
         )
         super().build()
 
@@ -52,11 +58,18 @@ class Camera(Object):
 
     def handle_panning(self):
         if self.target is not None:
-            self.position = self.get_lookahead_vector()
+            camera_difference = self.get_lookahead_vector() - self.position
+            target_difference = self.get_lookahead_vector() - self[self.target].position
+            if camera_difference.length() < target_difference.length():
+                self.position += camera_difference * self.smoothing * 10
+            else:
+                self.position += target_difference * self.smoothing * 10
             self.offset = self.position - self.center_offset
+
             self.cascade(f'{self.get_path()}/pan')
 
     async def loop(self):
-        self.lookahead_point.position = self.get_lookahead_vector()
+        self.cp.position = self.center_offset + self.offset
+        self.target_point.position = self.get_lookahead_vector()
         self.handle_panning()
         await super().loop()
