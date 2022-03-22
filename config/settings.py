@@ -79,6 +79,9 @@ settings = Settings(
         'sprite',
         scale=2.0,
     ),
+    Node(
+        'events',
+    ),
     target_framerate=100,
     max_framerate=72,
     resolution=Vector(int(1280), int(720)),

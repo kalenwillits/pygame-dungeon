@@ -41,6 +41,7 @@ class Node:
 
         if path[0] == '/':
             attr = self.get_root()
+            path = path[1:]
         else:
             attr = self
 
