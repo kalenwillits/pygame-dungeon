@@ -38,7 +38,12 @@ class Node:
     def __getitem__(self, path):
         if path is None:
             return
-        attr = self
+
+        if path[0] == '/':
+            attr = self.get_root()
+        else:
+            attr = self
+
         for attr_name in path.split('/'):
             if attr_name == '.':
                 continue
