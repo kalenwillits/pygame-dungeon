@@ -11,8 +11,7 @@ class Settings(Node):
 
 settings = Settings(
     'settings',
-    Node(
-        'physics',
+    Node( 'physics',
         gravity=(0.0, 0.0),
         density=1,
         mass=1,
@@ -71,8 +70,9 @@ settings = Settings(
     ),
     Node(
         'camera',
-        smoothing=0.0,
-        lookahead=0.0,
+        smoothing=0.06,
+        lookahead=75,
+        tolerance=1
     ),
     target_framerate=100,
     max_framerate=72,

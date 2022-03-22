@@ -19,33 +19,10 @@ class Camera(Object):
     draw_border: bool = False
     draw_outline: bool = False
 
-    def build(self):
-        self(
-            self.name,
-            Sprite(
-                'target_point',
-                fill_color=(255, 255, 0),
-                size=(4, 4),
-                draw_rect=True,
-            ),
-            Sprite(
-                'cam',
-                fill_color=(0, 0, 255),
-                size=(4, 4),
-                draw_rect=True,
-            ),
-            Sprite(
-                'cp',
-                fill_color=(255, 0, 0),
-                size=(4, 4),
-                draw_rect=True,
-            )
-        )
-        super().build()
-
     def fit(self):
         self.initattr('smoothing', self.get_root().settings.camera.smoothing)
         self.initattr('lookahead', self.get_root().settings.camera.lookahead)
+        self.initattr('tolerance', self.get_root().settings.camera.tolerance)
         self.initattr('target', None)
         self.initattr('center_offset', Vector(self.get_root().settings.resolution) / 2)
 
@@ -72,13 +49,11 @@ class Camera(Object):
         if self.target is not None:
             orbital = self.get_oribital()
             dist_vector = orbital - self.position
-            angle = atan2(-dist_vector.y, dist_vector.x) % (2 * pi)
-            distance = self.smoothing * self.get_root().delta
-            self.position = Vector(
-                self.position.x + (cos(angle) * distance),
-                self.position.y - (sin(angle) * distance),
-            )
-
+            if dist_vector.length() > self.tolerance:
+                speed = self.smoothing * self.get_root().delta
+                self.position += dist_vector * speed
+            else:
+                self.position = orbital
             self.offset = self.position - self.center_offset
             self.cascade(f'{self.get_path()}/pan')
 

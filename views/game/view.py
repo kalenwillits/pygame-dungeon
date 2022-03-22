@@ -233,8 +233,6 @@ game = GameView(
 
             gravity=[0, 0],
         ),
-        smoothing=1,
-        lookahead=100,
         target='collision_layer/player'
     ),
 )
