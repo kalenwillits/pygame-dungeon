@@ -19,11 +19,11 @@ class Keybinds(Node):
         'move_left': [pygame.K_a],
         'move_right': [pygame.K_d],
         'move_down': [pygame.K_s],
-        'camera_up': [pygame.K_UP],
-        'camera_left': [pygame.K_LEFT],
-        'camera_right': [pygame.K_RIGHT],
-        'camera_down': [pygame.K_DOWN],
-        'camera_center': [pygame.K_SPACE],
+        'look_up': [pygame.K_UP],
+        'look_left': [pygame.K_LEFT],
+        'look_right': [pygame.K_RIGHT],
+        'look_down': [pygame.K_DOWN],
+        'look_center': [pygame.K_SPACE],
     }
     on_key_up: SINGLE_SCHEMA = {
     }

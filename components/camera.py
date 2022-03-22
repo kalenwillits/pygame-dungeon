@@ -1,8 +1,8 @@
-from math import cos, sin, atan2, pi
+from math import cos, sin
 from pygame.math import Vector2 as Vector
 
 from core.object import Object
-from core.sprite import Sprite
+
 
 class Camera(Object):
     '''
@@ -29,6 +29,7 @@ class Camera(Object):
         if self.target is not None:
             self.position = self[self.target].position
             self.handle_panning()
+            self.reset()
 
     def get_lookahead_vector(self) -> Vector:
         velocity = self[self.target].velocity
@@ -44,15 +45,18 @@ class Camera(Object):
         if isinstance(node, Object):
             node.offset = self.offset
 
+    def reset(self):
+        self.position = self[self.target].position
+
     def handle_panning(self):
         if self.target is not None:
             orbital = self.get_oribital()
-            # to_orbital_vector = orbital - self.position
-            # self.position += (to_orbital_vector.normalize() * self.smoothing * self.get_root().delta)
-            to_target_vector = self[self.target].position - self.position
-            self.position += to_target_vector
+            to_orbital_vector = orbital - self.position
+            if to_orbital_vector.length() > self.tolerance:
+                self.position += to_orbital_vector.normalize() * self.smoothing * self.get_root().delta
+            else:
+                self.position = orbital
 
-                # self.position = orbital
             self.offset = self.position - self.center_offset
             self.cascade(f'{self.get_path()}/pan')
 

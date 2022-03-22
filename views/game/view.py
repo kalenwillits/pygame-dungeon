@@ -1,3 +1,5 @@
+from math import pi
+
 from core.node import Node
 from core.actor import Actor
 from core.space import Space
@@ -34,6 +36,12 @@ class Player(Actor):
         self.get_root().events.connect('on_key_pressed', 'move_left', f'{self.get_path()}/move_left')
         self.get_root().events.connect('on_key_pressed', 'move_right', f'{self.get_path()}/move_right')
         self.get_root().events.connect('on_key_pressed', 'move_down', f'{self.get_path()}/move_down')
+
+        self.get_root().events.connect('on_key_pressed', 'look_up', f'{self.get_path()}/look_up')
+        self.get_root().events.connect('on_key_pressed', 'look_left', f'{self.get_path()}/look_left')
+        self.get_root().events.connect('on_key_pressed', 'look_right', f'{self.get_path()}/look_right')
+        self.get_root().events.connect('on_key_pressed', 'look_down', f'{self.get_path()}/look_down')
+
         self.initattr('direction', 'W')
         self.radial = 'right'
         self.frame_types = {
@@ -87,6 +95,18 @@ class Player(Actor):
     def move_down(self):
         force = Vector(0, self.acceleration * self.get_root().delta)
         self.impulse(force)
+
+    def look_up(self):
+        self.set_heading((3*pi)/2)
+
+    def look_left(self):
+        self.set_heading(pi)
+
+    def look_right(self):
+        self.set_heading(0)
+
+    def look_down(self):
+        self.set_heading(pi/2)
 
     async def loop(self):
         self.handle_frames()
@@ -181,23 +201,23 @@ game = GameView(
         'camera',
         Space(
             'collision_layer',
-            # TileMap(
-            #     'tilemap_layer_1',
-            #     tileset=TILESET,
-            #     matrix=[
-            #         [0 for _ in range(20)],
-            #         [2 for _ in range(20)],
-            #         [1 for _ in range(20)],
-            #         [1 for _ in range(20)],
-            #         [1 for _ in range(20)],
-            #         [1 for _ in range(20)],
-            #         [1 for _ in range(20)],
-            #         [1 for _ in range(20)],
-            #         [1 for _ in range(20)],
-            #         [1 for _ in range(20)],
-            #     ],
-            #     position=(0, 0),
-            # ),
+            TileMap(
+                'tilemap_layer_1',
+                tileset=TILESET,
+                matrix=[
+                    [0 for _ in range(20)],
+                    [2 for _ in range(20)],
+                    [1 for _ in range(20)],
+                    [1 for _ in range(20)],
+                    [1 for _ in range(20)],
+                    [1 for _ in range(20)],
+                    [1 for _ in range(20)],
+                    [1 for _ in range(20)],
+                    [1 for _ in range(20)],
+                    [1 for _ in range(20)],
+                ],
+                position=(0, 0),
+            ),
             Player(
                 'player',
                 resource='../../../../../resources/spritesheet',
