@@ -41,7 +41,7 @@ class Player(Actor):
         self.get_root().events.connect('on_key_pressed', 'look_left', f'{self.get_path()}/look_left')
         self.get_root().events.connect('on_key_pressed', 'look_right', f'{self.get_path()}/look_right')
         self.get_root().events.connect('on_key_pressed', 'look_down', f'{self.get_path()}/look_down')
-
+        self.get_root().events.connect('on_key_pressed', 'look_center', f'{self.get_path()}/look_center')
         self.initattr('direction', 'W')
         self.radial = 'right'
         self.frame_types = {
@@ -107,6 +107,9 @@ class Player(Actor):
 
     def look_down(self):
         self.set_heading(pi/2)
+
+    def look_center(self):
+        self.set_heading(None)
 
     async def loop(self):
         self.handle_frames()

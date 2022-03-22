@@ -28,7 +28,7 @@ class Camera(Object):
         super().fit()
         if self.target is not None:
             self.position = self[self.target].position
-            self.handle_panning()
+            self.handle_follow()
             self.reset()
 
     def get_lookahead_vector(self) -> Vector:
@@ -41,25 +41,28 @@ class Camera(Object):
             sin(self[self.target].heading)
         ) * self.lookahead
 
-    def pan(self, node):
+    def apply_offset(self, node):
         if isinstance(node, Object):
             node.offset = self.offset
 
     def reset(self):
         self.position = self[self.target].position
 
-    def handle_panning(self):
+    def pan_to(self, vector: Vector):
+        diff = vector - self.position
+        if diff.length() > self.tolerance:
+            self.position += (diff * self.smoothing * self.get_root().delta)
+
+    def handle_follow(self):
         if self.target is not None:
-            orbital = self.get_oribital()
-            to_orbital_vector = orbital - self.position
-            if to_orbital_vector.length() > self.tolerance:
-                self.position += (to_orbital_vector * self.smoothing * self.get_root().delta)
+            if self[self.target].heading is not None:
+                self.pan_to(self.get_oribital())
             else:
-                self.position = orbital
+                self.pan_to(self[self.target].position)
 
             self.offset = self.position - self.center_offset
-            self.cascade(f'{self.get_path()}/pan')
+            self.cascade(f'{self.get_path()}/apply_offset')
 
     async def loop(self):
-        self.handle_panning()
+        self.handle_follow()
         await super().loop()

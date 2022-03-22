@@ -20,6 +20,7 @@ class Keybinds(Node):
         'move_right': [pygame.K_d],
         'move_down': [pygame.K_s],
         'look_up': [pygame.K_UP],
+        'look_up_left': [pygame.K_UP, pygame.K_LEFT],
         'look_left': [pygame.K_LEFT],
         'look_right': [pygame.K_RIGHT],
         'look_down': [pygame.K_DOWN],

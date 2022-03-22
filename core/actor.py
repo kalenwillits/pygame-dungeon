@@ -76,10 +76,7 @@ class Actor(Body, Sprite):
         )
 
     def set_heading(self, heading: float = None):
-        if heading is None:
-            self.heading = self.velocity.angle
-        else:
-            self.heading = heading
+        self.heading = heading
 
     def fit(self):
         self.initattr('state', self.get_root().settings.animation.state)
@@ -89,7 +86,7 @@ class Actor(Body, Sprite):
         self.initattr('fixed_frames', 0)
         self.initattr('velocity_frames', 0)
         self.initattr('frame_types', defaultdict(lambda: 'fixed', {}))
-        self.initattr('heading', 0.0)
+        self.initattr('heading', None)
         self.initattr('animations', {
             'idle': {
                 'E': [0],
