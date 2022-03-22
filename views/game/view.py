@@ -12,6 +12,8 @@ from random import choice
 
 from pymunk.vec2d import Vec2d as Vector
 
+# TODO Radials constant dict
+
 
 class GameView(Node):
     def fit(self):
@@ -142,7 +144,6 @@ class FloorTile(Sprite):
             size=(16, 16),
             cols=32,
             rows=32,
-            scale=1,
             resource='../../../../../../resources/spritesheet',
         )
 
@@ -224,6 +225,7 @@ game = GameView(
             TileMap(
                 'tilemap_layer_1',
                 tileset=TILESET,
+                tilesize=(32, 32),
                 matrix=[
                     [0 for _ in range(20)],
                     [2 for _ in range(20)],
@@ -251,6 +253,7 @@ game = GameView(
             TileMap(
                 'tilemap_layer_2',
                 tileset=TILESET,
+                tilesize=(32, 32),
                 matrix=[
                     [3 for _ in range(20)],
                     [0 for _ in range(20)],

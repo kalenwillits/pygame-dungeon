@@ -43,14 +43,14 @@ class Sprite(Object):
     def fit(self):
         self.initattr('border_color', self.get_root().style.color.border)
         self.initattr('fill_color', self.get_root().style.color.idle)
-        self.initattr('scale', 1.0)
+        self.initattr('scale', self.get_root().settings.sprite.scale)
         self.initattr('outline_color', self.get_root().style.color.outline)
         self.initattr('outline_width', self.get_root().style.outline.width)
 
         if self.resource:
             self.sprite = self[self.resource].content
             self.scale_and_size()
-            self.area = Rect(0, 0, self.size[0], self.size[1])
+            self.area = Rect(0, 0, self.size[0] * self.scale, self.size[1] * self.scale)
             self.build_outline()
         super().fit()
 

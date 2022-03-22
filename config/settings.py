@@ -11,7 +11,8 @@ class Settings(Node):
 
 settings = Settings(
     'settings',
-    Node( 'physics',
+    Node(
+        'physics',
         gravity=(0.0, 0.0),
         density=1,
         mass=1,
@@ -73,6 +74,10 @@ settings = Settings(
         smoothing=0.1,  # Speed of the camera's pan, too low and the camera can actually get left behind
         lookahead=64,  # Radius of the orbital around the target,
         tolerance=1,  # Snaps the the camera to the orbital when this close
+    ),
+    Node(
+        'sprite',
+        scale=2.0,
     ),
     target_framerate=100,
     max_framerate=72,
