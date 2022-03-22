@@ -58,8 +58,5 @@ class Camera(Object):
             self.cascade(f'{self.get_path()}/pan')
 
     async def loop(self):
-        self.cp.position = self.center_offset + self.offset
-        self.cam.position = self.position
-        self.target_point.position = self.get_oribital()
         self.handle_panning()
         await super().loop()
