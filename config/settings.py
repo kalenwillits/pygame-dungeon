@@ -70,7 +70,7 @@ settings = Settings(
     ),
     Node(
         'camera',
-        smoothing=1.2,  # Speed of the camera's pan, too low and the camera can actually get left behind
+        smoothing=0.1,  # Speed of the camera's pan, too low and the camera can actually get left behind
         lookahead=64,  # Radius of the orbital around the target,
         tolerance=1,  # Snaps the the camera to the orbital when this close
     ),
