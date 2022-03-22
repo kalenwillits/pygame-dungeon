@@ -53,7 +53,7 @@ class Camera(Object):
             orbital = self.get_oribital()
             to_orbital_vector = orbital - self.position
             if to_orbital_vector.length() > self.tolerance:
-                self.position += to_orbital_vector.normalize() * self.smoothing * self.get_root().delta
+                self.position += to_orbital_vector.normalize() * (self.smoothing) * self.get_root().delta
             else:
                 self.position = orbital
 
