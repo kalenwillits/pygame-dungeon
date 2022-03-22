@@ -91,7 +91,6 @@ class Sprite(Object):
         }[self.anchor]
 
     def scale_and_size(self):
-        print(self.name)
         self.sprite = scale(
             self.sprite,
             (
