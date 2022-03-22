@@ -36,12 +36,17 @@ class Player(Actor):
         self.get_root().events.connect('on_key_pressed', 'move_left', f'{self.get_path()}/move_left')
         self.get_root().events.connect('on_key_pressed', 'move_right', f'{self.get_path()}/move_right')
         self.get_root().events.connect('on_key_pressed', 'move_down', f'{self.get_path()}/move_down')
-
         self.get_root().events.connect('on_key_pressed', 'look_up', f'{self.get_path()}/look_up')
         self.get_root().events.connect('on_key_pressed', 'look_left', f'{self.get_path()}/look_left')
         self.get_root().events.connect('on_key_pressed', 'look_right', f'{self.get_path()}/look_right')
         self.get_root().events.connect('on_key_pressed', 'look_down', f'{self.get_path()}/look_down')
         self.get_root().events.connect('on_key_pressed', 'look_center', f'{self.get_path()}/look_center')
+
+        self.get_root().events.connect('on_key_pressed', 'look_up_left', f'{self.get_path()}/look_up_left')
+        self.get_root().events.connect('on_key_pressed', 'look_up_right', f'{self.get_path()}/look_up_right')
+        self.get_root().events.connect('on_key_pressed', 'look_down_left', f'{self.get_path()}/look_down_left')
+        self.get_root().events.connect('on_key_pressed', 'look_down_right', f'{self.get_path()}/look_down_right')
+
         self.initattr('direction', 'W')
         self.radial = 'right'
         self.frame_types = {
@@ -99,14 +104,26 @@ class Player(Actor):
     def look_up(self):
         self.set_heading((3*pi)/2)
 
+    def look_up_left(self):
+        self.set_heading((4*pi)/3)
+
     def look_left(self):
         self.set_heading(pi)
 
     def look_right(self):
         self.set_heading(0)
 
+    def look_up_right(self):
+        self.set_heading((7*pi)/4)
+
     def look_down(self):
         self.set_heading(pi/2)
+
+    def look_down_left(self):
+        self.set_heading((3*pi)/4)
+
+    def look_down_right(self):
+        self.set_heading(pi/4)
 
     def look_center(self):
         self.set_heading(None)
