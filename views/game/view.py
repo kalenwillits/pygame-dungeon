@@ -73,24 +73,20 @@ class Player(Actor):
     def move_up(self):
         force = Vector(0, -self.acceleration * self.get_root().delta)
         self.impulse(force)
-        self.set_heading()
 
     def move_left(self):
         force = Vector(-self.acceleration * self.get_root().delta, 0)
         self.impulse(force)
         self.radial = 'left'
-        self.set_heading()
 
     def move_right(self):
         force = Vector(self.acceleration * self.get_root().delta, 0)
         self.impulse(force)
         self.radial = 'right'
-        self.set_heading()
 
     def move_down(self):
         force = Vector(0, self.acceleration * self.get_root().delta)
         self.impulse(force)
-        self.set_heading()
 
     async def loop(self):
         self.handle_frames()

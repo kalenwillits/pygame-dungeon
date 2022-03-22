@@ -1,3 +1,4 @@
+from collections import defaultdict
 import pygame
 
 from core.node import Node
@@ -15,13 +16,13 @@ SIGNAL_TYPE_MAP = {signal: type for type, signal in TYPE_SIGNAL_MAP.items()}
 
 
 class Events(Node):
-    on_key_down: dict[str, str] = {}
-    on_key_pressed: dict[str, str] = {}
-    on_key_up: dict[str, str] = {}
-    on_mouse_button_down: dict[str, str] = {}
-    on_mouse_button_pressed: dict[str, str] = {}
-    on_mouse_button_up: dict[str, str] = {}
-    on_mouse_wheel: dict[str, str] = {}
+    on_key_down: dict[str, str] = defaultdict(lambda: None, {})
+    on_key_pressed: dict[str, str] = defaultdict(lambda: None, {})
+    on_key_up: dict[str, str] = defaultdict(lambda: None, {})
+    on_mouse_button_down: dict[str, str] = defaultdict(lambda: None, {})
+    on_mouse_button_pressed: dict[str, str] = defaultdict(lambda: None, {})
+    on_mouse_button_up: dict[str, str] = defaultdict(lambda: None, {})
+    on_mouse_wheel: dict[str, str] = defaultdict(lambda: None, {})
 
     generic_event_queue: set[str] = set()
 
@@ -66,7 +67,8 @@ class Events(Node):
         # Continuous key press events
         for signal_name, keys in self.get_root().keybinds.on_key_pressed.items():
             if all([pygame.key.get_pressed()[key] for key in keys]):
-                self.get_root()[self.on_key_pressed[signal_name]]()
+                if signal_func := self.get_root()[self.on_key_pressed[signal_name]]:
+                    signal_func()
 
         # Continuous mouse press events
         for signal_name, buttons in self.get_root().keybinds.on_mouse_button_pressed.items():

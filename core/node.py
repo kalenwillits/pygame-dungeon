@@ -33,6 +33,8 @@ class Node:
         yield from filter(lambda node: node.name in self.view, self.children)
 
     def __getitem__(self, path):
+        if path is None:
+            return
         attr = self
         for attr_name in path.split('/'):
             if attr_name == '.':

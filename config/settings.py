@@ -42,7 +42,7 @@ settings = Settings(
     ),
     Node(
         'user',
-        resolution=Vector(int(1920), int(1080)),
+        resolution=Vector(int(1920/1.2), int(1080/1.2)),
     ),
     Node(
         'particles',
@@ -70,9 +70,9 @@ settings = Settings(
     ),
     Node(
         'camera',
-        smoothing=0.04,
-        lookahead=50,
-        tolerance=1
+        smoothing=0.01,  # Speed of the camera's pan, too low and the camera can actually get left behind
+        lookahead=32,  # Radius of the orbital around the target,
+        tolerance=2,  # Snaps the the camera to the orbital when this close
     ),
     target_framerate=100,
     max_framerate=72,

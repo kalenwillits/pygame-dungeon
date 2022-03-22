@@ -4,7 +4,6 @@ from pygame.math import Vector2 as Vector
 from core.object import Object
 from core.sprite import Sprite
 
-
 class Camera(Object):
     '''
     Following Camera to scroll with a object node.
@@ -48,12 +47,12 @@ class Camera(Object):
     def handle_panning(self):
         if self.target is not None:
             orbital = self.get_oribital()
-            dist_vector = orbital - self.position
-            if dist_vector.length() > self.tolerance:
-                speed = self.smoothing * self.get_root().delta
-                self.position += dist_vector * speed
-            else:
-                self.position = orbital
+            # to_orbital_vector = orbital - self.position
+            # self.position += (to_orbital_vector.normalize() * self.smoothing * self.get_root().delta)
+            to_target_vector = self[self.target].position - self.position
+            self.position += to_target_vector
+
+                # self.position = orbital
             self.offset = self.position - self.center_offset
             self.cascade(f'{self.get_path()}/pan')
 

@@ -15,10 +15,15 @@ class Keybinds(Node):
         'camera_lock': pygame.K_SPACE,
     }
     on_key_pressed: MULTI_SCHEMA = {
-        'move_up': [pygame.K_UP],
-        'move_left': [pygame.K_LEFT],
-        'move_right': [pygame.K_RIGHT],
-        'move_down': [pygame.K_DOWN],
+        'move_up': [pygame.K_w],
+        'move_left': [pygame.K_a],
+        'move_right': [pygame.K_d],
+        'move_down': [pygame.K_s],
+        'camera_up': [pygame.K_UP],
+        'camera_left': [pygame.K_LEFT],
+        'camera_right': [pygame.K_RIGHT],
+        'camera_down': [pygame.K_DOWN],
+        'camera_center': [pygame.K_SPACE],
     }
     on_key_up: SINGLE_SCHEMA = {
     }
