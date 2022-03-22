@@ -52,6 +52,7 @@ class Sprite(Object):
             self.scale_and_size()
             self.area = Rect(0, 0, self.size[0] * self.scale, self.size[1] * self.scale)
             self.build_outline()
+            self.rect.size = self.size[0] * self.scale, self.size[1] * self.scale
         super().fit()
 
     def build_outline(self):
@@ -61,8 +62,8 @@ class Sprite(Object):
 
     def set_index(self, index: int):
         self.area.topleft = (
-                (self.size[0] * self.scale * (index % self.cols)) + self.area_offset[0],
-                (self.size[1] * self.scale * (index // self.cols)) + self.area_offset[1]
+                (self.size[0] * (index % self.cols)) + self.area_offset[0],
+                (self.size[1] * (index // self.cols)) + self.area_offset[1]
         )
 
     def get_index(self) -> int:
