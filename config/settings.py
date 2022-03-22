@@ -81,7 +81,7 @@ settings = Settings(
     ),
     target_framerate=100,
     max_framerate=72,
-    resolution=Vector(int(1920), int(1080)),
+    resolution=Vector(int(1280), int(720)),
     full_screen=False,
     hide_cursor=False,
     debug=True,

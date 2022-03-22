@@ -49,10 +49,10 @@ class Sprite(Object):
 
         if self.resource:
             self.sprite = self[self.resource].content
+            self.size = self.size[0] * self.scale, self.size[1] * self.scale
+            self.area = Rect(0, 0, self.size[0], self.size[1])
             self.scale_and_size()
-            self.area = Rect(0, 0, self.size[0] * self.scale, self.size[1] * self.scale)
             self.build_outline()
-            self.rect.size = self.size[0] * self.scale, self.size[1] * self.scale
         super().fit()
 
     def build_outline(self):
@@ -69,9 +69,9 @@ class Sprite(Object):
     def get_index(self) -> int:
         return int((
             (
-                (self.area.topleft[0] - self.area_offset[0]) / (self.size[0] * self.scale)) * self.cols
+                (self.area.topleft[0] - self.area_offset[0]) / (self.size[0])) * self.cols
             ) + (
-                (self.area.topleft[1] - self.area_offset[1]) / (self.size[1] * self.scale)
+                (self.area.topleft[1] - self.area_offset[1]) / (self.size[1])
         ))
 
     def get_sprite_offset(self) -> Vector:
@@ -94,8 +94,8 @@ class Sprite(Object):
         self.sprite = scale(
             self.sprite,
             (
-                self.size[0] * self.scale * self.cols,
-                self.size[1] * self.scale * self.rows
+                self.size[0] * self.cols,
+                self.size[1] * self.rows
             )
         )
 

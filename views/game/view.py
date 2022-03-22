@@ -145,6 +145,10 @@ class FloorTile(Sprite):
             cols=32,
             rows=32,
             resource='../../../../../../resources/spritesheet',
+            draw_border=True,
+            border_radius=0,
+            border_width=3,
+            border_color=(0, 0, 255)
         )
 
         super().build()
@@ -182,9 +186,6 @@ class VerticalWallTile(Body, Sprite):
             rows=32,
             resource='../../../../../../resources/spritesheet',
             vertices=[[0, 0], [0, 32], [32, 32], [32, 0]],
-            draw_sprite=False,
-            draw_rect=True,
-            draw_border=True,
         )
 
     def fit(self):
@@ -203,9 +204,6 @@ class HorizontalWallTile(Body, Sprite):
             rows=32,
             resource='../../../../../../resources/spritesheet',
             vertices=[[-16, -16], [-16, 16], [16, 16], [16, 16]],
-            draw_sprite=False,
-            draw_rect=True,
-            draw_border=True,
             border_radius=0,
         )
 
@@ -256,10 +254,6 @@ game = GameView(
                 cols=32,
                 rows=16,
                 vertices=[[-5, 3], [5, 3], [5, 13], [-5, 13]],
-                draw_sprite=False,
-                draw_rect=True,
-                draw_border=True,
-                fill_color=(0, 0, 255)
             ),
             TileMap(
                 'tilemap_layer_2',
