@@ -2,9 +2,11 @@
 
 class Node:
     parent = None
-    children: list = None
-    view: set[str] = set()
+
+    view: list[str] = []
     kwargs: dict = None
+    sort: int = 0
+
     _compile_methods: tuple[str, str, str] = 'startup', 'build', 'fit'
     _status: int = 0
 
@@ -12,7 +14,7 @@ class Node:
         self.name = name
         self.kwargs = kwargs
         self.children = list(children)
-        self.view = {node.name for node in children}
+        self.view = [node.name for node in children]
         for attr, value in kwargs.items():
             setattr(self, attr, value)
 
@@ -30,7 +32,8 @@ class Node:
         return self
 
     def __iter__(self):
-        yield from filter(lambda node: node.name in self.view, self.children)
+        for node_name in self.view:
+            yield getattr(self, node_name)
 
     def __getitem__(self, path):
         if path is None:
@@ -50,6 +53,9 @@ class Node:
 
     def __repr__(self):
         return f'</{self.get_path()}>'
+
+    def sort_children(self):
+        self.view.sort(key=lambda node_name: getattr(self, node_name).sort)
 
     def initattr(self, attr: str, value):
         if not hasattr(self, attr):
@@ -72,7 +78,7 @@ class Node:
     def add_child(self, child, index=-1):
         child.set_parent(self)
         self[child.name] = child
-        self.view.add(child.name)
+        self.view.insert(index, child.name)
         self.children.insert(index, child)
         for setup_method in self._compile_methods[:self.get_root()._status + 1]:
             child[setup_method]()
@@ -118,6 +124,7 @@ class Node:
     def build(self):
         for node in self.children:
             node.build()
+        self.sort_children()
 
     def fit(self):
         for node in self.children:

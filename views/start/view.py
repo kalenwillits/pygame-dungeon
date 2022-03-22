@@ -8,18 +8,18 @@ GRID = {
     'cols': 2,
 }
 
-ENGINE_VIEWS = {'settings', 'data', 'style', 'cursor', 'keybinds', 'events', 'tasks'}
+ENGINE_VIEWS = ['settings', 'data', 'style', 'cursor', 'keybinds', 'events', 'tasks']
 
 
 class StartView(Object):
     def fit(self):
-        self['../..'].set_view({'menu', *ENGINE_VIEWS})
+        self['../..'].set_view(['menu', *ENGINE_VIEWS])
         self.get_root().events.connect('on_key_down', 'enter', f'{self.get_path()}/close')
         super().fit()
 
     def close(self):
         self.get_root().events.disconnect('on_key_down', 'enter')
-        self['../..'].set_view({'main', *ENGINE_VIEWS})
+        self['../..'].set_view(['main', *ENGINE_VIEWS])
 
 
 start = StartView(
