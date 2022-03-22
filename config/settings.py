@@ -70,8 +70,8 @@ settings = Settings(
     ),
     Node(
         'camera',
-        smoothing=0.06,
-        lookahead=75,
+        smoothing=0.04,
+        lookahead=50,
         tolerance=1
     ),
     target_framerate=100,
