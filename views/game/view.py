@@ -8,6 +8,8 @@ from components.camera import Camera
 
 from random import choice
 
+from pymunk.vec2d import Vec2d as Vector
+
 
 class GameView(Node):
     def fit(self):
@@ -69,18 +71,26 @@ class Player(Actor):
             return 'idle'
 
     def move_up(self):
-        self.impulse((0, -self.acceleration * self.get_root().delta))
+        force = Vector(0, -self.acceleration * self.get_root().delta)
+        self.impulse(force)
+        self.set_heading()
 
     def move_left(self):
-        self.impulse((-self.acceleration * self.get_root().delta, 0))
+        force = Vector(-self.acceleration * self.get_root().delta, 0)
+        self.impulse(force)
         self.radial = 'left'
+        self.set_heading()
 
     def move_right(self):
-        self.impulse((self.acceleration * self.get_root().delta, 0))
+        force = Vector(self.acceleration * self.get_root().delta, 0)
+        self.impulse(force)
         self.radial = 'right'
+        self.set_heading()
 
     def move_down(self):
-        self.impulse((0, self.acceleration * self.get_root().delta))
+        force = Vector(0, self.acceleration * self.get_root().delta)
+        self.impulse(force)
+        self.set_heading()
 
     async def loop(self):
         self.handle_frames()
@@ -175,23 +185,23 @@ game = GameView(
         'camera',
         Space(
             'collision_layer',
-            TileMap(
-                'tilemap_layer_1',
-                tileset=TILESET,
-                matrix=[
-                    [0 for _ in range(20)],
-                    [2 for _ in range(20)],
-                    [1 for _ in range(20)],
-                    [1 for _ in range(20)],
-                    [1 for _ in range(20)],
-                    [1 for _ in range(20)],
-                    [1 for _ in range(20)],
-                    [1 for _ in range(20)],
-                    [1 for _ in range(20)],
-                    [1 for _ in range(20)],
-                ],
-                position=(0, 0),
-            ),
+            # TileMap(
+            #     'tilemap_layer_1',
+            #     tileset=TILESET,
+            #     matrix=[
+            #         [0 for _ in range(20)],
+            #         [2 for _ in range(20)],
+            #         [1 for _ in range(20)],
+            #         [1 for _ in range(20)],
+            #         [1 for _ in range(20)],
+            #         [1 for _ in range(20)],
+            #         [1 for _ in range(20)],
+            #         [1 for _ in range(20)],
+            #         [1 for _ in range(20)],
+            #         [1 for _ in range(20)],
+            #     ],
+            #     position=(0, 0),
+            # ),
             Player(
                 'player',
                 resource='../../../../../resources/spritesheet',
@@ -223,7 +233,7 @@ game = GameView(
 
             gravity=[0, 0],
         ),
-        smoothing=0.01,
+        smoothing=1,
         lookahead=100,
         target='collision_layer/player'
     ),

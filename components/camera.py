@@ -1,4 +1,4 @@
-
+from math import cos, sin, atan2, pi
 from pygame.math import Vector2 as Vector
 
 from core.object import Object
@@ -29,6 +29,12 @@ class Camera(Object):
                 draw_rect=True,
             ),
             Sprite(
+                'cam',
+                fill_color=(0, 0, 255),
+                size=(4, 4),
+                draw_rect=True,
+            ),
+            Sprite(
                 'cp',
                 fill_color=(255, 0, 0),
                 size=(4, 4),
@@ -52,24 +58,33 @@ class Camera(Object):
         velocity = self[self.target].velocity
         return self[self.target].position + (int(velocity.x * self.lookahead), int(velocity.y * self.lookahead))
 
+    def get_oribital(self):
+        return self[self.target].position + Vector(
+            cos(self[self.target].heading),
+            sin(self[self.target].heading)
+        ) * self.lookahead
+
     def pan(self, node):
         if isinstance(node, Object):
             node.offset = self.offset
 
     def handle_panning(self):
         if self.target is not None:
-            camera_difference = self.get_lookahead_vector() - self.position
-            target_difference = self.get_lookahead_vector() - self[self.target].position
-            if camera_difference.length() < target_difference.length():
-                self.position += camera_difference * self.smoothing * 10
-            else:
-                self.position += target_difference * self.smoothing * 10
-            self.offset = self.position - self.center_offset
+            orbital = self.get_oribital()
+            dist_vector = orbital - self.position
+            angle = atan2(-dist_vector.y, dist_vector.x) % (2 * pi)
+            distance = self.smoothing * self.get_root().delta
+            self.position = Vector(
+                self.position.x + (cos(angle) * distance),
+                self.position.y - (sin(angle) * distance),
+            )
 
+            self.offset = self.position - self.center_offset
             self.cascade(f'{self.get_path()}/pan')
 
     async def loop(self):
         self.cp.position = self.center_offset + self.offset
-        self.target_point.position = self.get_lookahead_vector()
+        self.cam.position = self.position
+        self.target_point.position = self.get_oribital()
         self.handle_panning()
         await super().loop()
