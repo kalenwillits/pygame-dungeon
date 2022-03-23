@@ -13,7 +13,6 @@ class Node:
     def __init__(self, name, *children: list, **kwargs):
         self.name = name
         self.kwargs = kwargs
-        self.children = list(children)
         self.view = [node.name for node in children]
         for attr, value in kwargs.items():
             setattr(self, attr, value)
@@ -75,14 +74,16 @@ class Node:
     def set_parent(self, node):
         self.parent = node
 
+    def sort_children(self):
+        self.view.sort(key=lambda node_name: getattr(self, node_name).level)
+
     def get_children(self):
-        return self.children
+        return [*self]
 
     def add_child(self, child, index=-1):
         child.set_parent(self)
         self[child.name] = child
         self.view.insert(index, child.name)
-        self.children.insert(index, child)
         for setup_method in self._compile_methods[:self.get_root()._status + 1]:
             child[setup_method]()
 
@@ -121,19 +122,20 @@ class Node:
         self.view = new_view
 
     def init(self):
-        for node in self.children:
+        for node in self:
             node.init()
 
     def startup(self):
-        for node in self.children:
+        for node in self:
             node.startup()
 
     def build(self):
-        for node in self.children:
+        for node in self:
             node.build()
+        self.sort_children()
 
     def fit(self):
-        for node in self.children:
+        for node in self:
             node.fit()
 
     async def loop(self):
@@ -145,5 +147,5 @@ class Node:
             await node.draw()
 
     def shutdown(self):
-        for node in self.children:
+        for node in self:
             node.shutdown()
