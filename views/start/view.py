@@ -11,7 +11,7 @@ GRID = {
 ENGINE_VIEWS = ['settings', 'data', 'style', 'cursor', 'keybinds', 'events', 'tasks']
 
 
-class StartView(Object):
+class Start(Object):
     def build(self):
         self(
             self.name,

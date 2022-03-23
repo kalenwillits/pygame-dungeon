@@ -15,8 +15,6 @@ from pymunk.vec2d import Vec2d as Vector
 # TODO Radials constant dict
 
 
-
-
 class Player(Actor):
     animations = {
         'idle': {
@@ -233,7 +231,7 @@ TILESET = {
 }
 
 
-class GameView(Node):
+class Game(Node):
     def build(self):
         self(
             self.name,
