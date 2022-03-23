@@ -5,7 +5,9 @@ from core.node import Node
 from random import choice
 
 
-class FloorTile(Sprite):
+class Floor(Sprite):
+    sort = 1
+
     def build(self):
         self(
             self.name,
@@ -14,10 +16,9 @@ class FloorTile(Sprite):
             cols=32,
             rows=32,
             resource='/resources/spritesheet',
-            draw_border=True,
             border_radius=0,
             border_width=3,
-            border_color=(0, 0, 255)
+            border_color=(0, 0, 255),
         )
 
         super().build()
@@ -27,7 +28,27 @@ class FloorTile(Sprite):
         self.set_index(choice([129, 130, 131, 161, 162, 163]))
 
 
-class VerticalWallEdgeTile(Sprite):
+class TopWall(Body, Sprite):
+    sort = 1
+
+    def build(self):
+        self(
+            self.name,
+            body_type='static',
+            anchor='topleft',
+            size=(16, 16),
+            cols=32,
+            rows=32,
+            resource='../../../../../../resources/spritesheet',
+            vertices=[[0, 0], [0, 16], [32, 16], [32, 0]],
+        )
+
+    def fit(self):
+        super().fit()
+        self.set_index(34)
+
+
+class TopWallEdge(Sprite):
     sort = 1
 
     def build(self):
@@ -46,60 +67,38 @@ class VerticalWallEdgeTile(Sprite):
         self.set_index(2)
 
 
-class VerticalWallEdgeWithFloorTile(VerticalWallEdgeTile):
-    sort = 2
+class BottomWallEdge(Node):
+    sort = -1
 
     def build(self):
         self(
             self.name,
-            FloorTile(
+            Body(
+                'body',
+                body_type='static',
+                vertices=[[0, 32], [16, 32], [20, 24], [0, 24]],
+                size=(16, 16),
+                position=self.position,
+            ),
+            Floor(
                 'floor',
+                position=self.position,
+            ),
+            TopWallEdge(
+                'wall_edge',
+                position=self.position
             )
         )
-
-
-class VerticalWallTile(Body, Sprite):
-    def build(self):
-        self(
-            self.name,
-            body_type='static',
-            anchor='topleft',
-            size=(16, 16),
-            cols=32,
-            rows=32,
-            resource='../../../../../../resources/spritesheet',
-            vertices=[[0, 0], [0, 32], [32, 32], [32, 0]],
-        )
+        super().build()
 
     def fit(self):
         super().fit()
-        self.set_index(34)
-
-
-class HorizontalWallTile(Body, Sprite):
-    def build(self):
-        self(
-            self.name,
-            body_type='static',
-            anchor='topleft',
-            size=(16, 16),
-            cols=32,
-            rows=32,
-            resource='/resources/spritesheet',
-            vertices=[[-16, -16], [-16, 16], [16, 16], [16, 16]],
-            border_radius=0,
-        )
-
-    def fit(self):
-        super().fit()
-        self.set_index(289)
 
 
 TILESET = {
     0: Node,
-    1: FloorTile,
-    2: VerticalWallTile,
-    3: VerticalWallEdgeTile,
-    4: HorizontalWallTile,
-    5: VerticalWallEdgeWithFloorTile,
+    1: Floor,
+    2: TopWall,
+    3: TopWallEdge,
+    4: BottomWallEdge,
 }

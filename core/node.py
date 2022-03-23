@@ -5,7 +5,7 @@ class Node:
 
     view: list[str] = []
     kwargs: dict = None
-    sort: int = 0
+    level: int = 0
 
     _compile_methods: tuple[str, str, str] = 'startup', 'build', 'fit'
     _status: int = 0
@@ -59,9 +59,6 @@ class Node:
 
     def __repr__(self):
         return f'</{self.get_path()}>'
-
-    def sort_children(self):
-        self.view.sort(key=lambda node_name: getattr(self, node_name).sort)
 
     def initattr(self, attr: str, value):
         if not hasattr(self, attr):
@@ -134,7 +131,6 @@ class Node:
     def build(self):
         for node in self.children:
             node.build()
-        self.sort_children()
 
     def fit(self):
         for node in self.children:

@@ -103,7 +103,6 @@ class App(Node):
                 )
 
     def init(self):
-
         self.mixer.init(
             frequency=self.settings.mixer.frequency,
             size=self.settings.mixer.size,
@@ -150,12 +149,10 @@ class App(Node):
                 self.endtime = self.starttime
 
                 self.clock.tick(self.settings.max_framerate)
-                self.in_main_loop = True
                 self.tasks.add(self.loop())
                 self.tasks.add(self.draw())
 
-                await asyncio.gather(*self.tasks.queue)
-                self.tasks.clear()
+                await self.tasks.run()
 
                 if self.quit:
                     break
@@ -165,7 +162,6 @@ class App(Node):
                 traceback.print_exc()
 
         finally:
-            self.in_main_loop = False
             for task in self.tasks.queue:
                 if not task.done():
                     task.cancel()

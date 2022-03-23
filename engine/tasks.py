@@ -4,14 +4,14 @@ from core.node import Node
 
 
 class Tasks(Node):
-    queue = []
+    queue: list = []
 
     def clear(self):
         self.queue = []
 
-    def add(self, task):
-        self.queue.append(asyncio.ensure_future(task))
+    def add(self,  coroutine):
+        self.queue.append(asyncio.ensure_future(coroutine))
 
     async def run(self):
-        while self.queue:
-            await self.queue.pop()
+        await asyncio.gather(*self.queue)
+        self.clear()

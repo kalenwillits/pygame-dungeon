@@ -17,6 +17,8 @@ class Player(Actor):
     }
     direction: str = 'E'
 
+    sort= 10
+
     def fit(self):
         super().fit()
         self.get_root().events.connect('on_key_pressed', 'move_up', f'{self.get_path()}/move_up')

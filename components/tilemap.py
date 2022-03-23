@@ -26,7 +26,6 @@ class TileMap(Object):
                         tile_class(
                             f'{tile_code}_{row_index}_{col_index}',
                             position=tile_position,
-                            size=self.tilesize,
                         )
                     )
 

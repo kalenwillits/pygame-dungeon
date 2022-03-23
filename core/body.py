@@ -1,7 +1,7 @@
 from collections import defaultdict
 
 import pymunk
-from core.node import Node
+from core.object import Object
 
 from pygame.math import Vector2 as Vector
 
@@ -25,7 +25,7 @@ BODY_SHAPES = defaultdict(
 )
 
 
-class Body(Node):
+class Body(Object):
     body: pymunk.Body = None
     shape: pymunk.Shape = None
     is_sensor: bool = False
@@ -33,8 +33,9 @@ class Body(Node):
     density: float = None
     radius: float = None
     sync_rotation: bool = True
-    _acceleration: float = None
     max_velocity: float = None
+
+    _acceleration: float = None
     _attr_cache: dict = None
 
     def __init__(self, name, *nodes, **kwargs):
