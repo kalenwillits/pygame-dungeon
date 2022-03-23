@@ -114,8 +114,13 @@ class Player(Actor):
     def look_center(self):
         self.set_heading(None)
 
-    async def loop(self):
+    def lock_body_rotation(self):
         self.angle = 0.0
+        self['..'].space.reindex_shapes_for_body(self.body)
+
+    async def loop(self):
+        self.lock_body_rotation()
+
         self.handle_frames()
         self.handle_animation()
         await super().loop()
