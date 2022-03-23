@@ -2,6 +2,7 @@ from collections import defaultdict
 from core.body import Body
 from core.sprite import Sprite
 from pygame.math import Vector2 as Vector
+from components.trigger import Trigger
 
 
 class Actor(Body, Sprite):
@@ -23,6 +24,16 @@ class Actor(Body, Sprite):
         ]
     ] = None
     frame_types: defaultdict[str, str] = None
+
+    def build(self):
+        self(
+            self.name,
+            Trigger(
+                'radial_trigger',
+                value='../radial'
+            )
+        )
+        super().build()
 
     def set_radial(self, vector):
         x, y = round(vector[0], self.radial_precision), round(vector[1], self.radial_precision)
@@ -54,12 +65,6 @@ class Actor(Body, Sprite):
         self.fixed_frames += self.get_root().delta
         self.velocity_frames += self.get_root().delta*self.velocity.length
 
-    def radial_trigger(self):
-        if self.radial != self.previous_radial:
-            self.previous_radial = self.radial
-            return True
-        return False
-
     def state_trigger(self):
         if self.state != self.previous_state:
             self.previous_state = self.state
@@ -71,8 +76,8 @@ class Actor(Body, Sprite):
 
     def get_body_offset(self):
         return Vector(
-            int(self.position.x - self.body.position.x),
-            int(self.position.y - self.body.position.y)
+            self.position.x - self.body.position.x,
+            self.position.y - self.body.position.y
         )
 
     def set_heading(self, heading: float = None):

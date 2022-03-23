@@ -15,12 +15,13 @@ class Settings(Node):
                 gravity=(0.0, 0.0),
                 density=1,
                 mass=1,
-                max_velocity=12,  # Max speed
-                acceleration=8,  # How quickly you get to max speed
+                max_velocity=10,  # Max speed
+                acceleration=10,  # How quickly you get to max speed
                 damping=0.9,
                 elasticity=1,
-                friction=1,
-                moment=1,
+                torque=0,
+                friction=0,
+                moment=0,
                 body_type='dynamic',
             ),
             Node(
@@ -29,7 +30,7 @@ class Settings(Node):
             ),
             Node(
                 'animation',
-                framerate=20,
+                framerate=10,
                 radial='S',
                 state='idle',
                 radial_precision=1,

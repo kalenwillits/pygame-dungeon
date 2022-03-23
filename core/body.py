@@ -17,8 +17,7 @@ BODY_TYPES = {
 
 
 BODY_SHAPES = defaultdict(
-    lambda: pymunk.Poly,
-    {
+    lambda: pymunk.Poly, {
         0: pymunk.Circle,
         1: pymunk.Circle,
         2: pymunk.Segment,
@@ -128,6 +127,18 @@ class Body(Node):
             self.shape.elasticity = value
 
     @property
+    def torque(self) -> float:
+        return self.shape.elasticity
+
+    @torque.setter
+    def torque(self, value: float):
+        if self.body is None:
+            self._attr_cache['torque'] = value
+        else:
+            self.body.torque = value
+
+
+    @property
     def layer(self) -> int:
         return self.shape.collision_type
 
@@ -170,9 +181,9 @@ class Body(Node):
           [x + offset[0], y + offset[1]] for x, y in self.vertices
         ]
 
-    def handle_max_velocity(self):
-        if self.velocity.length > self.max_velocity:
-            self.velocity = self.velocity.normalized() * self.max_velocity
+    # def handle_max_velocity(self):
+    #     if self.velocity.length > self.max_velocity:
+    #         self.velocity = self.velocity.normalized() * self.max_velocity
 
     def impulse(self, force: tuple, point=None, mode: str = 'world', type='impulse'):
         getattr(self.body, f'apply_{type}_at_{mode}_point')(force, self.body.position if point is None else point)
@@ -204,6 +215,7 @@ class Body(Node):
     def compile_body_and_shape(self):
         self.body = pymunk.Body(body_type=BODY_TYPES[(self.body_type)])
         self.body.position = self.position.x, self.position.y
+        self.body.velocity_func = self.limit_velocity
         self.shape = BODY_SHAPES[len(self.vertices)](
             self.body,
             self.vertices if len(self.vertices) > 1 else 10.0,
@@ -221,6 +233,13 @@ class Body(Node):
     def remove_mask(self, mask: str):
         self.masks.remove(mask)
 
+    def limit_velocity(self, body, gravity, damping, dt):
+        pymunk.Body.update_velocity(body, gravity, damping, dt)
+        length = body.velocity.length
+        if length > self.max_velocity:
+            scale = self.max_velocity / length
+            body.velocity = body.velocity * scale
+
     def fit(self):
         self.initattr('vertices', [])
         self.fit_vertices_with_offset()
@@ -232,11 +251,11 @@ class Body(Node):
         if pymunk.Body.KINEMATIC != BODY_TYPES[self.body_type] != pymunk.Body.STATIC:
             self.initattr('mass', self.get_root().settings.physics.mass)
             self.initattr('density', self.get_root().settings.physics.density)
+            self.initattr('torque', self['/settings/physics/torque'])
 
         self.compile_body_and_shape()
         super().fit()
 
     async def loop(self):
-        self.handle_max_velocity()
-        self.body.angle = 0
+        # self.handle_max_velocity()
         await super().loop()
