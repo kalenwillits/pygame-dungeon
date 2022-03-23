@@ -15,9 +15,6 @@ from pymunk.vec2d import Vec2d as Vector
 # TODO Radials constant dict
 
 
-class GameView(Node):
-    def fit(self):
-        super().fit()
 
 
 class Player(Actor):
@@ -235,46 +232,47 @@ TILESET = {
     0: Node,
 }
 
-# TODO adjust the tileset to take multiple tiles in one spot
 
-
-game = GameView(
-    'game',
-    Camera(
-        'camera',
-        Space(
-            'collision_layer',
-            TileMap(
-                'tilemap',
-                tileset=TILESET,
-                tilesize=(32, 32),
-                matrix=[
-                    [3 for _ in range(20)],
-                    [2 for _ in range(20)],
-                    [1 for _ in range(20)],
-                    [1 for _ in range(20)],
-                    [1 for _ in range(20)],
-                    [1 for _ in range(20)],
-                    [1 for _ in range(20)],
-                    [1 for _ in range(20)],
-                    [1 for _ in range(20)],
-                    [2 for _ in range(20)],
-                ],
-                position=(0, 0),
+class GameView(Node):
+    def build(self):
+        self(
+            self.name,
+            Camera(
+                'camera',
+                Space(
+                    'collision_layer',
+                    TileMap(
+                        'tilemap',
+                        tileset=TILESET,
+                        tilesize=(32, 32),
+                        matrix=[
+                            [3 for _ in range(20)],
+                            [2 for _ in range(20)],
+                            [1 for _ in range(20)],
+                            [1 for _ in range(20)],
+                            [1 for _ in range(20)],
+                            [1 for _ in range(20)],
+                            [1 for _ in range(20)],
+                            [1 for _ in range(20)],
+                            [1 for _ in range(20)],
+                            [2 for _ in range(20)],
+                        ],
+                        position=(0, 0),
+                    ),
+                    Player(
+                        'player',
+                        resource='../../../../../resources/spritesheet',
+                        position=(64, 64),
+                        sort=10,
+                        density=1,
+                        size=(16, 32),
+                        cols=32,
+                        rows=16,
+                        vertices=[[-5, 3], [5, 3], [5, 13], [-5, 13]],
+                    ),
+                    gravity=[0, 0],
+                ),
+                target='collision_layer/player'
             ),
-            Player(
-                'player',
-                resource='../../../../../resources/spritesheet',
-                position=(64, 64),
-                sort=10,
-                density=1,
-                size=(16, 32),
-                cols=32,
-                rows=16,
-                vertices=[[-5, 3], [5, 3], [5, 13], [-5, 13]],
-            ),
-            gravity=[0, 0],
-        ),
-        target='collision_layer/player'
-    ),
-)
+        )
+        super().build()

@@ -7,12 +7,9 @@ from engine.cursor import Cursor
 from engine.events import Events
 from engine.tasks import Tasks
 from core.resource import Resource
-
-from views.start.view import start
-
+from views.start.view import Start
+from views.game.view import Game
 from components.data import Data
-
-from views.game.view import game
 
 
 app = App(
@@ -32,11 +29,11 @@ app = App(
     ),
     Node(
         'menu',
-        start,
+        Start('start'),
     ),
     Node(
         'main',
-        game,
+        Game('game'),
     ),
     # --------------------------------------------------------------------------------------------------------------- #
     Events('events'),
