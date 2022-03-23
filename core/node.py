@@ -132,11 +132,11 @@ class Node:
     def build(self):
         for node in self:
             node.build()
-        self.sort_children()
 
     def fit(self):
         for node in self:
             node.fit()
+        self.sort_children()
 
     async def loop(self):
         for node in self:

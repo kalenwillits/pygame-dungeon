@@ -5,6 +5,7 @@ from pymunk.vec2d import Vec2d as Vector
 
 
 class Player(Actor):
+    level: int = 1
     animations = {
         'idle': {
             'W': [183],
@@ -17,10 +18,11 @@ class Player(Actor):
     }
     direction: str = 'E'
 
-    sort= 10
-
     def fit(self):
         super().fit()
+        self.vertices = [
+            (-5, 16), (5, 16), (5, 32), (-5, 32)
+        ]
         self.get_root().events.connect('on_key_pressed', 'move_up', f'{self.get_path()}/move_up')
         self.get_root().events.connect('on_key_pressed', 'move_left', f'{self.get_path()}/move_left')
         self.get_root().events.connect('on_key_pressed', 'move_right', f'{self.get_path()}/move_right')
@@ -118,7 +120,6 @@ class Player(Actor):
 
     def lock_body_rotation(self):
         self.angle = 0.0
-        self['..'].space.reindex_shapes_for_body(self.body)
 
     async def loop(self):
         self.lock_body_rotation()
