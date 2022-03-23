@@ -144,7 +144,7 @@ class FloorTile(Sprite):
             size=(16, 16),
             cols=32,
             rows=32,
-            resource='../../../../../../resources/spritesheet',
+            resource='/resources/spritesheet',
             draw_border=True,
             border_radius=0,
             border_width=3,
@@ -159,6 +159,8 @@ class FloorTile(Sprite):
 
 
 class VerticalWallEdgeTile(Sprite):
+    sort = 1
+
     def build(self):
         self(
             self.name,
@@ -167,12 +169,24 @@ class VerticalWallEdgeTile(Sprite):
             size=(16, 16),
             cols=32,
             rows=32,
-            resource='../../../../../../resources/spritesheet',
+            resource='/resources/spritesheet',
         )
 
     def fit(self):
         super().fit()
         self.set_index(2)
+
+
+class VerticalWallEdgeWithFloorTile(VerticalWallEdgeTile):
+    sort = 2
+
+    def build(self):
+        self(
+            self.name,
+            FloorTile(
+                'floor',
+            )
+        )
 
 
 class VerticalWallTile(Body, Sprite):
@@ -202,7 +216,7 @@ class HorizontalWallTile(Body, Sprite):
             size=(16, 16),
             cols=32,
             rows=32,
-            resource='../../../../../../resources/spritesheet',
+            resource='/resources/spritesheet',
             vertices=[[-16, -16], [-16, 16], [16, 16], [16, 16]],
             border_radius=0,
         )
@@ -216,9 +230,12 @@ TILESET = {
     1: FloorTile,
     3: VerticalWallEdgeTile,
     4: HorizontalWallTile,
+    5: VerticalWallEdgeWithFloorTile,
     2: VerticalWallTile,
     0: Node,
 }
+
+# TODO adjust the tileset to take multiple tiles in one spot
 
 
 game = GameView(
@@ -228,11 +245,11 @@ game = GameView(
         Space(
             'collision_layer',
             TileMap(
-                'tilemap_layer_1',
+                'tilemap',
                 tileset=TILESET,
                 tilesize=(32, 32),
                 matrix=[
-                    [0 for _ in range(20)],
+                    [3 for _ in range(20)],
                     [2 for _ in range(20)],
                     [1 for _ in range(20)],
                     [1 for _ in range(20)],
@@ -241,7 +258,7 @@ game = GameView(
                     [1 for _ in range(20)],
                     [1 for _ in range(20)],
                     [1 for _ in range(20)],
-                    [1 for _ in range(20)],
+                    [2 for _ in range(20)],
                 ],
                 position=(0, 0),
             ),
@@ -249,32 +266,13 @@ game = GameView(
                 'player',
                 resource='../../../../../resources/spritesheet',
                 position=(64, 64),
+                sort=10,
                 density=1,
                 size=(16, 32),
                 cols=32,
                 rows=16,
                 vertices=[[-5, 3], [5, 3], [5, 13], [-5, 13]],
             ),
-            TileMap(
-                'tilemap_layer_2',
-                tileset=TILESET,
-                tilesize=(32, 32),
-                matrix=[
-                    [3 for _ in range(20)],
-                    [0 for _ in range(20)],
-                    [0 for _ in range(20)],
-                    [0 for _ in range(20)],
-                    [0 for _ in range(20)],
-                    [0 for _ in range(20)],
-                    [0 for _ in range(20)],
-                    [0 for _ in range(20)],
-                    [0 for _ in range(20)],
-                    [3 for _ in range(20)],
-                    [2 for _ in range(20)]
-                ],
-                position=(0, 0),
-            ),
-
             gravity=[0, 0],
         ),
         target='collision_layer/player'

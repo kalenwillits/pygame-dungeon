@@ -83,7 +83,7 @@ settings = Settings(
         'events',
     ),
     target_framerate=100,
-    max_framerate=72,
+    max_framerate=60,
     resolution=Vector(int(1280), int(720)),
     full_screen=False,
     hide_cursor=False,
