@@ -15,6 +15,3 @@ class Cursor(Node):
     async def loop(self):
         self.handle_position()
         await super().loop()
-
-
-cursor = Cursor('cursor')

@@ -123,6 +123,10 @@ class Node:
     def set_view(self, new_view: set[str, ...]):
         self.view = new_view
 
+    def init(self):
+        for node in self.children:
+            node.init()
+
     def startup(self):
         for node in self.children:
             node.startup()

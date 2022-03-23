@@ -15,6 +15,3 @@ class Tasks(Node):
     async def run(self):
         while self.queue:
             await self.queue.pop()
-
-
-tasks = Tasks('tasks')

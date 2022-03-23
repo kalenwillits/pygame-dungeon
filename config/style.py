@@ -1,11 +1,14 @@
 from pygame.font import Font
+import pygame
 from pygame import Color
 from core.node import Node
 
 
 class Style(Node):
-    def startup(self):
-        self.add_child(
+    def init(self):
+        pygame.font.init()
+        self(
+            self.name,
             Node(
                 'rect',
                 border_radius=10,
@@ -14,9 +17,7 @@ class Style(Node):
                     self.get_root().settings.resolution.x/3,
                     self.get_root().settings.resolution.y/35
                 )
-            )
-        )
-        self.add_child(
+            ),
             Node(
                 'color',
                 text=Color(255, 255, 255),
@@ -27,9 +28,7 @@ class Style(Node):
                 disabled=Color(25, 25, 25),
                 border=Color(80, 80, 80),
                 outline=Color(255, 255, 255),
-            )
-        )
-        self.add_child(
+            ),
             Node(
                 'text',
                 source='resources/fonts/m5x7.ttf',
@@ -40,10 +39,8 @@ class Style(Node):
                 size_lg=int((self.get_root().settings.resolution.x / 20)),
                 size_xl=int((self.get_root().settings.resolution.x / 10)),
 
-            )
-        )
 
-        self.add_child(
+            ),
             Node(
                 'outline',
                 width=1,
@@ -59,16 +56,4 @@ class Style(Node):
         self.text.lg_character_size = self.text.lg.render('_', True, (0, 0, 0)).get_size()
         self.text.xl = Font(self.text.source, self.text.size_xl)
         self.text.xl_character_size = self.text.xl.render('_', True, (0, 0, 0)).get_size()
-        super().startup()
-
-        def build(self):
-            self(
-                self.name,
-            )
-            super().build()
-
-
-style = Style(
-    'style',
-    Node('settings'),
-)
+        super().init()

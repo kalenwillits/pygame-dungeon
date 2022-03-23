@@ -77,6 +77,3 @@ class Events(Node):
 
     async def loop(self):
         self.handle_events()
-
-
-events = Events('events')

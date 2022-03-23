@@ -1,11 +1,11 @@
 from engine.app import App
 from core.node import Node
-from config.settings import settings
+from config.settings import Settings
 from config.keybinds import Keybinds
-from config.style import style
-from engine.cursor import cursor
-from engine.events import events
-from engine.tasks import tasks
+from config.style import Style
+from engine.cursor import Cursor
+from engine.events import Events
+from engine.tasks import Tasks
 from core.resource import Resource
 
 from views.start.view import start
@@ -17,11 +17,12 @@ from views.game.view import game
 
 app = App(
     'app',
-    settings,
+    Settings('settings'),
     Data('data'),
-    style,
-    cursor,
+    Style('style'),
+    Cursor('cursor'),
     Keybinds('keybinds'),
+    # --------------------------------------------------------------------------------------------------------------- #
     Node(
         'resources',
         Resource(
@@ -37,8 +38,9 @@ app = App(
         'main',
         game,
     ),
-    events,
-    tasks,
+    # --------------------------------------------------------------------------------------------------------------- #
+    Events('events'),
+    Tasks('tasks'),
 )
 
 

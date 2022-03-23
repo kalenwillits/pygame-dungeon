@@ -21,6 +21,7 @@ class App(Node):
     starttime = None
     endtime = None
     mixer = mixer
+    init_queue: list[str] = ['settings', 'style', '.']
 
     def get_framerate(self) -> int:
         return int(self.clock.get_fps())
@@ -101,8 +102,7 @@ class App(Node):
                     special_flags=pygame.BLEND_ALPHA_SDL2
                 )
 
-    def startup(self):
-        pygame.init()
+    def init(self):
 
         self.mixer.init(
             frequency=self.settings.mixer.frequency,
@@ -110,6 +110,7 @@ class App(Node):
             buffer=self.settings.mixer.buffer,
         )
 
+        pygame.init()
         self.window = pygame.display.set_mode(
             self.settings.user.resolution, pygame.FULLSCREEN if self.settings.full_screen else pygame.NOFRAME)
         pygame.display.set_caption(self.settings.window_caption)
@@ -120,7 +121,7 @@ class App(Node):
         self.display = Surface(self.settings.resolution)
         self.display_rect = self.display.get_rect()
 
-        super().startup()
+        super().init()
 
     async def draw(self):
         frame = scale(self.display, self.settings.user.resolution)
@@ -130,6 +131,9 @@ class App(Node):
         await super().draw()
 
     async def main_loop(self):
+
+        for node_path in self.init_queue:
+            self[node_path].init()
 
         try:
             self.startup()
