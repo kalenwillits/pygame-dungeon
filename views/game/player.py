@@ -20,9 +20,6 @@ class Player(Actor):
 
     def fit(self):
         super().fit()
-        self.vertices = [
-            (-5, 16), (5, 16), (5, 32), (-5, 32)
-        ]
         self.get_root().events.connect('on_key_pressed', 'move_up', f'{self.get_path()}/move_up')
         self.get_root().events.connect('on_key_pressed', 'move_left', f'{self.get_path()}/move_left')
         self.get_root().events.connect('on_key_pressed', 'move_right', f'{self.get_path()}/move_right')
