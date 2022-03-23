@@ -19,9 +19,9 @@ class Settings(Node):
                 acceleration=10,  # How quickly you get to max speed
                 damping=0.9,
                 elasticity=1,
-                torque=0,
                 friction=0,
-                moment=0,
+                torque=-1,
+                moment=-1,
                 body_type='dynamic',
             ),
             Node(

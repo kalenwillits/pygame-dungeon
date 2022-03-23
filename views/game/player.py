@@ -115,6 +115,7 @@ class Player(Actor):
         self.set_heading(None)
 
     async def loop(self):
+        self.angle = 0.0
         self.handle_frames()
         self.handle_animation()
         await super().loop()
