@@ -24,7 +24,7 @@ class App(Node):
     init_queue: list[str] = ['settings', 'style', '.']
 
     def get_framerate(self) -> int:
-        return int(self.clock.get_fps())
+        return self.clock.get_fps()
 
     def render(
         self,
@@ -145,7 +145,7 @@ class App(Node):
             self.endtime = time.time()
             while True:
                 self.starttime = time.time()
-                self.delta = (self.starttime - self.endtime) * self.settings.target_framerate
+                self.delta = (self.starttime - self.endtime) * self.get_framerate()
                 self.endtime = self.starttime
 
                 self.clock.tick(self.settings.max_framerate)

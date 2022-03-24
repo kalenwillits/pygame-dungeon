@@ -131,3 +131,6 @@ dmypy.json
 
 # Vim
 *.sw*
+
+# External resources
+resources/0x72*

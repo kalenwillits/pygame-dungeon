@@ -4,6 +4,7 @@ from core.node import Node
 
 from random import choice
 
+
 class Floor(Sprite):
     level = 0
 
@@ -121,7 +122,7 @@ class RightWall(Body, Sprite):
             cols=32,
             rows=32,
             resource='../../../../../../resources/spritesheet',
-            vertices=[(10, -32), (32, -32), (32, 32), (10, 32)],
+            vertices=[[16.0, -16.0], [16.0, 16.0], [6.0, 6.0], [6.0, -16.0]]
         )
 
     def fit(self):

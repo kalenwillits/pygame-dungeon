@@ -86,7 +86,6 @@ class Settings(Node):
                 'tasks',
                 levels=[0, 1, 2]
             ),
-            target_framerate=100,
             max_framerate=60,
             resolution=Vector(int(1280), int(720)),
             full_screen=False,

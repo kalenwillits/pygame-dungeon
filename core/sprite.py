@@ -26,6 +26,7 @@ class Sprite(Object):
     sprite: Surface = None
     fill_color: Color = None
     border_color: Color = None
+    border_radius: float = None
     area: Rect = None
     area_offset: tuple[int, int] = (0, 0)
     index: int = None
@@ -46,9 +47,11 @@ class Sprite(Object):
         self.initattr('scale', self.get_root().settings.sprite.scale)
         self.initattr('outline_color', self.get_root().style.color.outline)
         self.initattr('outline_width', self.get_root().style.outline.width)
+        self.initattr('border_radius', self.get_root().style.rect.border_radius)
 
         if self.resource:
             self.sprite = self[self.resource].content
+            self.size = self.kwargs.get('size', self.sprite.get_size())
             self.size = self.size[0] * self.scale, self.size[1] * self.scale
             self.area = Rect(0, 0, self.size[0], self.size[1])
             self.scale_and_size()
@@ -139,5 +142,10 @@ class Sprite(Object):
         self.scale_and_size()
 
     async def draw(self):
-        self.get_root().render(self, fill_color=self.fill_color, border_color=self.border_color)
+        self.get_root().render(
+            self,
+            fill_color=self.fill_color,
+            border_color=self.border_color,
+            border_radius=self.border_radius,
+        )
         await super().draw()
