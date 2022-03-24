@@ -5,6 +5,10 @@ from pymunk.vec2d import Vec2d as Vector
 
 
 class Player(Actor):
+    draw_sprite=False
+    draw_rect=True
+    fill_color=(0, 0, 255)
+    border_radius=0
     level: int = 1
     animations = {
         'idle': {

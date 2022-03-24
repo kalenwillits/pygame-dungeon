@@ -84,7 +84,14 @@ class Settings(Node):
             ),
             Node(
                 'tasks',
-                levels=[0, 1, 2]
+            ),
+            Node(
+                'globals',
+                draw_rect=False,
+                draw_border=False,
+                draw_sprite=False,
+                draw_outline=False,
+                draw_polygon=True,
             ),
             max_framerate=60,
             resolution=Vector(int(1280), int(720)),

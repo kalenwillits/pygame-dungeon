@@ -4,6 +4,7 @@ import pymunk
 from core.object import Object
 
 from pygame.math import Vector2 as Vector
+from pygame import Color
 
 
 BODY_TYPES = {
@@ -34,6 +35,10 @@ class Body(Object):
     radius: float = None
     sync_rotation: bool = True
     max_velocity: float = None
+
+    draw_polygon: bool = False
+    polygon_color: Color = None
+    polygon_width: int = None
 
     _acceleration: float = None
     _attr_cache: dict = None
@@ -243,6 +248,9 @@ class Body(Object):
 
     def fit(self):
         self.initattr('vertices', [])
+        self.initattr('draw_polygon', False)
+        self.initattr('polygon_color', self['/style/color/polygon'])
+        self.initattr('polygon_width', self['/style/polygon/width'])
         self.fit_vertices_with_offset()
         self.initattr('acceleration', self.get_root().settings.physics.acceleration)
         self.initattr('max_velocity', self.get_root().settings.physics.max_velocity)
@@ -258,5 +266,13 @@ class Body(Object):
         super().fit()
 
     async def loop(self):
-        # self.handle_max_velocity()
         await super().loop()
+
+    async def draw(self):
+        self['/render'](
+            self,
+            polygon_color=self.polygon_color,
+            polygon_width=self.polygon_width
+        )
+        await super().draw()
+

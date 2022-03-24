@@ -28,6 +28,7 @@ class Style(Node):
                 disabled=Color(25, 25, 25),
                 border=Color(80, 80, 80),
                 outline=Color(255, 255, 255),
+                polygon=Color(255, 165, 0),
             ),
             Node(
                 'text',
@@ -43,6 +44,10 @@ class Style(Node):
             ),
             Node(
                 'outline',
+                width=1,
+            ),
+            Node(
+                'polygon',
                 width=1,
             )
         )

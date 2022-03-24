@@ -34,6 +34,8 @@ class App(Node):
         border_radius: int = None,
         border_width: int = None,
         outline_color: tuple[int, int, int] = None,
+        polygon_color: tuple[int, int, int] = None,
+        polygon_width: int = None
     ):
         offset_rect = node.rect.move(-node.offset)
         if self.display_rect.colliderect(offset_rect):
@@ -45,8 +47,12 @@ class App(Node):
                 border_width = self.style.rect.border_width
             if outline_color is None:
                 outline_color = self.style.color.outline
+            if polygon_color is None:
+                polygon_color = self.style.color.polygon
+            if polygon_width is None:
+                polygon_width = self.style.polygon.width
 
-            if node.draw_rect:
+            if node.draw_rect or self.settings.globals.draw_rect:
                 # Draw the fill rect
                 pygame.draw.rect(
                     self.display,
@@ -55,7 +61,7 @@ class App(Node):
                     border_radius=border_radius
                     )
             # Draw the rect border
-            if node.draw_border:
+            if node.draw_border or self.settings.globals.draw_border:
                 pygame.draw.rect(
                     self.display,
                     self.style.color.border,
@@ -68,7 +74,7 @@ class App(Node):
             # Figure out the outline offset
             # Allow the outline to cycle through animations
 
-            if node.draw_outline:
+            if node.draw_outline or self.settings.globals.draw_outline:
                 self.display.blit(
                     node.outline,
                     node.get_sprite_offset() - node.offset,
@@ -94,13 +100,22 @@ class App(Node):
                     special_flags=pygame.BLEND_ALPHA_SDL2
                 )
 
-            if node.sprite and node.draw_sprite:
+            if node.sprite and node.draw_sprite or self.settings.globals.draw_sprite:
                 self.display.blit(
                     node.sprite,
                     node.get_sprite_offset() - node.offset,
                     area=node.area,
                     special_flags=pygame.BLEND_ALPHA_SDL2
                 )
+
+            if hasattr(node, 'vertices'):
+                if node.vertices and node.draw_polygon or self.settings.globals.draw_polygon:
+                    pygame.draw.polygon(self.display, polygon_color, [
+                        [
+                            vertex[0] + getattr(offset_rect, node.anchor)[0],
+                            vertex[1] + getattr(offset_rect, node.anchor)[1]
+                        ] for vertex in node.vertices
+                    ], width=polygon_width)
 
     def init(self):
         self.mixer.init(
