@@ -1,3 +1,5 @@
+import re
+
 from core.node import Node
 from components.button import Button
 from components.text import Text
@@ -123,11 +125,15 @@ class ClasseRadial(Node):
 class NameInput(Input):
     def build(self):
         def on_change(self):
+            previous_length = len(self.value)
+            self.value = re.sub(r'[^a-zA-Z]', '', self.value)
+            self.cursor_position -= (previous_length - len(self.value))
             self['../data']['name'] = self.value
 
         self(
             self.name,
             on_change=on_change,
+            max_characters=24,
             **STYLE,
         )
         super().build()
