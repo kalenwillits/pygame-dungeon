@@ -4,7 +4,6 @@ from components.text import Text
 from components.timer import Timer
 
 from pygame.math import Vector2 as Vector
-from pygame import mouse
 import pygame
 
 VIEWS = {
@@ -20,7 +19,6 @@ class Input(Interface):
     max_characters: int = None
 
     cooldown: int = None
-    toggle_edit_mode: bool = False
 
     @property
     def value(self) -> str:
@@ -83,6 +81,7 @@ class Input(Interface):
         self.initattr('value', self.kwargs.get('value', ''))
         self.initattr('cooldown', self.get_root().settings.input.cooldown)
         self.initattr('state', 'idle')
+        self.initattr('max_characters', float('inf'))
         super().fit()
         self.place_text()
         self.timer.start()
@@ -91,14 +90,10 @@ class Input(Interface):
     def handle_state(self):
         if self.timer.timestamp > self.cooldown:
             if self.rect.collidepoint(self.get_root().cursor.position):
-                if mouse.get_pressed()[0]:
-                    self.state = 'edit'
-                    self.enter_edit_mode()
+                self.state = 'edit'
 
             else:
-                if mouse.get_pressed()[0]:
-                    self.state = 'idle'
-                    self.exit_edit_mode()
+                self.state = 'idle'
             self.timer.start()
 
     def enter_edit_mode(self):
@@ -109,14 +104,16 @@ class Input(Interface):
 
     def handle_cursor_position(self):
         self.cursor.position = (
-            self.text.position[0] + self.cursor.size[0] * self.cursor_position,
-            self.text.position[1]
-        )
+                min(
+                    (self.cursor.size[0] * self.cursor_position) + self.text.position[0],
+                    (self.max_characters * self.cursor.size[0]) + self.text.position[0],
+                ),
+                self.text.position[1]
+            )
 
     def handle_input_event(self, event):
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_RETURN or event.key == pygame.K_ESCAPE:
-                self.toggle_edit_mode = not self.toggle_edit_mode
                 self.state = 'idle'
             elif event.key == pygame.K_BACKSPACE:
                 if len(self.value):
@@ -140,7 +137,7 @@ class Input(Interface):
                 self.cursor_position = 0
             elif event.key == pygame.K_END:
                 self.cursor_position = len(self.value)
-            elif len(self.value) > (self.max_characters if self.max_characters else float('inf')):
+            elif len(self.value) > self.max_characters:
                 pass
             else:
                 new_value = event.unicode.strip()
@@ -150,11 +147,16 @@ class Input(Interface):
     def handle_view(self):
         if self.state_trigger.handle():
             self.set_view(VIEWS[self.state])
+            if self.state == 'edit':
+                self.enter_edit_mode()
+            elif self.state == 'idle':
+                self.exit_edit_mode()
 
     def handle_overflow(self):
         if (self.cursor.size[0] * self.cursor_position) > (self.size[0] - self.text.margin * 2):
             cutoff = len(self.value) - int((self.size[0] - (self.text.margin * 2)) / self.cursor.size[0])
             self.value = self.value[cutoff:]
+            self.cursor_position -= cutoff
         else:
             self.value = self.value
 
@@ -166,5 +168,6 @@ class Input(Interface):
     async def loop(self):
         self.handle_state()
         self.handle_view()
+        self.handle_on_change()
         self.handle_cursor_position()
         await super().loop()

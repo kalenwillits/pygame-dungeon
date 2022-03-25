@@ -32,7 +32,7 @@ class Style(Node):
             ),
             Node(
                 'text',
-                source='resources/fonts/m5x7.ttf',
+                source='resources/fonts/UbuntuMono-R.ttf',
                 margin=int((self.get_root().settings.resolution.x / 200)),
                 size_xs=int((self.get_root().settings.resolution.x / 80)),
                 size_sm=int((self.get_root().settings.resolution.x / 60)),

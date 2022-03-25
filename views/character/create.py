@@ -1,6 +1,7 @@
 from core.node import Node
 from components.button import Button
 from components.text import Text
+from components.input import Input
 
 
 STYLE = {
@@ -118,6 +119,27 @@ class ClasseRadial(Node):
         )
         super().build()
 
+
+class NameInput(Input):
+    def build(self):
+        def on_change(self):
+            self['../data']['name'] = self.value
+
+        self(
+            self.name,
+            on_change=on_change,
+            **STYLE,
+        )
+        super().build()
+
+
+class CreateButton(Button):
+    def build(self):
+        self(
+            self.name,
+        )
+        super().build()
+
 # ------------------------------------------------------------------------------------------------------------------ #
 
 
@@ -133,11 +155,15 @@ class CharacterCreate(Node):
             self.name,
             SexButton(
                 'sex_button',
-                row=5,
+                row=6,
             ),
             ClasseRadial(
                 'classe_radial',
-                row=6,
+                row=7,
+            ),
+            NameInput(
+                'name_input',
+                row=8,
             )
         )
         super().build()
