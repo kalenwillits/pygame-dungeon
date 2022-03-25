@@ -40,7 +40,7 @@ class TopWall(Body, Sprite):
             cols=32,
             rows=32,
             resource='../../../../../../resources/spritesheet',
-            vertices=[[-16, 0], [32, 0], [32, 16], [-16, 16]],
+            vertices=[[24, -8], [24, -2], [-8, -2], [-8, -8]]
         )
 
     def fit(self):
@@ -60,8 +60,7 @@ class TopLeftWall(Body, Sprite):
             cols=32,
             rows=32,
             resource='../../../../../../resources/spritesheet',
-            vertices=[[-16, 0], [32, 0],
-                      [32, 16], [0, 16], [0, 32], [-16, 32]],
+            vertices=[[-8, -8], [24, -8], [24, -2], [0, -2], [0, 24], [-8, 24]]
         )
 
     def fit(self):
@@ -81,8 +80,7 @@ class TopRightWall(Body, Sprite):
             cols=32,
             rows=32,
             resource='../../../../../../resources/spritesheet',
-            vertices=[[8, 0], [32, 0],
-                      [32, 16], [24, 16], [24, 32], [8, 32]],
+            vertices=[[-8, -2], [16, -2], [16, 24], [24, 24], [24, -8], [-8, -8]],
         )
 
     def fit(self):
@@ -102,7 +100,7 @@ class LeftWall(Body, Sprite):
             cols=32,
             rows=32,
             resource='../../../../../../resources/spritesheet',
-            vertices=[[0, -16], [16, 16], [11, 16], [11, -16]]
+            vertices=[[-8, -8], [0, -8], [0, 24], [-8, 24]]
         )
 
     def fit(self):
@@ -122,7 +120,7 @@ class RightWall(Body, Sprite):
             cols=32,
             rows=32,
             resource='../../../../../../resources/spritesheet',
-            vertices=[[12, 0], [12, 32], [0, 32], [0, 0]]
+            vertices=[[16, -8], [16, 24], [24, 24], [24, -8]]
         )
 
     def fit(self):
@@ -142,7 +140,7 @@ class BottomLeftWallEdge(Body, Sprite):
             cols=32,
             rows=32,
             resource='../../../../../../resources/spritesheet',
-            vertices=[(0, -16), (4, -16), (4, 16), (0, 16)],
+            vertices=[[0, -8], [0, 24], [-8, 24], [-8, -8]]
         )
 
     def fit(self):
@@ -162,7 +160,7 @@ class BottomLeftWall(Body, Sprite):
             cols=32,
             rows=32,
             resource='../../../../../../resources/spritesheet',
-            vertices=[[22, 22], [0, 22], [0, 32], [32, 32], [32, 0], [22, 0]]
+            vertices=[[-2, -8], [-2, 18], [24, 18], [24, 24], [-8, 24], [-8, -8]]
         )
 
     def fit(self):
@@ -182,7 +180,7 @@ class BottomRightWall(Body, Sprite):
             cols=32,
             rows=32,
             resource='../../../../../../resources/spritesheet',
-            vertices=[[32, -6], [32, 38], [22, 38], [22, -6]]
+            vertices=[[-8, 18], [16, 18], [16, -8], [24, -8], [24, 24], [-8, 24]]
         )
 
     def fit(self):
@@ -202,7 +200,7 @@ class BottomRightWallEdge(Body, Sprite):
             cols=32,
             rows=32,
             resource='../../../../../../resources/spritesheet',
-            vertices=[(28, 0), (32, 0), (32, 32), (28, 32)],
+            vertices=[[16, -8], [16, 24], [24, 24], [24, -8]]
         )
 
     def fit(self):
@@ -222,7 +220,7 @@ class BottomWall(Body, Sprite):
             cols=32,
             rows=32,
             resource='../../../../../../resources/spritesheet',
-            vertices=[[-16, 0], [32, 0], [32, 16], [-16, 16]],
+            vertices=[[24, 18], [-8, 18], [-8, 24], [24, 24]]
         )
 
     def fit(self):

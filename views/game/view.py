@@ -4,7 +4,7 @@ from components.map import Map
 from components.camera import Camera
 from views.game.player import Player
 from views.game.tiles.dungeon_tiles import TILESET
-from views.game.map import MAP
+from views.game.map import MAP, MAP_FOR_TEST
 
 # TODO Radials constant dict
 
@@ -24,7 +24,6 @@ class Game(Node):
                             resource='/resources/spritesheet',
                             position=(64, 64),
                             size=(16, 32),
-                            vertices=[(-8, 16), (8, 16), (8, -16), (-8, -16)],
                             acceleration=50,
                             cols=32,
                             rows=16,
