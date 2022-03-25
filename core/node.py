@@ -34,7 +34,7 @@ class Node:
         for node_name in self.view:
             yield getattr(self, node_name)
 
-    def __getitem__(self, path):
+    def __getitem__(self, path: str):
         if path is None:
             return
 
@@ -53,8 +53,28 @@ class Node:
                 attr = getattr(attr, attr_name)
         return attr
 
-    def __setitem__(self, attr, value):
-        setattr(self, attr, value)
+    def __setitem__(self, path: str, value: any):
+        if path is None:
+            return
+
+        if path[0] == '/':
+            attr = self.get_root()
+            path = path[1:]
+        else:
+            attr = self
+
+        path_split = path.split('/')
+        final_attr = path_split[-1]
+
+        for attr_name in path_split[:-1]:
+            if attr_name == '.':
+                continue
+            elif attr_name == '..':
+                attr = attr.get_parent()
+            else:
+                attr = getattr(attr, attr_name)
+
+        setattr(attr, final_attr, value)
 
     def __repr__(self):
         return f'</{self.get_path()}>'

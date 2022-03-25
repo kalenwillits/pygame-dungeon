@@ -11,16 +11,16 @@ STYLE = {
     'size': (250, 20),
 }
 
+ENGINE_VIEWS = ['settings', 'data', 'style', 'cursor', 'keybinds', 'events', 'tasks']
+
 
 class ActionButton(Button):
     def build(self):
-
         def on_release(self):
             if self['../character']:
-                self['/main/set_view'](['game'])
+                self['/main/set_view'](['game', *ENGINE_VIEWS])
             else:
-                self['/main/menu/set_view'](['character_create'])
-
+                self['../../set_view'](['character_create'])
         self(
             self.name,
             Text(
@@ -63,10 +63,8 @@ class ActionButton(Button):
 
 class DeleteCharacterButton(Button):
     def build(self):
-
         def on_release(self):
             self.character = {}
-
         self(
             self.name,
             Text(
@@ -108,11 +106,15 @@ class QuitButton(Button):
         )
         super().build()
 
+# ------------------------------------------------------------------------------------------------------------------ #
+
 
 class CharacterOverview(Node):
     def build(self):
         self(
             self.name,
+            # Character name and level goes here.
+            # Character sprite goes here.
             ActionButton(
                 'action_button',
                 row=5,
