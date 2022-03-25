@@ -30,7 +30,7 @@ class ActionButton(Button):
                 col=self.col,
                 row=self.row,
                 grid=self.grid,
-                value='New',
+                value='Enter' if self['../character'] else 'New',
                 anchor=self.anchor,
             ),
             Trigger(
