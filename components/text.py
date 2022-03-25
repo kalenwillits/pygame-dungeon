@@ -44,13 +44,9 @@ class Text(Interface):
         self.rect = self.sprite.get_rect(**self.get_rect_params())
 
     def handle_value_change(self):
-        if (stat := self.value_change_trigger.handle()):
+        if self.value_change_trigger.handle():
             self.build_sprite()
             self.build_rect()
-
-        if 'action_button' in self.get_path():
-            if stat:
-                print(stat)
 
     async def loop(self):
         self.handle_value_change()

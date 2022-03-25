@@ -4,6 +4,7 @@ from core.node import Node
 from components.button import Button
 from components.text import Text
 from components.input import Input
+from components.trigger import Trigger
 
 
 STYLE = {
@@ -141,10 +142,37 @@ class NameInput(Input):
 
 class CreateButton(Button):
     def build(self):
+        def on_press(self):
+            self['/data/data']['character'] = self['../data']
+            self['../../set_view'](['character_overview'])
         self(
             self.name,
+            Text(
+                'text',
+                cols=self.cols,
+                rows=self.rows,
+                col=self.col,
+                row=self.row,
+                grid=self.grid,
+                value='Create',
+                anchor=self.anchor,
+            ),
+            on_press=on_press,
+            **STYLE,
         )
         super().build()
+
+    def handle_disabled_state(self):
+        if not self['../data']['name']:
+            self.set_disabled()
+        elif not self['../data']['classe']:
+            self.set_disabled()
+        else:
+            self.set_idle()
+
+    async def loop(self):
+        self.handle_disabled_state()
+        await super().loop()
 
 # ------------------------------------------------------------------------------------------------------------------ #
 
@@ -170,15 +198,10 @@ class CharacterCreate(Node):
             NameInput(
                 'name_input',
                 row=8,
+            ),
+            CreateButton(
+                'create_button',
+                row=9,
             )
         )
         super().build()
-
-    def fit(self):
-        super().fit()
-
-    async def loop(self):
-        await super().loop()
-
-    async def draw(self):
-        await super().draw()

@@ -5,7 +5,7 @@ from components.trigger import Trigger
 
 STYLE = {
     'cols': 2,
-    'rows': 8,
+    'rows': 12,
     'col': 1,
     'grid': True,
     'size': (250, 20),
@@ -18,7 +18,7 @@ class ActionButton(Button):
     def build(self):
         def on_release(self):
             if self['../character']:
-                self['/main/set_view'](['game', *ENGINE_VIEWS])
+                self['/set_view'](['main', *ENGINE_VIEWS])
             else:
                 self['../../set_view'](['character_create'])
         self(
@@ -64,7 +64,7 @@ class ActionButton(Button):
 class DeleteCharacterButton(Button):
     def build(self):
         def on_release(self):
-            self.character = {}
+            self['/data/data']['character'] = {}
         self(
             self.name,
             Text(
@@ -117,15 +117,15 @@ class CharacterOverview(Node):
             # Character sprite goes here.
             ActionButton(
                 'action_button',
-                row=5,
+                row=7,
                 ),
             DeleteCharacterButton(
                 'delete_character_button',
-                row=6,
+                row=10,
             ),
             QuitButton(
                 'quit_button',
-                row=7,
+                row=11,
             ),
             Trigger(
                 'character_state_trigger',
@@ -145,14 +145,15 @@ class CharacterOverview(Node):
             self.set_view(['action_button', 'quit_button'])
 
     def handle_view_state(self):
-        if self.character_state_trigger():
+        if self.character_state_trigger.handle():
             self.fit_view_state()
 
     def fit(self):
-        self.fit_view_state()
         super().fit()
+        self.fit_view_state()
 
     async def loop(self):
+        self.handle_view_state()
         await super().loop()
 
     async def draw(self):
