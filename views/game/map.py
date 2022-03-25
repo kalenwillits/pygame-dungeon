@@ -1,4 +1,42 @@
+from views.game.tiles.dungeon_tiles import (
+    Floor,
+    TopWall,
+    WallEdge,
+    BottomWall,
+    TopLeftWall,
+    TopLeftWallEdge,
+    LeftWall,
+    BottomLeftWall,
+    BottomLeftWallEdge,
+    BottomRightWall,
+    BottomRightWallEdge,
+    RightWall,
+    TopRightWall,
+    TopRightWallEdge,
+    PillarBase,
+    PillarMid,
+    PillarTop,
+)
 
+TILESET = {
+    1: Floor,
+    2: TopWall,
+    3: WallEdge,
+    4: BottomWall,
+    5: TopLeftWall,
+    6: TopLeftWallEdge,
+    7: LeftWall,
+    8: BottomLeftWall,
+    9: BottomLeftWallEdge,
+    10: BottomRightWall,
+    11: BottomRightWallEdge,
+    12: RightWall,
+    13: TopRightWall,
+    14: TopRightWallEdge,
+    15: PillarBase,
+    16: PillarMid,
+    17: PillarTop,
+}
 
 MAP = [
     [[6], [3], [3], [3], [3], [14]],

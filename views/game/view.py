@@ -3,8 +3,7 @@ from core.space import Space
 from components.map import Map
 from components.camera import Camera
 from views.game.player import Player
-from views.game.tiles.dungeon_tiles import TILESET
-from views.game.map import MAP, MAP_FOR_TEST
+from views.game.map import MAP, TILESET
 
 # TODO Radials constant dict
 
