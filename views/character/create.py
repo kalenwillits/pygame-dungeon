@@ -5,7 +5,7 @@ from components.text import Text
 
 STYLE = {
     'cols': 2,
-    'rows': 8,
+    'rows': 12,
     'col': 1,
     'grid': True,
     'size': (250, 20),
@@ -43,6 +43,81 @@ class SexButton(Button):
         )
         super().build()
 
+
+class ClasseRadial(Node):
+    style = {
+        'cols': 6,
+        'rows': STYLE['rows'],
+        'grid': True,
+        'size': (75, 20),
+    }
+
+    def build(self):
+        def on_press(self):
+            for child in self['../get_children']():
+                if child.name != self.name:
+                    self[f'../{child.name}/set_idle']()
+                else:
+                    self['../../data']['classe'] = self.name
+
+        def on_release(self):
+            if not any([child.state == 'pressed' for child in self['../get_children']()]):
+                self['../../data']['classe'] = None
+
+        self(
+            self.name,
+            Button(
+                'warrior',
+                Text(
+                    'text',
+                    value='Warrior',
+                    col=2,
+                    row=self.row,
+                    **self.style,
+                ),
+                is_toggle=True,
+                col=2,
+                row=self.row,
+                on_press=on_press,
+                on_release=on_release,
+                **self.style,
+            ),
+            Button(
+                'rogue',
+                Text(
+                    'text',
+                    value='Rogue',
+                    col=3,
+                    row=self.row,
+                    **self.style,
+                ),
+                is_toggle=True,
+                col=3,
+                row=self.row,
+                on_press=on_press,
+                on_release=on_release,
+                **self.style,
+            ),
+            Button(
+                'mage',
+                Text(
+                    'text',
+                    value='Mage',
+                    col=4,
+                    row=self.row,
+                    **self.style,
+                ),
+                is_toggle=True,
+                col=4,
+                row=self.row,
+                on_press=on_press,
+                on_release=on_release,
+                **self.style,
+            ),
+
+        )
+        super().build()
+
 # ------------------------------------------------------------------------------------------------------------------ #
 
 
@@ -59,6 +134,10 @@ class CharacterCreate(Node):
             SexButton(
                 'sex_button',
                 row=5,
+            ),
+            ClasseRadial(
+                'classe_radial',
+                row=6,
             )
         )
         super().build()

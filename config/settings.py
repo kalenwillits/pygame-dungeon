@@ -59,7 +59,7 @@ class Settings(Node):
             ),
             Node(
                 'button',
-                cooldown=20,
+                cooldown=50,
             ),
             Node(
                 'input',
