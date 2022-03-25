@@ -48,7 +48,7 @@ class Events(Node):
         if valid_signal := TYPE_SIGNAL_MAP.get(event.type):
             for signal_name, signal_path in self[valid_signal].items():
                 if self.get_signal_event_state(signal_name, event):
-                    if signal_path:
+                    if self['/' + '/'.join(signal_path.split('/')[:-1])].is_active:
                         self.get_root()[signal_path]()
                         break
 
@@ -67,13 +67,17 @@ class Events(Node):
         # Continuous key press events
         for signal_name, keys in self.get_root().keybinds.on_key_pressed.items():
             if all([pygame.key.get_pressed()[key] for key in keys]):
-                if signal_func := self.get_root()[self.on_key_pressed[signal_name]]:
-                    signal_func()
+                signal_path = self.on_key_pressed[signal_name]
+                if self['/' + '/'.join(signal_path.split('/')[:-1])].is_active:
+                    if signal_func := self.get_root()[signal_path]:
+                        signal_func()
 
         # Continuous mouse press events
         for signal_name, buttons in self.get_root().keybinds.on_mouse_button_pressed.items():
             if all([pygame.mouse.get_pressed()[button] for button in buttons]):
-                self.get_root()[self.on_mouse_button_pressed[signal_name]]()
+                signal_path = self.on_key_pressed[signal_name]
+                if self['/' + '/'.join(signal_path.split('/')[:-1])].is_active:
+                    self.get_root()[signal_path]()
 
     async def loop(self):
         self.handle_events()

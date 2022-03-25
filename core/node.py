@@ -79,6 +79,15 @@ class Node:
     def __repr__(self):
         return f'</{self.get_path()}>'
 
+    @property
+    def is_active(self) -> bool:
+        node = self
+        while node.get_parent() is not None:
+            if node.name not in node.get_parent().view:
+                return False
+            node = node.get_parent()
+        return True
+
     def initattr(self, attr: str, value):
         if not hasattr(self, attr):
             setattr(self, attr, value)
