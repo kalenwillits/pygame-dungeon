@@ -14,7 +14,7 @@ from core.node import Node
 
 
 class App(Node):
-    quit: bool = False
+    is_running: bool = True
     display: Surface = None
     clock = Clock()
     delta: float = 0.0
@@ -25,6 +25,9 @@ class App(Node):
 
     def get_framerate(self) -> int:
         return self.clock.get_fps()
+
+    def exit(self):
+        self.is_running = False
 
     def render(
         self,
@@ -158,7 +161,7 @@ class App(Node):
             self._status += 1
 
             self.endtime = time.time()
-            while True:
+            while self.is_running:
                 self.starttime = time.time()
                 self.delta = (self.starttime - self.endtime) * self.get_framerate()
                 self.endtime = self.starttime
@@ -168,9 +171,6 @@ class App(Node):
                 self.tasks.add(self.draw())
 
                 await self.tasks.run()
-
-                if self.quit:
-                    break
 
         except Exception:
             if self.settings.debug:

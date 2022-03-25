@@ -62,7 +62,7 @@ class Events(Node):
 
             # Hard-coded quit event
             if event.type == pygame.QUIT:
-                self.get_root().quit = True
+                self['/exit']()
 
         # Continuous key press events
         for signal_name, keys in self.get_root().keybinds.on_key_pressed.items():

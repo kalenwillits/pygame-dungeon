@@ -11,7 +11,7 @@ class Style(Node):
             self.name,
             Node(
                 'rect',
-                border_radius=10,
+                border_radius=4,
                 border_width=1,
                 size=(
                     self.get_root().settings.resolution.x/3,

@@ -42,9 +42,10 @@ class Start(Object):
 
     def fit(self):
         self['../..'].set_view(['menu', *ENGINE_VIEWS])
+        self['..'].set_view(['start'])
         self.get_root().events.connect('on_key_down', 'enter', f'{self.get_path()}/close')
         super().fit()
 
     def close(self):
         self.get_root().events.disconnect('on_key_down', 'enter')
-        self['../..'].set_view(['main', *ENGINE_VIEWS])
+        self['..'].set_view(['character_overview'])

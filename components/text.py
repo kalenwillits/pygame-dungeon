@@ -41,14 +41,16 @@ class Text(Interface):
         )
 
     def build_rect(self):
-        # TODO recheck this moving forward, since size comes from rect, we don't need this anymore
-        # self.size = self.sprite.get_size()
         self.rect = self.sprite.get_rect(**self.get_rect_params())
 
     def handle_value_change(self):
-        if self.value_change_trigger.handle():
+        if (stat := self.value_change_trigger.handle()):
             self.build_sprite()
             self.build_rect()
+
+        if 'action_button' in self.get_path():
+            if stat:
+                print(stat)
 
     async def loop(self):
         self.handle_value_change()
