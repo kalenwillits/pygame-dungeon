@@ -4,7 +4,6 @@ from core.node import Node
 from components.button import Button
 from components.text import Text
 from components.input import Input
-from components.trigger import Trigger
 
 
 STYLE = {
@@ -143,7 +142,7 @@ class NameInput(Input):
 class CreateButton(Button):
     def build(self):
         def on_press(self):
-            self['/data/data']['character'] = self['../data']
+            self['/cache']['character'] = self['../data']
             self['../../set_view'](['character_overview'])
         self(
             self.name,

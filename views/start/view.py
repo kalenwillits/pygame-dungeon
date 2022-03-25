@@ -8,7 +8,7 @@ GRID = {
     'cols': 2,
 }
 
-ENGINE_VIEWS = ['settings', 'data', 'style', 'cursor', 'keybinds', 'events', 'tasks']
+ENGINE_VIEWS = ['settings', 'cache', 'style', 'cursor', 'keybinds', 'events', 'tasks']
 
 
 class Start(Object):

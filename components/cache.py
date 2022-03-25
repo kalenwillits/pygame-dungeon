@@ -4,10 +4,16 @@ import os
 from core.node import Node
 
 
-class Data(Node):
+class Cache(Node):
     data: dict = {}
     schema: dict = {}
     path: str = os.path.join('data')
+
+    def __getitem__(self, key: str) -> any:
+        return self.data.get(key)
+
+    def __setitem__(self, key: str, value: any):
+        self.data[key] = value
 
     def startup(self):
         target = os.path.join(self.path, f'{self.name}.json')

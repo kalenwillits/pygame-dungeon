@@ -11,7 +11,7 @@ STYLE = {
     'size': (250, 20),
 }
 
-ENGINE_VIEWS = ['settings', 'data', 'style', 'cursor', 'keybinds', 'events', 'tasks']
+ENGINE_VIEWS = ['settings', 'cache', 'style', 'cursor', 'keybinds', 'events', 'tasks']
 
 
 class ActionButton(Button):
@@ -64,7 +64,7 @@ class ActionButton(Button):
 class DeleteCharacterButton(Button):
     def build(self):
         def on_release(self):
-            self['/data/data']['character'] = {}
+            self['/cache']['character'] = {}
         self(
             self.name,
             Text(
@@ -136,7 +136,7 @@ class CharacterOverview(Node):
 
     @property
     def character(self) -> dict:
-        return self['/data/get']('character')
+        return self['/cache']['character']
 
     def fit_view_state(self):
         if self.character:
