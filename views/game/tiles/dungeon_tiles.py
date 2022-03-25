@@ -285,6 +285,64 @@ class TopRightWallEdge(Sprite):
         self.set_index(227)
 
 
+class PillarBase(Sprite):
+    level = 0
+
+    def build(self):
+        self(
+            self.name,
+            body_type='static',
+            anchor='topleft',
+            size=(16, 16),
+            cols=32,
+            rows=32,
+            resource='../../../../../../resources/spritesheet',
+        )
+
+    def fit(self):
+        super().fit()
+        self.set_index(229)
+
+
+class PillarMid(Body, Sprite):
+    level = 0
+
+    def build(self):
+        self(
+            self.name,
+            body_type='static',
+            anchor='topleft',
+            size=(16, 16),
+            cols=32,
+            rows=32,
+            resource='../../../../../../resources/spritesheet',
+            vertices=[[18, -12], [18, 10], [14, 14], [4, 14], [-2, 10], [-2, -12]]
+        )
+
+    def fit(self):
+        super().fit()
+        self.set_index(197)
+
+
+class PillarTop(Sprite):
+    level = 2
+
+    def build(self):
+        self(
+            self.name,
+            body_type='static',
+            anchor='topleft',
+            size=(16, 16),
+            cols=32,
+            rows=32,
+            resource='../../../../../../resources/spritesheet',
+        )
+
+    def fit(self):
+        super().fit()
+        self.set_index(165)
+
+
 TILESET = {
     0: Node,
     1: Floor,
@@ -301,4 +359,7 @@ TILESET = {
     12: RightWall,
     13: TopRightWall,
     14: TopRightWallEdge,
+    15: PillarBase,
+    16: PillarMid,
+    17: PillarTop,
 }
