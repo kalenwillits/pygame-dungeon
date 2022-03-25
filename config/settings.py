@@ -86,12 +86,12 @@ class Settings(Node):
                 'tasks',
             ),
             Node(
-                'globals',
+                'globals',  # Global overides
                 draw_rect=False,
                 draw_border=False,
                 draw_sprite=False,
                 draw_outline=False,
-                draw_polygon=True,
+                draw_polygon=False,
             ),
             max_framerate=60,
             resolution=Vector(int(1280), int(720)),
