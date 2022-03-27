@@ -34,7 +34,7 @@ ANIMATIONS = {
         },
         'female': {
             'idle': {
-                'W': [183],
+                'W': [87],
                 'E': [72],
             },
             'moving': {
