@@ -89,7 +89,7 @@ class Input(Interface):
 
     def handle_state(self):
         if self.timer.timestamp > self.cooldown:
-            if self.rect.collidepoint(self.get_root().cursor.position):
+            if self.rect.collidepoint(self.get_root().cursor.left):
                 self.state = 'edit'
 
             else:

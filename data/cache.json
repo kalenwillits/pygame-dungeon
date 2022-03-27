@@ -1,29 +1,29 @@
 {
     "character": {
-        "name": "awd",
-        "classe": "warrior",
+        "name": "The",
+        "classe": "rogue",
         "sex": "female",
         "animations": {
             "idle": {
                 "W": [
-                    183
+                    23
                 ],
                 "E": [
-                    72
+                    8
                 ]
             },
             "moving": {
                 "W": [
-                    82,
-                    81,
-                    80,
-                    81
+                    18,
+                    17,
+                    16,
+                    17
                 ],
                 "E": [
-                    77,
-                    78,
-                    79,
-                    78
+                    13,
+                    14,
+                    15,
+                    14
                 ]
             }
         }
