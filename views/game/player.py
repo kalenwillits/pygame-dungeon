@@ -41,7 +41,7 @@ class Player(Actor):
             self.reset()
 
     def handle_animation(self):
-        self.set_radial(self.velocity)
+        self.set_radial(self.motion)
         if self.radial_trigger.handle():
             self.handle_direction()
 
@@ -52,26 +52,22 @@ class Player(Actor):
         self.set_index(animation[frame_index])
 
     def get_state(self) -> str:
-        if self.velocity.length > 0.1:
+        if self.motion.length() > 0.1:
             return 'moving'
         else:
             return 'idle'
 
     def move_up(self):
-        force = Vector(0, -self.acceleration * self.get_root().delta)
-        self.impulse(force)
+        self.motion += Vector(0, -self.acceleration * self.get_root().delta)
 
     def move_left(self):
-        force = Vector(-self.acceleration * self.get_root().delta, 0)
-        self.impulse(force)
+        self.motion += Vector(-self.acceleration * self.get_root().delta, 0)
 
     def move_right(self):
-        force = Vector(self.acceleration * self.get_root().delta, 0)
-        self.impulse(force)
+        self.motion += Vector(self.acceleration * self.get_root().delta, 0)
 
     def move_down(self):
-        force = Vector(0, self.acceleration * self.get_root().delta)
-        self.impulse(force)
+        self.motion += Vector(0, self.acceleration * self.get_root().delta)
 
     def look_up(self):
         self.set_heading((3*pi)/2)
@@ -105,7 +101,6 @@ class Player(Actor):
 
     async def loop(self):
         self.lock_body_rotation()
-
         self.handle_frames()
         self.handle_animation()
         await super().loop()

@@ -11,7 +11,6 @@ class Actor(Body, Sprite):
     radial: str = None
     heading: float = None  # Intended direction in radians
     motion: Vector = None  # Movement that is about to be applied.
-    previous_radial: str = None
     frames: int = None
     framerate: int = None
     radial_precision: int = None
@@ -85,7 +84,7 @@ class Actor(Body, Sprite):
         self.heading = heading
 
     def fit(self):
-        self.initattr('motion', None)
+        self.initattr('motion', Vector())
         self.initattr('state', self.get_root().settings.animation.state)
         self.initattr('radial', self.get_root().settings.animation.radial)
         self.initattr('radial_precision', self.get_root().settings.animation.radial_precision)
@@ -109,10 +108,13 @@ class Actor(Body, Sprite):
         super().fit()
         self.sync_position()
 
-    async def handle_motion(self):
-        if self.motion.length() - self.acceleration > 0:
-            self.motion -= self.acceleration
-            self.impulse(self.motion)
+    def handle_motion(self):
+        if self.motion.length() > 0:
+            acceleration_vector = self.motion.normalize() * (self.acceleration * self['/delta'])
+            self.motion -= acceleration_vector
+            self.impulse((acceleration_vector.x, acceleration_vector.y))
+            if self.motion.length() <= acceleration_vector.length():
+                self.motion = Vector()
 
     async def loop(self):
         self.sync_position()

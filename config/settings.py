@@ -16,7 +16,7 @@ class Settings(Node):
                 density=1,
                 mass=1,
                 max_velocity=10,  # Max speed
-                acceleration=10,  # How quickly you get to max speed
+                acceleration=100,  # How quickly you get to max speed
                 damping=0.9,
                 elasticity=1,
                 friction=0,
