@@ -14,6 +14,53 @@ STYLE = {
     'size': (250, 20),
 }
 
+CHARACTER_INIT = {
+    'name': None,
+    'classe': None,
+    'sex': 'male',
+}
+
+ANIMATIONS = {
+    'warrior': {
+        'male': {
+
+        },
+        'female': {
+
+        }
+    },
+    'mage': {
+        'male': {
+            'idle': {
+                'W': [*[183 for _ in range(30)], 182, 181, 182],
+                'E': [*[168 for _ in range(30)], 169, 170, 169]
+            },
+            'moving': {
+                'W': [180, 179, 178, 179],
+                'E': [171, 172, 173, 172]
+            }
+        },
+        'female': {
+            'idle': {
+                'W': [*[151 for _ in range(30)], 150, 149, 150],
+                'E': [*[136 for _ in range(30)], 137, 138, 137]
+            },
+            'moving': {
+                'W': [148, 147, 146, 147],
+                'E': [139, 140, 141, 140]
+            }
+        }
+    },
+    'rogue': {
+        'male': {
+
+        },
+        'female': {
+
+        }
+    },
+}
+
 
 class SexButton(Button):
     is_toggle = True
@@ -142,6 +189,7 @@ class NameInput(Input):
 class CreateButton(Button):
     def build(self):
         def on_press(self):
+            self['../data']['animations'] = ANIMATIONS[self['../data']['classe']][self['../data']['sex']]
             self['/cache']['character'] = self['../data']
             self['../../set_view'](['character_overview'])
         self(
@@ -177,11 +225,7 @@ class CreateButton(Button):
 
 
 class CharacterCreate(Node):
-    data: dict = {
-        'name': None,
-        'classe': None,
-        'sex': 'male',
-    }
+    data: dict = CHARACTER_INIT
 
     def build(self):
         self(

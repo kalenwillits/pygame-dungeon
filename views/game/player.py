@@ -7,16 +7,16 @@ from pymunk.vec2d import Vec2d as Vector
 class Player(Actor):
     vertices = [[-10, 30], [-10, 6], [2, 0], [12, 6], [12, 30]]
     level: int = 1
-    animations = {
-        'idle': {
-            'W': [*[183 for _ in range(30)], 182, 181, 182],
-            'E': [*[168 for _ in range(30)], 169, 170, 169]
-        },
-        'moving': {
-            'W': [180, 179, 178, 179],
-            'E': [171, 172, 173, 172]
-        }
-    }
+    # animations = {
+    #     'idle': {
+    #         'W': [*[183 for _ in range(30)], 182, 181, 182],
+    #         'E': [*[168 for _ in range(30)], 169, 170, 169]
+    #     },
+    #     'moving': {
+    #         'W': [180, 179, 178, 179],
+    #         'E': [171, 172, 173, 172]
+    #     }
+    # }
     direction: str = 'E'
 
     def fit(self):
@@ -42,12 +42,6 @@ class Player(Actor):
         }
         self.set_index(168)
 
-    def build(self):
-        self(
-            self.name,
-        )
-        super().build()
-
     def handle_direction(self):
         if 'W' in self.radial:
             self.direction = 'W'
@@ -61,7 +55,8 @@ class Player(Actor):
         if self.radial_trigger.handle():
             self.handle_direction()
 
-        animation = self.animations[self.get_state()][self.direction]
+        # animation = self.animations[self.get_state()][self.direction]
+        animation = self['/cache']['character']['animations'][self.get_state()][self.direction]
         frame_index = int(
             (getattr(self, f'{self.frame_types[self.state]}_frames') / self.framerate) % len(animation)
         )
