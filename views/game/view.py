@@ -23,7 +23,6 @@ class Game(Node):
                             resource='/resources/spritesheet',
                             position=(64, 64),
                             size=(16, 32),
-                            acceleration=50,
                             cols=32,
                             rows=16,
                         ),
