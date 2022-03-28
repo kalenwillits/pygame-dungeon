@@ -33,13 +33,22 @@ class Stats(Node):
     def intellect(self):
         return self['/cache']['character']['intellect']
 
+    @property
+    def experience(self):
+        return self['/cache']['character']['experience']
+
+    @property
+    def classe_level(self):
+        multiplier = 100  # Used to multiply how much xp is needed for each level
+        exponent = 1.5  # exponent to increase how much each level takes to level up
+        return int((self['/cache']['character']['experience'] / multiplier)**(1 / exponent))
+
     def fit(self):
         super().fit()
 
 
 class Player(Body, Sprite):
     vertices = [[-10, 30], [-10, 6], [2, 0], [12, 6], [12, 30]]
-    level: int = 1
     direction: str = 'E'
     state: str = None
     previous_state: str = None

@@ -15,6 +15,7 @@ STYLE = {
 }
 
 CHARACTER_INIT = {
+    'experience': 0.0,
     'name': None,
     'classe': None,
     'sex': 'male',

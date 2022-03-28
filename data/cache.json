@@ -1,34 +1,35 @@
 {
     "character": {
-        "name": "awd",
-        "classe": "rogue",
+        "experience": 0.0,
+        "name": "aw",
+        "classe": "warrior",
         "sex": "male",
         "animations": {
             "idle": {
                 "W": [
-                    55
+                    119
                 ],
                 "E": [
-                    40
+                    104
                 ]
             },
             "moving": {
                 "W": [
-                    50,
-                    49,
-                    48,
-                    49
+                    112,
+                    113,
+                    114,
+                    114
                 ],
                 "E": [
-                    45,
-                    46,
-                    47,
-                    46
+                    109,
+                    110,
+                    111,
+                    110
                 ]
             }
         },
-        "strength": 2,
-        "agility": 6,
+        "strength": 6,
+        "agility": 4,
         "intellect": 2
     }
 }
