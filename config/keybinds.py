@@ -30,6 +30,7 @@ class Keybinds(Node):
         'look_down_right': [pygame.K_DOWN, pygame.K_RIGHT],
     }
     on_key_up: SINGLE_SCHEMA = {
+        'toggle_menu': pygame.K_ESCAPE,
     }
     on_mouse_button_down: SINGLE_SCHEMA = {
         'left_click': 0,

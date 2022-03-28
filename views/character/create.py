@@ -19,6 +19,7 @@ CHARACTER_INIT = {
     'name': None,
     'classe': None,
     'sex': 'male',
+    'inventory': [],
 }
 
 ANIMATIONS = {

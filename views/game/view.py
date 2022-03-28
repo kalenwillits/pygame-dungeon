@@ -13,9 +13,6 @@ class Game(Node):
     def build(self):
         self(
             self.name,
-            HeadsUpDisplay(
-                'hud'
-            ),
             Camera(
                 'camera',
                 Space(
@@ -36,8 +33,6 @@ class Game(Node):
                         position=(0, 0),
                     ),
                     gravity=[0, 0],
-                ),
-                target='collision_layer/map/player'
-            ),
+                ), target='collision_layer/map/player'),
         )
         super().build()

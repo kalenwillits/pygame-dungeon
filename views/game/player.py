@@ -9,10 +9,6 @@ from components.trigger import Trigger
 
 
 class Stats(Node):
-    armor: int = None
-    resist: int = None
-    dodge: int = None
-
     @property
     def max_health(self) -> int:
         return self.strength // 2
@@ -45,6 +41,14 @@ class Stats(Node):
         return self['/cache']['character']['experience']
 
     @property
+    def inventory(self):
+        return self['/cache']['character'].get('inventory', [])
+
+    @inventory.setter
+    def inventory(self, value: list):
+        self['/cache']['character']['inventory'] = value
+
+    @property
     def classe_level(self):
         multiplier = 100  # Used to multiply how much xp is needed for each level
         exponent = 1.5  # exponent to increase how much each level takes to level up
@@ -52,6 +56,7 @@ class Stats(Node):
 
     def fit(self):
         self.initattr('health', self.max_health)
+        self.initattr('inventory', [])
         super().fit()
 
 
