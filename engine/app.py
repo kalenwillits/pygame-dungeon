@@ -161,6 +161,7 @@ class App(Node):
             self._status += 1
 
             self.endtime = time.time()
+
             while self.is_running:
                 self.starttime = time.time()
                 self.delta = (self.starttime - self.endtime) * self.get_framerate()

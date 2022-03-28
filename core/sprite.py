@@ -29,17 +29,17 @@ class Sprite(Object):
     border_radius: float = None
     area: Rect = None
     area_offset: tuple[int, int] = (0, 0)
-    index: int = None
+    frame: int = None
     cols: int = 1
     rows: int = 1
 
     @property
-    def index(self) -> int:
-        return self.get_index()
+    def frame(self) -> int:
+        return self.get_frame()
 
-    @index.setter
-    def index(self, value: int):
-        self.set_index(value)
+    @frame.setter
+    def frame(self, value: int):
+        self.set_frame(value)
 
     def fit(self):
         self.initattr('border_color', self.get_root().style.color.border)
@@ -63,13 +63,13 @@ class Sprite(Object):
         self.outline.set_colorkey((0, 0, 0))
         self.outline.fill(self.outline_color, special_flags=pygame.BLEND_RGBA_MULT)
 
-    def set_index(self, index: int):
+    def set_frame(self, frame: int):
         self.area.topleft = (
-                (self.size[0] * (index % self.cols)) + self.area_offset[0],
-                (self.size[1] * (index // self.cols)) + self.area_offset[1]
+                (self.size[0] * (frame % self.cols)) + self.area_offset[0],
+                (self.size[1] * (frame // self.cols)) + self.area_offset[1]
         )
 
-    def get_index(self) -> int:
+    def get_frame(self) -> int:
         return int((
             (
                 (self.area.topleft[0] - self.area_offset[0]) / (self.size[0])) * self.cols

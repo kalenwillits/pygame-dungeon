@@ -81,6 +81,7 @@ class Player(Body, Sprite):
         ]
     ] = None
     frame_types: defaultdict[str, str] = None
+    index=1
 
     def build(self):
         self(
@@ -138,7 +139,7 @@ class Player(Body, Sprite):
             'idle': 'fixed',
             'moving': 'velocity',
         }
-        self.set_index(168)
+        self.set_frame(168)
         self.sync_position()
 
     def set_radial(self, vector):
@@ -197,10 +198,10 @@ class Player(Body, Sprite):
             self.handle_direction()
 
         animation = self['/cache']['character']['animations'][self.get_state()][self.direction]
-        frame_index = int(
+        frame = int(
             (getattr(self, f'{self.frame_types[self.state]}_frames') / self.framerate) % len(animation)
         )
-        self.set_index(animation[frame_index])
+        self.set_frame(animation[frame])
 
     def get_state(self) -> str:
         if self.motion.length > 0.1:

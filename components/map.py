@@ -16,7 +16,6 @@ class Map(Object):
         self.initattr('tileset', {})
         self.initattr('matrix', [])
         self.build_map()
-        self.sort_children()
 
     def build_map(self):
         for row_index, row in enumerate(self.matrix):

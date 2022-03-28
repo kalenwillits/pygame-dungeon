@@ -6,7 +6,7 @@ from random import choice
 
 
 class Floor(Sprite):
-    level = 0
+    index = 0
 
     def build(self):
         self(
@@ -25,11 +25,11 @@ class Floor(Sprite):
 
     def fit(self):
         super().fit()
-        self.set_index(choice([129, 130, 131, 161, 162, 163]))
+        self.set_frame(choice([129, 130, 131, 161, 162, 163]))
 
 
 class TopWall(Body, Sprite):
-    level = 0
+    index = 0
 
     def build(self):
         self(
@@ -45,11 +45,11 @@ class TopWall(Body, Sprite):
 
     def fit(self):
         super().fit()
-        self.set_index(34)
+        self.set_frame(34)
 
 
 class TopLeftWall(Body, Sprite):
-    level = 0
+    index = 0
 
     def build(self):
         self(
@@ -65,11 +65,11 @@ class TopLeftWall(Body, Sprite):
 
     def fit(self):
         super().fit()
-        self.set_index(258)
+        self.set_frame(258)
 
 
 class TopRightWall(Body, Sprite):
-    level = 0
+    index = 0
 
     def build(self):
         self(
@@ -85,11 +85,11 @@ class TopRightWall(Body, Sprite):
 
     def fit(self):
         super().fit()
-        self.set_index(259)
+        self.set_frame(259)
 
 
 class LeftWall(Body, Sprite):
-    level = 2
+    index = 2
 
     def build(self):
         self(
@@ -105,11 +105,11 @@ class LeftWall(Body, Sprite):
 
     def fit(self):
         super().fit()
-        self.set_index(257)
+        self.set_frame(257)
 
 
 class RightWall(Body, Sprite):
-    level = 2
+    index = 2
 
     def build(self):
         self(
@@ -125,11 +125,11 @@ class RightWall(Body, Sprite):
 
     def fit(self):
         super().fit()
-        self.set_index(256)
+        self.set_frame(256)
 
 
 class BottomLeftWallEdge(Body, Sprite):
-    level = 2
+    index = 2
 
     def build(self):
         self(
@@ -145,11 +145,11 @@ class BottomLeftWallEdge(Body, Sprite):
 
     def fit(self):
         super().fit()
-        self.set_index(290)
+        self.set_frame(290)
 
 
 class BottomLeftWall(Body, Sprite):
-    level = 2
+    index = 2
 
     def build(self):
         self(
@@ -165,11 +165,11 @@ class BottomLeftWall(Body, Sprite):
 
     def fit(self):
         super().fit()
-        self.set_index(322)
+        self.set_frame(322)
 
 
 class BottomRightWall(Body, Sprite):
-    level = 2
+    index = 2
 
     def build(self):
         self(
@@ -185,11 +185,11 @@ class BottomRightWall(Body, Sprite):
 
     def fit(self):
         super().fit()
-        self.set_index(323)
+        self.set_frame(323)
 
 
 class BottomRightWallEdge(Body, Sprite):
-    level = 2
+    index = 2
 
     def build(self):
         self(
@@ -205,11 +205,11 @@ class BottomRightWallEdge(Body, Sprite):
 
     def fit(self):
         super().fit()
-        self.set_index(291)
+        self.set_frame(291)
 
 
 class BottomWall(Body, Sprite):
-    level = 2
+    index = 2
 
     def build(self):
         self(
@@ -225,11 +225,11 @@ class BottomWall(Body, Sprite):
 
     def fit(self):
         super().fit()
-        self.set_index(34)
+        self.set_frame(34)
 
 
 class WallEdge(Sprite):
-    level = 2
+    index = 2
 
     def build(self):
         self(
@@ -244,11 +244,11 @@ class WallEdge(Sprite):
 
     def fit(self):
         super().fit()
-        self.set_index(2)
+        self.set_frame(2)
 
 
 class TopLeftWallEdge(Sprite):
-    level = 2
+    index = 2
 
     def build(self):
         self(
@@ -263,11 +263,11 @@ class TopLeftWallEdge(Sprite):
 
     def fit(self):
         super().fit()
-        self.set_index(226)
+        self.set_frame(226)
 
 
 class TopRightWallEdge(Sprite):
-    level = 2
+    index = 2
 
     def build(self):
         self(
@@ -282,11 +282,11 @@ class TopRightWallEdge(Sprite):
 
     def fit(self):
         super().fit()
-        self.set_index(227)
+        self.set_frame(227)
 
 
 class PillarBase(Sprite):
-    level = 0
+    index = 0
 
     def build(self):
         self(
@@ -301,11 +301,11 @@ class PillarBase(Sprite):
 
     def fit(self):
         super().fit()
-        self.set_index(229)
+        self.set_frame(229)
 
 
 class PillarMid(Body, Sprite):
-    level = 0
+    index = 0
 
     def build(self):
         self(
@@ -321,11 +321,11 @@ class PillarMid(Body, Sprite):
 
     def fit(self):
         super().fit()
-        self.set_index(197)
+        self.set_frame(197)
 
 
 class PillarTop(Sprite):
-    level = 2
+    index = 2
 
     def build(self):
         self(
@@ -340,7 +340,7 @@ class PillarTop(Sprite):
 
     def fit(self):
         super().fit()
-        self.set_index(165)
+        self.set_frame(165)
 
 
 TILESET = {

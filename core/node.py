@@ -1,11 +1,11 @@
+from orderedset import OrderedSet
 
 
 class Node:
     parent = None
-
-    view: list[str] = []
+    view: OrderedSet = OrderedSet([])
     kwargs: dict = None
-    level: int = 0
+    index: int = 0
 
     _compile_methods: tuple[str, str, str] = 'startup', 'build', 'fit'
     _status: int = 0
@@ -13,7 +13,7 @@ class Node:
     def __init__(self, name, *children: list, **kwargs):
         self.name = name
         self.kwargs = kwargs
-        self.view = [node.name for node in children]
+        self.view = OrderedSet([node.name for node in children])
         for attr, value in kwargs.items():
             setattr(self, attr, value)
 
@@ -28,7 +28,6 @@ class Node:
             setattr(self, attr, value)
         for node in children:
             self.add_child(node)
-        return self
 
     def __iter__(self):
         for node_name in self.view:
@@ -103,8 +102,8 @@ class Node:
     def set_parent(self, node):
         self.parent = node
 
-    def sort_children(self):
-        self.view.sort(key=lambda node_name: getattr(self, node_name).level)
+    def sort_view(self):
+        self.view = OrderedSet([node.name for node in sorted(self.get_children(), key=lambda node: node.index)])
 
     def get_children(self):
         return [*self]
@@ -112,9 +111,10 @@ class Node:
     def add_child(self, child, index=-1):
         child.set_parent(self)
         self[child.name] = child
-        self.view.insert(index, child.name)
+        self.view.add(child.name)
         for setup_method in self._compile_methods[:self.get_root()._status + 1]:
             child[setup_method]()
+        self.sort_view()
 
     def get_parent(self):
         return self.parent
@@ -144,11 +144,8 @@ class Node:
 
         return path_string
 
-    def get_index(self):
-        return self.get_parent().get_children().index(self)
-
-    def set_view(self, new_view: set[str, ...]):
-        self.view = new_view
+    def set_view(self, new_view: list[str, ...]):
+        self.view = OrderedSet(new_view)
 
     def init(self):
         for node in self:
@@ -165,7 +162,6 @@ class Node:
     def fit(self):
         for node in self:
             node.fit()
-        self.sort_children()
 
     async def loop(self):
         for node in self:
