@@ -89,6 +89,24 @@ ANIMATIONS = {
     },
 }
 
+ATTRIBUTES = {
+    'warrior': {
+        'strength': 6,
+        'agility': 4,
+        'intellect': 2,
+    },
+    'mage': {
+        'strength': 2,
+        'agility': 4,
+        'intellect': 6,
+    },
+    'rogue': {
+        'strength': 2,
+        'agility': 6,
+        'intellect': 2,
+    },
+}
+
 
 class SexButton(Button):
     is_toggle = True
@@ -218,6 +236,9 @@ class CreateButton(Button):
     def build(self):
         def on_press(self):
             self['../data']['animations'] = ANIMATIONS[self['../data']['classe']][self['../data']['sex']]
+            for key, value in ATTRIBUTES[self['../data']['classe']].items():
+                self['../data'][key] = value
+
             self['/cache']['character'] = self['../data']
             self['../../set_view'](['character_overview'])
         self(
