@@ -1,36 +1,36 @@
 {
     "character": {
         "experience": 0.0,
-        "name": "aw",
+        "name": "BabaBooska",
         "classe": "warrior",
-        "sex": "male",
+        "sex": "female",
+        "inventory": [],
         "animations": {
             "idle": {
                 "W": [
-                    119
+                    87
                 ],
                 "E": [
-                    104
+                    72
                 ]
             },
             "moving": {
                 "W": [
-                    112,
-                    113,
-                    114,
-                    114
+                    82,
+                    81,
+                    80,
+                    81
                 ],
                 "E": [
-                    109,
-                    110,
-                    111,
-                    110
+                    77,
+                    78,
+                    79,
+                    78
                 ]
             }
         },
         "strength": 6,
         "agility": 4,
-        "intellect": 2,
-        "health": 3
+        "intellect": 2
     }
 }

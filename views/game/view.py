@@ -13,6 +13,9 @@ class Game(Node):
     def build(self):
         self(
             self.name,
+            HeadsUpDisplay(
+                'hud'
+            ),
             Camera(
                 'camera',
                 Space(
