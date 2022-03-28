@@ -6,7 +6,6 @@ from core.node import Node
 
 class Cache(Node):
     data: dict = {}
-    schema: dict = {}
     path: str = os.path.join('data')
 
     def __getitem__(self, key: str) -> any:

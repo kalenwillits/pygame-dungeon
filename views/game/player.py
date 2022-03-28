@@ -9,17 +9,24 @@ from components.trigger import Trigger
 
 
 class Stats(Node):
-    health: int = None
-
     armor: int = None
     resist: int = None
     dodge: int = None
 
-    def get_max_health(self) -> int:
+    @property
+    def max_health(self) -> int:
         return self.strength // 2
 
     def get_speed(self) -> int:
         return self.agility / 2
+
+    @property
+    def health(self) -> int:
+        return self['/cache']['character'].get('health')
+
+    @health.setter
+    def health(self, value: int):
+        self['/cache']['character']['health'] = value
 
     @property
     def strength(self):
@@ -44,6 +51,7 @@ class Stats(Node):
         return int((self['/cache']['character']['experience'] / multiplier)**(1 / exponent))
 
     def fit(self):
+        self.initattr('health', self.max_health)
         super().fit()
 
 
@@ -78,8 +86,7 @@ class Player(Body, Sprite):
             Trigger(
                 'radial_trigger',
                 value='../radial'
-            )
-
+            ),
         )
         super().build()
 

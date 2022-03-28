@@ -4,6 +4,7 @@ from components.map import Map
 from components.camera import Camera
 from views.game.player import Player
 from views.game.map import MAP, TILESET
+from views.game.ui.heads_up_display import HeadsUpDisplay
 
 # TODO Radials constant dict
 
@@ -12,6 +13,9 @@ class Game(Node):
     def build(self):
         self(
             self.name,
+            HeadsUpDisplay(
+                'hud'
+            ),
             Camera(
                 'camera',
                 Space(
