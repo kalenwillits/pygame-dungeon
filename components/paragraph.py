@@ -39,20 +39,37 @@ class Paragraph(Interface):
 
     def update_value(self):
         self.clear_children()
-        value_queue = self.value.replace('\n', '')
+        value_queue = self.value
         line_number = 0
+
         while value_queue:
-            self.add_child(
-                Text(
-                    f'{self.name}_{line_number}',
-                    text_size=self.text_size,
-                    text_color=self.text_color,
-                    margin=self.margin,
-                    value=value_queue[:self.line_length + 1],
-                    position=(self.position.x, self.position.y + (line_number * self.line_height))
+            line = value_queue[:self.line_length]
+
+            if '\n' in line:
+                # Line break
+                index = line.index('\n')
+            elif line[-1] != ' ':
+                # Word break
+                index = (len(line) - line[::-1].index(' '))
+            else:
+                index = self.line_length
+
+            if index > 0:
+                line = value_queue[:index].replace('\n', '')
+                self.add_child(
+                    Text(
+                        f'{self.name}_{line_number}',
+                        text_size=self.text_size,
+                        text_color=self.text_color,
+                        margin=self.margin,
+                        value=line,
+                        position=(self.rect.left, self.rect.top + (line_number * self.line_height))
+                    )
                 )
-            )
-            value_queue = value_queue[self.line_length:]
+            else:
+                index = 1
+
+            value_queue = value_queue[index:]
             line_number += 1
 
     async def loop(self):

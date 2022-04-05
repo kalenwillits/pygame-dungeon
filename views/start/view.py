@@ -39,18 +39,6 @@ class Start(Object):
                 row=3,
                 **GRID,
             ),
-            Paragraph(
-                'test_para',
-                size=(200, 200),
-                value="""
-                THIS IS A TEST
-                BEEP
-                BEEP
-                BEEP
-                GIWAWOGIHAWGOUAWGH{AWOGUHAWGO{UHAWGOAWGUH"AOWGHAW"GOAWHG"OAWIGH"AWGOIHAW"OGIHAWG"OAWIGHAWOGHAWG:AWGH
-                """,
-                **GRID,
-            )
         )
         super().build()
 
