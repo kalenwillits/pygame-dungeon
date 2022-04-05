@@ -96,7 +96,7 @@ class Settings(Node):
             Node(
                 'paragraph',
                 text_size='sm',
-                spacing=1,
+                spacing=1.05,
             ),
             max_framerate=60,
             resolution=Vector(int(1280), int(720)),
