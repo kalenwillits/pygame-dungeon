@@ -134,3 +134,6 @@ dmypy.json
 
 # External resources
 resources/0x72*
+
+# venv folder
+.dungeon

@@ -93,6 +93,11 @@ class Settings(Node):
                 draw_outline=False,
                 draw_polygon=False,
             ),
+            Node(
+                'paragraph',
+                text_size='sm',
+                spacing=1,
+            ),
             max_framerate=60,
             resolution=Vector(int(1280), int(720)),
             full_screen=False,

@@ -116,6 +116,15 @@ class Node:
             child[setup_method]()
         self.sort_view()
 
+    def clear_children(self):
+        for node_name in self.view:
+            delattr(self, node_name)
+        self.view.clear()
+
+    def remove_child(self, child_name):
+        self.view.remove(child_name)
+        delattr(self, child_name)
+
     def get_parent(self):
         return self.parent
 

@@ -39,8 +39,6 @@ class Style(Node):
                 size_md=int((self.get_root().settings.resolution.x / 60)),
                 size_lg=int((self.get_root().settings.resolution.x / 40)),
                 size_xl=int((self.get_root().settings.resolution.x / 20)),
-
-
             ),
             Node(
                 'outline',
