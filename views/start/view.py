@@ -2,8 +2,6 @@ from components.text import Text
 from core.interface import Interface
 from core.object import Object
 
-from components.paragraph import Paragraph
-
 GRID = {
     'grid': True,
     'rows': 5,

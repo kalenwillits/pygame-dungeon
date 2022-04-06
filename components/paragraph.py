@@ -48,9 +48,12 @@ class Paragraph(Interface):
             if '\n' in line:
                 # Line break
                 index = line.index('\n')
-            elif line[-1] != ' ':
-                # Word break
-                index = (len(line) - line[::-1].index(' '))
+            elif ' ' in line:
+                # word break
+                if line[-1] != ' ':
+                    index = (len(line) - line[::-1].index(' '))
+                else:
+                    index = self.line_length
             else:
                 index = self.line_length
 
