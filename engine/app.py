@@ -32,52 +32,27 @@ class App(Node):
     def render(
         self,
         node: Node,
-        fill_color: tuple[int, int, int] = None,
-        border_color: tuple[int, int, int] = None,
-        border_radius: int = None,
-        border_width: int = None,
-        outline_color: tuple[int, int, int] = None,
-        polygon_color: tuple[int, int, int] = None,
-        polygon_width: int = None
+        **kwargs
     ):
         offset_rect = node.rect.move(-node.offset)
         if self.display_rect.colliderect(offset_rect):
-            if fill_color is None:
-                fill_color = self.style.color.idle
-            if border_radius is None:
-                border_radius = self.style.rect.border_radius
-            if border_width is None:
-                border_width = self.style.rect.border_width
-            if border_color is None:
-                border_color = self.style.color.border
-            if outline_color is None:
-                outline_color = self.style.color.outline
-            if polygon_color is None:
-                polygon_color = self.style.color.polygon
-            if polygon_width is None:
-                polygon_width = self.style.polygon.width
-
             if node.draw_rect or self.settings.globals.draw_rect:
                 # Draw the fill rect
                 pygame.draw.rect(
                     self.display,
-                    fill_color,
+                    kwargs.get('fill_color', self.style.color.idle),
                     offset_rect,
-                    border_radius=border_radius
+                    border_radius=kwargs.get('border_radius', self.style.rect.border_radius)
                     )
             # Draw the rect border
             if node.draw_border or self.settings.globals.draw_border:
                 pygame.draw.rect(
                     self.display,
-                    border_color,
+                    kwargs.get('border_color', self.style.color.border),
                     offset_rect,
-                    width=border_width,
-                    border_radius=border_radius,
+                    width=kwargs.get('border_width', self.style.rect.border_width),
+                    border_radius=kwargs.get('border_radius', self.style.rect.border_radius)
                     )
-
-            # TODO
-            # Figure out the outline offset
-            # Allow the outline to cycle through animations
 
             if node.draw_outline or self.settings.globals.draw_outline:
                 self.display.blit(
@@ -115,12 +90,12 @@ class App(Node):
 
             if hasattr(node, 'vertices'):
                 if node.vertices and node.draw_polygon or self.settings.globals.draw_polygon:
-                    pygame.draw.polygon(self.display, polygon_color, [
+                    pygame.draw.polygon(self.display, kwargs.get('polygon_color', self.style.color.polygon), [
                         [
                             vertex[0] + getattr(offset_rect, node.anchor)[0],
                             vertex[1] + getattr(offset_rect, node.anchor)[1]
                         ] for vertex in node.vertices
-                    ], width=polygon_width)
+                    ], width=kwargs.get('polygon_width', self.style.polygon.width))
 
     def init(self):
         self.mixer.init(
