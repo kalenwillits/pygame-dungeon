@@ -16,20 +16,6 @@ class DetailCard(Interface):
     draw_border = False
     draw_rect = False
 
-    _cache: dict = {}
-
-    @property
-    def title(self) -> str:
-        if hasattr(self, 'card'):
-            return self.card.title_text.value
-
-    @title.setter
-    def title(self, value: str):
-        if hasattr(self, 'card'):
-            self.card.title_text.set_value(value)
-        else:
-            self._cache['title'] = value
-
     @property
     def is_hover(self) -> bool:
         if (hover_point := self['/cursor/hover']):
@@ -48,15 +34,16 @@ class DetailCard(Interface):
                 'card',
                 Text(
                     'title_text',
-                    value=self.title,
                     anchor='top',
                     text_size='xs',
+                    value=self.title,
                 ),
                 Paragraph(
                     'body_paragraph',
                     value=self.body,
                     anchor='top',
                     text_size='xs',
+                    size=(self.card_size[0] - self.margin, self.card_size[1] - self.margin),
                     ),
                 size=self.card_size,
                 anchor=self.anchor,
@@ -73,21 +60,16 @@ class DetailCard(Interface):
         super().build()
 
     def fit(self):
-        self.initattr('title', '')
-        self.initattr('body', '')
         super().fit()
-        self._process_cache()
         self.hide_card()
+        self.place_content()
 
     def place_content(self):
         self.card.title_text.position = Vector(self.card.rect.centerx, self.card.rect.top + self.margin)
-        # self.card.body_paragraph.position = (
-        #                 self.rect.centerx,
-        #                 self.rect.top + self.margin * 2 + self['/style/text/xs_character_size'][1]
-        #             )
-
-    def _process_cache(self):
-        self.card.title_text.set_value(self._cache['title'])
+        self.card.body_paragraph.position = Vector(
+            self.rect.centerx,
+            self.rect.top + self.margin * 2 + self['/style/text/xs_character_size'][1]
+        )
 
     def hide_card(self):
         self.set_view(['card_trigger'])
