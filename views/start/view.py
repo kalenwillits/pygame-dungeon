@@ -44,7 +44,7 @@ class Start(Object):
                 size=(100, 100),
                 card_size=(500, 500),
                 title='Test Title',
-                body='This is a test\nDamage 20-40\nStrength + 2awpidhawpidhawpidha awodihawdioh pawdhoawih pwadhaiwodhap awpdihawpidh',
+                body='This is a test\nDamage 20-40\nStrength + 2 awpidhawpidhawpidha awodihawdioh pawdhoawih pwadhaiwodhap awpdihawpidh awdpojwadopj aw[djawdpo awpdoawpod awpodjawpdo aawjdpawodwpaodhapwdhapwdhawpidhawpidhapwidhawpdhwapdhawoawdbawidubawiudgawiduvawidvawidyvawidyvawdiayvwdkuawtdcvawudtcawodutvaodytvaseofuyvaseofuyvasefuoyavsfsaufyvaeifgwvefio32il3fb2l3fvb2lfjvh23f',
                 col=1,
                 row=2,
                 border_color=(0, 0, 200),

@@ -4,7 +4,6 @@ from components.text import Text
 from components.button import Button
 from core.interface import Interface
 # from components.trigger import Trigger
-from components.item_list import ItemList
 
 
 RELATIVE_POINTER = '../camera/collision_layer/map/player/stats/'

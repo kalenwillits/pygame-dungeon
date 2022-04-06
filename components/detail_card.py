@@ -67,8 +67,8 @@ class DetailCard(Interface):
     def place_content(self):
         self.card.title_text.position = Vector(self.card.rect.centerx, self.card.rect.top + self.margin)
         self.card.body_paragraph.position = Vector(
-            self.rect.centerx,
-            self.rect.top + self.margin * 2 + self['/style/text/xs_character_size'][1]
+            self.card.rect.centerx,
+            self.card.rect.top + (self.margin * 2) + self['/style/text/xs_character_size'][1]
         )
 
     def hide_card(self):
