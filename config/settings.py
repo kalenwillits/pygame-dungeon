@@ -98,6 +98,10 @@ class Settings(Node):
                 text_size='sm',
                 spacing=1.05,
             ),
+            Node(
+                'cursor',
+                hover_delay=2,
+            ),
             max_framerate=60,
             resolution=Vector(int(1280), int(720)),
             full_screen=False,

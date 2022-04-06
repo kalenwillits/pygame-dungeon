@@ -1,6 +1,5 @@
 from core.interface import Interface
 from components.text import Text
-from components.trigger import Trigger
 
 from pygame.math import Vector2 as Vector
 
