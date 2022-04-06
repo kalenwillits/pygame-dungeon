@@ -48,6 +48,8 @@ class App(Node):
                 border_radius = self.style.rect.border_radius
             if border_width is None:
                 border_width = self.style.rect.border_width
+            if border_color is None:
+                border_color = self.style.color.border
             if outline_color is None:
                 outline_color = self.style.color.outline
             if polygon_color is None:
@@ -67,7 +69,7 @@ class App(Node):
             if node.draw_border or self.settings.globals.draw_border:
                 pygame.draw.rect(
                     self.display,
-                    self.style.color.border,
+                    border_color,
                     offset_rect,
                     width=border_width,
                     border_radius=border_radius,
