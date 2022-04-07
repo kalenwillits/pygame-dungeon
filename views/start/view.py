@@ -2,8 +2,6 @@ from components.text import Text
 from core.interface import Interface
 from core.object import Object
 
-from components.detail_card import DetailCard
-
 GRID = {
     'grid': True,
     'rows': 5,
@@ -39,17 +37,6 @@ class Start(Object):
                 row=3,
                 **GRID,
             ),
-            DetailCard(
-                'test_detail',
-                size=(100, 100),
-                card_size=(500, 500),
-                title='Test Title',
-                body='This is a test\nDamage 20-40\nStrength + 2 awpidhawpidhawpidha awodihawdioh pawdhoawih pwadhaiwodhap awpdihawpidh awdpojwadopj aw[djawdpo awpdoawpod awpodjawpdo aawjdpawodwpaodhapwdhapwdhawpidhawpidhapwidhawpdhwapdhawoawdbawidubawiudgawiduvawidvawidyvawidyvawdiayvwdkuawtdcvawudtcawodutvaodytvaseofuyvaseofuyvasefuoyavsfsaufyvaeifgwvefio32il3fb2l3fvb2lfjvh23f',
-                col=1,
-                row=2,
-                border_color=(0, 0, 200),
-                **GRID,
-            )
         )
         super().build()
 

@@ -4,6 +4,7 @@ from components.text import Text
 from components.button import Button
 from core.interface import Interface
 # from components.trigger import Trigger
+from components.item_list import ItemList
 
 
 RELATIVE_POINTER = '../camera/collision_layer/map/player/stats/'
@@ -68,6 +69,19 @@ class Menu(Node):
                 'main_game_menu',
                 InventoryButton(
                     'inventory_button',
+                ),
+                ItemList(
+                    'inventory',
+                    items=[{
+                        'title': 'Wooden Sword',
+                        'body': 'Damage: 2-4\nValue: 9gp',
+                    }],
+                    item_size=(292, 15),
+                    cols=2,
+                    rows=2,
+                    row=1,
+                    col=1,
+                    grid=True,
                 ),
                 QuitButton(
                     'quit_button',

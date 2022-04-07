@@ -12,6 +12,8 @@ class DetailCard(Interface):
     margin: float = 1
 
     card_size: tuple[float, float] = None
+    card_anchor: str = None
+    card_position: Vector = None
 
     draw_border = False
     draw_rect = False
@@ -45,16 +47,12 @@ class DetailCard(Interface):
                     text_size='xs',
                     size=(self.card_size[0] - self.margin, self.card_size[1] - self.margin),
                     ),
+                anchor=self.card_anchor,
                 size=self.card_size,
-                anchor=self.anchor,
-                grid=self.grid,
-                cols=self.cols,
-                col=self.col,
-                rows=self.rows,
-                row=self.row,
                 border_color=self.border_color,
                 draw_rect=True,
                 draw_border=True,
+                position=self.card_position,
             ),
         )
         super().build()
