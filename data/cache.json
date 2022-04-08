@@ -4,7 +4,16 @@
         "name": "awd",
         "classe": "rogue",
         "sex": "male",
-        "inventory": [],
+        "inventory": [
+            {
+                "title": "Wooden Sword",
+                "body": "Damage: 2-4\nValue: 9gp"
+            },
+            {
+                "title": "Wooden Sword",
+                "body": "Damage: 2-4\nValue: 9gp"
+            }
+        ],
         "animations": {
             "idle": {
                 "W": [

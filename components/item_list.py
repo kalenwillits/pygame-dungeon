@@ -1,5 +1,4 @@
 from core.interface import Interface
-from components.detail_card import DetailCard
 from components.text import Text
 from components.trigger import Trigger
 
@@ -12,6 +11,8 @@ ITEM_SCHEMA = {
 class Item(Interface):
     margin: float = None
 
+    draw_border = False
+
     def build(self):
         self(
             self.name,
@@ -20,18 +21,6 @@ class Item(Interface):
                 value=self.kwargs.get('title'),
                 anchor='left',
                 text_size='xs',
-            ),
-            # TODO Format body from attributes
-            DetailCard(
-                'item_detail_card',
-                title=self.kwargs.get('title'),
-                body=self.kwargs.get('body'),
-                card_size=(150, 150),
-                card_anchor='topright',
-                size=self.kwargs.get('size'),
-                anchor='topleft',
-                position=self.position,
-                card_position=self.position
             ),
             anchor='topleft',
         )
@@ -45,9 +34,19 @@ class Item(Interface):
         super().fit()
         self.place_content()
 
+    def handle_focus(self):
+        if self.rect.collidepoint(self['/cursor/position']):
+            self.draw_border = True
+        else:
+            self.draw_border = False
+
+    async def loop(self):
+        self.handle_focus()
+        await super().loop()
+
 
 class ItemList(Interface):
-    items: list[dict] = None
+    items: str = None  # Pointer to a list matching the item schema.
     scroll: float = None
     margin: float = None
     item_size: tuple[int, int] = None
@@ -56,7 +55,7 @@ class ItemList(Interface):
     draw_border = True
 
     def build_items(self):
-        for index, item in enumerate(self.items):
+        for index, item in enumerate(self[self.items]):
             item_name = f'item_{index}'
             self.add_child(
                 Item(
@@ -89,7 +88,6 @@ class ItemList(Interface):
                 draw_border=False,
                 fill_color=(100, 100, 100),
             ),
-            size=(300, 400),
         )
         super().build()
 
@@ -106,3 +104,11 @@ class ItemList(Interface):
 
     def handle_scroll(self):
         ...
+
+    def handle_items_change(self):
+        if self.on_items_change_trigger.handle():
+            self.build_items()
+
+    async def loop(self):
+        self.handle_items_change()
+        await super().loop()

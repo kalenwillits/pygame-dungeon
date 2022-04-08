@@ -30,12 +30,17 @@ class Game(Node):
                             cols=32,
                             rows=16,
                         ),
+                        Node(
+                            'environment',
+
+                        ),
                         tileset=TILESET,
                         tilesize=(32, 32),
                         matrix=MAP,
                         position=(0, 0),
                     ),
                     gravity=[0, 0],
-                ), target='collision_layer/map/player'),
+                ),
+                target='collision_layer/map/player'),
         )
         super().build()

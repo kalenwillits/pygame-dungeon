@@ -2,8 +2,6 @@ from core.node import Node
 
 from components.text import Text
 from components.button import Button
-from core.interface import Interface
-# from components.trigger import Trigger
 from components.item_list import ItemList
 
 
@@ -20,10 +18,35 @@ MENU_GRID = {
 }
 
 
+class Inventory(ItemList):
+
+    @property
+    def items_pointer(self) -> list:
+        return self['/cache']['character']['inventory']
+
+    def build(self):
+        self(
+            self.name,
+            items='items_pointer',
+            item_size=(192, 15),
+            position=(10, -1),
+            border_radius=0,
+            size=(200, self['/settings/resolution'][1] + 2),
+            anchor='topleft',
+        )
+        super().build()
+
+    def add_item(self, item: dict, index=-1):
+        self['/cache']['character']['inventory'].insert(index, item)
+
+    def remove_item(self):
+        ...
+
+
 class InventoryButton(Button):
     def build(self):
         def on_press(self):
-            self['../set_view'](['inventory'])
+            self['../../set_view'](['inventory'])
 
         self(
             self.name,
@@ -70,29 +93,11 @@ class Menu(Node):
                 InventoryButton(
                     'inventory_button',
                 ),
-                ItemList(
-                    'inventory',
-                    items=[{
-                        'title': 'Wooden Sword',
-                        'body': 'Damage: 2-4\nValue: 9gp',
-                    }],
-                    item_size=(292, 15),
-                    cols=2,
-                    rows=2,
-                    row=1,
-                    col=1,
-                    grid=True,
-                ),
                 QuitButton(
                     'quit_button',
                 ),
             ),
-            size=(500, 500),
-            cols=2,
-            rows=2,
-            row=1,
-            col=1,
-            grid=True,
+            Inventory('inventory'),
         )
         super().build()
 
