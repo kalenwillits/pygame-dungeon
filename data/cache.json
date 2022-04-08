@@ -1,37 +1,37 @@
 {
     "character": {
         "experience": 0.0,
-        "name": "Mageymag",
-        "classe": "mage",
+        "name": "PallyWallton",
+        "classe": "warrior",
         "sex": "male",
         "inventory": [],
         "animations": {
             "idle": {
                 "W": [
-                    183
+                    119
                 ],
                 "E": [
-                    168
+                    104
                 ]
             },
             "moving": {
                 "W": [
-                    180,
-                    179,
-                    178,
-                    179
+                    112,
+                    113,
+                    114,
+                    114
                 ],
                 "E": [
-                    171,
-                    172,
-                    173,
-                    172
+                    109,
+                    110,
+                    111,
+                    110
                 ]
             }
         },
-        "strength": 2,
+        "strength": 6,
         "agility": 4,
-        "intellect": 6,
-        "health": 1
+        "intellect": 2,
+        "health": 3
     }
 }

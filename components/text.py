@@ -15,8 +15,7 @@ class Text(Interface):
         self.initattr('text_color', self.get_root().style.color.text)
         self.initattr('text_size', self.get_root().settings.text.text_size)
         self.initattr('value', '')
-        self.build_sprite()
-        self.build_rect()
+        self.rebuild()
         self(
             self.name,
             Trigger(
@@ -29,9 +28,14 @@ class Text(Interface):
     def fit(self):
         self.initattr('margin', self.get_root().style.text.margin)
         super().fit()
+        self.rebuild()
 
     def set_value(self, new_value):
         self.value = new_value
+
+    def rebuild(self):
+        self.build_sprite()
+        self.build_rect()
 
     def build_sprite(self):
         self.sprite = self.get_root().style.text[f'{self.text_size}'].render(
@@ -45,8 +49,7 @@ class Text(Interface):
 
     def handle_value_change(self):
         if self.value_change_trigger.handle():
-            self.build_sprite()
-            self.build_rect()
+            self.rebuild()
 
     async def loop(self):
         self.handle_value_change()

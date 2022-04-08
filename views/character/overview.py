@@ -149,8 +149,8 @@ class CharacterOverview(Node):
             self.fit_view_state()
 
     def fit(self):
-        super().fit()
         self.fit_view_state()
+        super().fit()
 
     async def loop(self):
         self.handle_view_state()

@@ -20,6 +20,14 @@ MENU_GRID = {
     'size': (300, 15),
 }
 
+HUD_BAR = {
+    'size': ((16+4)*16, 20),
+    'grid': True,
+    'rows': 20,
+    'cols': 2,
+    'col': 1,
+    }
+
 
 class Inventory(ItemList):
     @property
@@ -86,7 +94,28 @@ class QuitButton(Button):
         super().build()
 
 
-class OptionButton(Button):
+class FocusBar(Interface):
+    target: str = None
+
+    def build(self):
+        self(
+            self.name,
+            Text(
+                'text',
+                value='PLACEHOLDER',
+                cols=self.cols,
+                col=self.col,
+                rows=self.rows,
+                row=self.row,
+                grid=self.grid,
+            ),
+            row=1,
+            **HUD_BAR
+            )
+        super().build()
+
+
+class ActionButton(Button):
     target: str = None
 
     def build(self):
@@ -129,23 +158,22 @@ class ActionBar(Interface):
                 'change_trigger',
                 value='../actions',
             ),
-            size=((16+4)*16, 20),
-            anchor='center',
-            grid=True,
-            rows=20,
-            row=17,
-            cols=2,
-            col=1,
+            row=18,
+            **HUD_BAR,
         )
         super().build()
+
+    def change_focus(self):
+        self['../focus_bar/text/set_value']('TEST')
 
     def build_actions(self):
         for child in self:
             if 'action' in child.name:
                 self.remove_child(child.name)
         for index, option in enumerate(self.actions):
+
             self.add_child(
-                OptionButton(
+                ActionButton(
                     f'action_{index + 1}',
                     position=(
                         ((self.rect.left + self.margin) + (self.rect.left + self.margin) * index) - 7,
@@ -155,7 +183,7 @@ class ActionBar(Interface):
                         ((self.rect.left + self.margin) + (self.rect.left + self.margin) * index) + 2,
                         self.rect.centery - 13,
                     ),
-                    target=option.get('target', lambda self: None),
+                    target=option.get('target', '../change_focus'),
                     value=f'{index + 1}',
                     title=option.get('title'),
                     body=option.get('body'),
@@ -232,6 +260,7 @@ class HeadsUpDisplay(Node):
                 anchor='topleft',
                 position=(0, self['/style/text/xs_character_size'][1])
             ),
+            FocusBar('focus_bar'),
             ActionBar('action_bar'),
         )
         super().build()
