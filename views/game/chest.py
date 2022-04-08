@@ -4,6 +4,7 @@ from pymunk.vec2d import Vec2d as Vector
 from core.body import Body
 from core.sprite import Sprite
 from components.trigger import Trigger
+from pygame import mouse
 
 
 class Chest(Body, Sprite):
@@ -79,7 +80,13 @@ class Chest(Body, Sprite):
     def lock_body_rotation(self):
         self.angle = 0.0
 
+    def handle_focus(self):
+        if self.rect.collidepoint(self['/cursor/position'] + self.offset):
+            self.draw_outline = True
+        else:
+            self.draw_outline = False
+
     async def loop(self):
         self.sync_position()
-        self.handle_animation()
+        self.handle_focus()
         await super().loop()

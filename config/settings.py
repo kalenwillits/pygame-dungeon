@@ -43,7 +43,7 @@ class Settings(Node):
             ),
             Node(
                 'user',
-                resolution=Vector(int(1920/1.2), int(1080/1.2)),
+                resolution=Vector(int(1920/1.5), int(1080/1.5)),
             ),
             Node(
                 'particles',

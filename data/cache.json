@@ -1,46 +1,36 @@
 {
     "character": {
         "experience": 0.0,
-        "name": "awd",
-        "classe": "rogue",
+        "name": "Mageymag",
+        "classe": "mage",
         "sex": "male",
-        "inventory": [
-            {
-                "title": "Wooden Sword",
-                "body": "Damage: 2-4\nValue: 9gp"
-            },
-            {
-                "title": "Wooden Sword",
-                "body": "Damage: 2-4\nValue: 9gp"
-            }
-        ],
+        "inventory": [],
         "animations": {
             "idle": {
                 "W": [
-                    55
+                    183
                 ],
                 "E": [
-                    40
+                    168
                 ]
             },
             "moving": {
                 "W": [
-                    50,
-                    49,
-                    48,
-                    49
+                    180,
+                    179,
+                    178,
+                    179
                 ],
                 "E": [
-                    45,
-                    46,
-                    47,
-                    46
+                    171,
+                    172,
+                    173,
+                    172
                 ]
             }
         },
         "strength": 2,
-        "agility": 6,
-        "intellect": 2,
-        "health": 1
+        "agility": 4,
+        "intellect": 6
     }
 }
