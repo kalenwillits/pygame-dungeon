@@ -1,6 +1,7 @@
 from core.interface import Interface
 from components.text import Text
 from components.trigger import Trigger
+from components.detail_card import DetailCard
 
 ITEM_SCHEMA = {
     'title': str,
@@ -21,6 +22,17 @@ class Item(Interface):
                 value=self.kwargs.get('title'),
                 anchor='left',
                 text_size='xs',
+            ),
+            DetailCard(
+                'item_detail_card',
+                title=self.kwargs.get('title'),
+                body=self.kwargs.get('body'),
+                card_size=(200, 150),
+                card_anchor='topleft',
+                size=self.kwargs.get('size'),
+                anchor='topleft',
+                position=self.position,
+                card_position=(self.position.x + 200, self.position.y)
             ),
             anchor='topleft',
         )

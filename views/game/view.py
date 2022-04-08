@@ -5,6 +5,7 @@ from components.camera import Camera
 from views.game.player import Player
 from views.game.map import MAP, TILESET
 from views.game.ui.heads_up_display import HeadsUpDisplay
+from views.game.chest import Chest
 
 # TODO Radials constant dict
 
@@ -30,9 +31,13 @@ class Game(Node):
                             cols=32,
                             rows=16,
                         ),
-                        Node(
-                            'environment',
-
+                        Chest(
+                            'item_chest',
+                            resource='/resources/spritesheet',
+                            size=(16, 16),
+                            cols=32,
+                            rows=32,
+                            position=(90, 300),
                         ),
                         tileset=TILESET,
                         tilesize=(32, 32),
