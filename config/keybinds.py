@@ -31,6 +31,7 @@ class Keybinds(Node):
     }
     on_key_up: SINGLE_SCHEMA = {
         'toggle_menu': pygame.K_ESCAPE,
+        'toggle_focus': pygame.K_TAB,
     }
     on_mouse_button_down: SINGLE_SCHEMA = {
         'left_click': 0,

@@ -1,3 +1,5 @@
+from pygame import mouse
+
 from core.node import Node
 from core.interface import Interface
 
@@ -95,14 +97,24 @@ class QuitButton(Button):
 
 
 class FocusBar(Interface):
-    target: str = None
+    target: dict = {}
+
+    def get_target(self) -> dict:
+        return self.target
+
+    def set_target(self, value: dict):
+        self.target = value
 
     def build(self):
         self(
             self.name,
+            Trigger(
+                'change_trigger',
+                value='../target',
+            ),
             Text(
                 'text',
-                value='PLACEHOLDER',
+                value='',
                 cols=self.cols,
                 col=self.col,
                 rows=self.rows,
@@ -113,6 +125,34 @@ class FocusBar(Interface):
             **HUD_BAR
             )
         super().build()
+
+    def fit(self):
+        self['/events/connect']('on_key_up', 'toggle_focus', f'{self.get_path()}/toggle_focus')
+        super().fit()
+
+    def handle_focus_change(self):
+        if self.change_trigger.handle():
+            self.text.set_value(self.target.get('name', ''))
+            if self.target:
+                self[f'/{self.target.get("pointer")}'].set_focused()
+
+            # if self.change_trigger.previous_value:
+                # self[f'/{self.change_trigger.previous_value.get("pointer")}'].is_focued = False
+
+    def clear_focus(self):
+        if self.target:
+            self[f'/{self.target.get("pointer")}'].set_idle()
+        self.target = {}
+        self.text.set_value('')
+
+    def toggle_focus(self):
+        # TODO search for other things to focus on.
+        self.clear_focus()
+
+
+    async def loop(self):
+        self.handle_focus_change()
+        await super().loop()
 
 
 class ActionButton(Button):

@@ -5,8 +5,11 @@ from core.body import Body
 from core.sprite import Sprite
 from components.trigger import Trigger
 
+from pygame import mouse
+
 
 class Chest(Body, Sprite):
+    is_focused: bool = None
     body_type = 'static'
     vertices = [[-6, -4], [6, -4], [16, -2], [16, 16], [-16, 16], [-16, -2]]
     frames: int = None
@@ -31,14 +34,11 @@ class Chest(Body, Sprite):
         super().build()
 
     def fit(self):
-        self.initattr('state', self.get_root().settings.animation.state)
-        self.initattr('radial', self.get_root().settings.animation.radial)
-        self.initattr('radial_precision', self.get_root().settings.animation.radial_precision)
+        self.initattr('is_focused', False)
+        self.initattr('state', 'idle')
         self.initattr('framerate', self.get_root().settings.animation.framerate)
         self.initattr('fixed_frames', 0)
-        self.initattr('velocity_frames', 0)
         self.initattr('frame_types', defaultdict(lambda: 'fixed', {}))
-        self.initattr('heading', None)
         self.initattr('animations', {
             'idle': {
             }
@@ -79,13 +79,28 @@ class Chest(Body, Sprite):
     def lock_body_rotation(self):
         self.angle = 0.0
 
-    def handle_focus(self):
+    def set_focused(self):
+        self.state = 'focused'
+
+    def set_idle(self):
+        self.state = 'idle'
+
+    def handle_focused(self):
+        self.draw_outline = True
+
+    def handle_idle(self):
         if self.rect.collidepoint(self['/cursor/position'] + self.offset):
+            if self.rect.collidepoint(self['/cursor/left'] + self.offset):
+                self['../../../../hud/focus_bar/set_target']({
+                    'name': 'Chest(unlocked)',
+                    'pointer': self.get_path(),
+                })
+
             self.draw_outline = True
         else:
             self.draw_outline = False
 
     async def loop(self):
         self.sync_position()
-        self.handle_focus()
+        self[f'handle_{self.state}']()
         await super().loop()
