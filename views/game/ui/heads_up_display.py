@@ -118,16 +118,16 @@ class OptionButton(Button):
         super().build()
 
 
-class OptionsBar(Interface):
-    options: list[dict] = []
+class ActionBar(Interface):
+    actions: list[dict] = []
     margin: int = 1
 
     def build(self):
         self(
             self.name,
             Trigger(
-                'options_change_trigger',
-                value='../options',
+                'change_trigger',
+                value='../actions',
             ),
             size=((16+4)*16, 20),
             anchor='center',
@@ -139,14 +139,14 @@ class OptionsBar(Interface):
         )
         super().build()
 
-    def build_options(self):
+    def build_actions(self):
         for child in self:
-            if 'option_' in child.name:
+            if 'action' in child.name:
                 self.remove_child(child.name)
-        for index, option in enumerate(self.options):
+        for index, option in enumerate(self.actions):
             self.add_child(
                 OptionButton(
-                    f'option_{index + 1}',
+                    f'action_{index + 1}',
                     position=(
                         ((self.rect.left + self.margin) + (self.rect.left + self.margin) * index) - 7,
                         self.rect.centery - 16,
@@ -162,23 +162,24 @@ class OptionsBar(Interface):
                 )
             )
 
-    def handle_options_change(self):
-        if self.options_change_trigger.handle():
-            self.build_options()
+    def handle_actions_change(self):
+        if self.change_trigger.handle():
+            self.build_actions()
 
     def fit(self):
-        self.initattr('options', [])
-        self.build_options()
+        self.initattr('actions', [])
+        self.build_actions()
         super().fit()
 
-        self.options = [
+        # Temp hard-code
+        self.actions = [
             {
                 'title': 'Loot',
             }
         ]
 
     async def loop(self):
-        self.handle_options_change()
+        self.handle_actions_change()
         await super().loop()
 
 
@@ -231,7 +232,7 @@ class HeadsUpDisplay(Node):
                 anchor='topleft',
                 position=(0, self['/style/text/xs_character_size'][1])
             ),
-            OptionsBar('options_bar'),
+            ActionBar('action_bar'),
         )
         super().build()
 
