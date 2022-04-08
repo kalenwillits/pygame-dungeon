@@ -1,8 +1,11 @@
 from core.node import Node
+from core.interface import Interface
 
 from components.text import Text
 from components.button import Button
 from components.item_list import ItemList
+from components.trigger import Trigger
+from components.detail_card import DetailCard
 
 
 RELATIVE_POINTER = '../camera/collision_layer/map/player/stats/'
@@ -19,7 +22,6 @@ MENU_GRID = {
 
 
 class Inventory(ItemList):
-
     @property
     def items_pointer(self) -> list:
         return self['/cache']['character']['inventory']
@@ -84,6 +86,102 @@ class QuitButton(Button):
         super().build()
 
 
+class OptionButton(Button):
+    target: str = None
+
+    def build(self):
+        def on_press(self):
+            self[self.target]()
+
+        self(
+            self.name,
+            Text(
+                'text',
+                value=self.value,
+                text_size='xs',
+                position=self.text_position,
+            ),
+            DetailCard(
+                'detail_card',
+                title=self.kwargs.get('title'),
+                body=self.kwargs.get('body'),
+                card_size=(150, 100),
+                card_anchor='bottomleft',
+                size=(16, 16),
+                anchor='center',
+                position=self.position,
+                card_position=self.position,
+            ),
+            on_press=on_press,
+            size=(16, 16),
+        )
+        super().build()
+
+
+class OptionsBar(Interface):
+    options: list[dict] = []
+    margin: int = 1
+
+    def build(self):
+        self(
+            self.name,
+            Trigger(
+                'options_change_trigger',
+                value='../options',
+            ),
+            size=((16+4)*16, 20),
+            anchor='center',
+            grid=True,
+            rows=20,
+            row=17,
+            cols=2,
+            col=1,
+        )
+        super().build()
+
+    def build_options(self):
+        for child in self:
+            if 'option_' in child.name:
+                self.remove_child(child.name)
+        for index, option in enumerate(self.options):
+            self.add_child(
+                OptionButton(
+                    f'option_{index + 1}',
+                    position=(
+                        ((self.rect.left + self.margin) + (self.rect.left + self.margin) * index) - 7,
+                        self.rect.centery - 16,
+                    ),
+                    text_position=(
+                        ((self.rect.left + self.margin) + (self.rect.left + self.margin) * index) + 2,
+                        self.rect.centery - 13,
+                    ),
+                    target=option.get('target', lambda self: None),
+                    value=f'{index + 1}',
+                    title=option.get('title'),
+                    body=option.get('body'),
+                )
+            )
+
+    def handle_options_change(self):
+        if self.options_change_trigger.handle():
+            self.build_options()
+
+    def fit(self):
+        self.initattr('options', [])
+        self.build_options()
+        super().fit()
+
+        self.options = [
+            {
+                'title': 'Loot',
+            }
+        ]
+
+    async def loop(self):
+        self.handle_options_change()
+        await super().loop()
+
+
 class Menu(Node):
     def build(self):
         self(
@@ -133,6 +231,7 @@ class HeadsUpDisplay(Node):
                 anchor='topleft',
                 position=(0, self['/style/text/xs_character_size'][1])
             ),
+            OptionsBar('options_bar'),
         )
         super().build()
 

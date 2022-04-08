@@ -31,6 +31,7 @@
         },
         "strength": 2,
         "agility": 4,
-        "intellect": 6
+        "intellect": 6,
+        "health": 1
     }
 }

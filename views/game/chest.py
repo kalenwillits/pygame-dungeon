@@ -4,7 +4,6 @@ from pymunk.vec2d import Vec2d as Vector
 from core.body import Body
 from core.sprite import Sprite
 from components.trigger import Trigger
-from pygame import mouse
 
 
 class Chest(Body, Sprite):
