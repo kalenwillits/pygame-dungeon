@@ -3,18 +3,15 @@ from pymunk.vec2d import Vec2d as Vector
 
 from core.body import Body
 from core.sprite import Sprite
-from components.trigger import Trigger
-
-from pygame import mouse
 
 
 class Chest(Body, Sprite):
-    is_focused: bool = None
     body_type = 'static'
     vertices = [[-6, -4], [6, -4], [16, -2], [16, 16], [-16, 16], [-16, -2]]
     frames: int = None
     framerate: int = None
     state: str = None
+    previous_state: str = None
     animations: dict[
         str,  # animation name
         dict[
@@ -34,7 +31,11 @@ class Chest(Body, Sprite):
         super().build()
 
     def fit(self):
-        self.initattr('is_focused', False)
+        self.initattr('actions', [
+            {
+                'title': 'Loot',
+            }
+        ])
         self.initattr('state', 'idle')
         self.initattr('framerate', self.get_root().settings.animation.framerate)
         self.initattr('fixed_frames', 0)
@@ -92,8 +93,9 @@ class Chest(Body, Sprite):
         if self.rect.collidepoint(self['/cursor/position'] + self.offset):
             if self.rect.collidepoint(self['/cursor/left'] + self.offset):
                 self['../../../../hud/focus_bar/set_target']({
-                    'name': 'Chest(unlocked)',
+                    'name': 'Chest',
                     'pointer': self.get_path(),
+                    'actions': self.actions,
                 })
 
             self.draw_outline = True

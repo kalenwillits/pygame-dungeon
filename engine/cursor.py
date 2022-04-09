@@ -23,6 +23,24 @@ class Cursor(Node):
         )
         super().build()
 
+    def set_left(self, value: Vector):
+        self.left = value
+
+    def get_left(self) -> Vector:
+        return self.left
+
+    def set_right(self, value: Vector):
+        self.right = value
+
+    def get_right(self) -> Vector:
+        return self.right
+
+    def set_position(self, value: Vector):
+        self.position = value
+
+    def get_position(self) -> Vector:
+        return self.position
+
     def handle_position(self):
         mouse_position = mouse.get_pos()
         scale = self.get_root().settings.scale_factor

@@ -127,7 +127,7 @@ class FocusBar(Interface):
         super().build()
 
     def fit(self):
-        self['/events/connect']('on_key_up', 'toggle_focus', f'{self.get_path()}/toggle_focus')
+        self['/events/connect']('on_key_up', 'toggle_focus', f'{self.get_path()}/clear_focus')
         super().fit()
 
     def handle_focus_change(self):
@@ -135,20 +135,19 @@ class FocusBar(Interface):
             self.text.set_value(self.target.get('name', ''))
             if self.target:
                 self[f'/{self.target.get("pointer")}'].set_focused()
-
-            # if self.change_trigger.previous_value:
-                # self[f'/{self.change_trigger.previous_value.get("pointer")}'].is_focued = False
+                self['../action_bar/set_actions'](self.target.get('actions', []))
 
     def clear_focus(self):
         if self.target:
             self[f'/{self.target.get("pointer")}'].set_idle()
         self.target = {}
         self.text.set_value('')
+        self['/cursor/set_left']((float('inf'), float('inf')))
+        self['../action_bar/clear_actions']()
 
     def toggle_focus(self):
         # TODO search for other things to focus on.
         self.clear_focus()
-
 
     async def loop(self):
         self.handle_focus_change()
@@ -203,13 +202,20 @@ class ActionBar(Interface):
         )
         super().build()
 
-    def change_focus(self):
-        self['../focus_bar/text/set_value']('TEST')
+    def clear_actions(self):
+        self.actions = []
+
+    def set_actions(self, value: list[dict]):
+        self.actions = value
+
+    def get_actions(self) -> list[dict]:
+        return self.actions
 
     def build_actions(self):
-        for child in self:
-            if 'action' in child.name:
-                self.remove_child(child.name)
+        for child_name in [child.name for child in self]:
+            if 'action' in child_name:
+                self.remove_child(child_name)
+
         for index, option in enumerate(self.actions):
 
             self.add_child(
@@ -238,13 +244,6 @@ class ActionBar(Interface):
         self.initattr('actions', [])
         self.build_actions()
         super().fit()
-
-        # Temp hard-code
-        self.actions = [
-            {
-                'title': 'Loot',
-            }
-        ]
 
     async def loop(self):
         self.handle_actions_change()
