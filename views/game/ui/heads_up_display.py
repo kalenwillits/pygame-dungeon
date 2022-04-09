@@ -229,7 +229,7 @@ class ActionBar(Interface):
                         ((self.rect.left + self.margin) + (self.rect.left + self.margin) * index) + 2,
                         self.rect.centery - 13,
                     ),
-                    target=option.get('target', '../change_focus'),
+                    target=option.get('target'),
                     value=f'{index + 1}',
                     title=option.get('title'),
                     body=option.get('body'),
