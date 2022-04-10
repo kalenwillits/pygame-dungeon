@@ -361,18 +361,6 @@ class IsometricTile(Body, Sprite):
             vertices=[[0, -8], [16, 0], [0, 8], [-16, 0]]
         )
 
-    def recalc_vertices(self):
-        self.vertices = [
-            [
-                vertex[0] + ISOMETRIC_SHIFT[self.anchor][0],
-                vertex[1] + ISOMETRIC_SHIFT[self.anchor][1]
-            ] for vertex in self.vertices
-        ]
-
-    def fit(self):
-        # self.recalc_vertices()
-        super().fit()
-
 
 TILESET = {
     0: Node,

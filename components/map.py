@@ -46,13 +46,16 @@ class Map(Object):
             ] for vertex in self[tile_name].vertices
         ]
 
+    def calc_isometric_offset_0(self, cartesian_position):
+        return cartesian_position + (self.tilesize[0] // 2, 0)
+
     def calc_isometric_tile_position(self, col: int, row: int):
         isometric_offset = row % 2
-        cartesian_position = self.position + (self.tilesize[0] * col, self.tilesize[1] * row)
+        cartesian_position = self.position + (self.tilesize[0] * col, self.tilesize[1] * (row // 2))
 
         if isometric_offset > 0:
             return cartesian_position + (self.tilesize[0] // 2, 0)
-        return cartesian_position + (0, self.tilesize[1] // 2)
+        return cartesian_position - (0, self.tilesize[1] // 2)
 
     def calc_cartesian_tile_position(self, col: int, row: int):
         ...
