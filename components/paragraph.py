@@ -47,7 +47,7 @@ class Paragraph(Interface):
 
             if '\n' in line:
                 # Line break
-                index = line.index('\n')
+                index = line.index('\n') + 1
             elif ' ' in line:
                 if len(value_queue) > self.line_length:
                     if line[-1] != ' ' and value_queue[self.line_length + 1] != ' ':

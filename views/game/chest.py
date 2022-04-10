@@ -34,7 +34,7 @@ class Chest(Body, Sprite):
         self.initattr('actions', [
             {
                 'title': 'Loot',
-                'body': 'Open container and inspect contents',
+                'body': 'Open container and inspect contents \ntes',
             },
             {
                 'title': 'Take All',
