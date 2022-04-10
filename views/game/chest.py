@@ -34,6 +34,11 @@ class Chest(Body, Sprite):
         self.initattr('actions', [
             {
                 'title': 'Loot',
+                'body': 'Open container and inspect contents',
+            },
+            {
+                'title': 'Take All',
+                'body': 'Take all contents without inpspecting'
             }
         ])
         self.initattr('state', 'idle')

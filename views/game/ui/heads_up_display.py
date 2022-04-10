@@ -55,6 +55,28 @@ class Inventory(ItemList):
         ...
 
 
+class Loot(ItemList):
+    target: str = None
+
+    def build(self):
+        self(
+            self.name,
+            items='items_pointer',
+            item_size=(192, 15),
+            position=(10, -1),
+            border_radius=0,
+            size=(200, self['/settings/resolution'][1] + 2),
+            anchor='topleft',
+        )
+        super().build()
+
+    def add_item(self, item: dict, index=-1):
+        self['/cache']['character']['inventory'].insert(index, item)
+
+    def remove_item(self):
+        ...
+
+
 class InventoryButton(Button):
     def build(self):
         def on_press(self):
