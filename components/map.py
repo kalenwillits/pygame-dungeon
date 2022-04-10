@@ -58,7 +58,7 @@ class Map(Object):
         return cartesian_position - (0, self.tilesize[1] // 2)
 
     def calc_cartesian_tile_position(self, col: int, row: int):
-        ...
+        return self.position + (self.tilesize[0] * col, self.tilesize[1] * (row))
 
     def calc_tile_position(self, col: int, row: int):
         return self[f'calc_{self.mode}_tile_position'](col, row)
