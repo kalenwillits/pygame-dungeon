@@ -344,8 +344,8 @@ class PillarTop(Sprite):
 
 
 ISOMETRIC_SHIFT = {
-    'top': [0, 4],
-    'left': [4, 0],
+    'top': [0, -8],
+    'left': [16, 0],
 }
 
 
@@ -357,8 +357,8 @@ class IsometricTile(Body, Sprite):
         self(
             self.name,
             body_type='static',
-            size=(16, 16),
-            vertices=[[0, -4], [8, 0], [0, 4], [-8, 0]]
+            size=(32, 16),
+            vertices=[[0, -8], [16, 0], [0, 8], [-16, 0]]
         )
 
     def recalc_vertices(self):
@@ -370,7 +370,7 @@ class IsometricTile(Body, Sprite):
         ]
 
     def fit(self):
-        self.recalc_vertices()
+        # self.recalc_vertices()
         super().fit()
 
 

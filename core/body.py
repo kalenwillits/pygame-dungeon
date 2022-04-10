@@ -222,6 +222,7 @@ class Body(Object):
         self.body = pymunk.Body(body_type=BODY_TYPES[(self.body_type)])
         self.body.position = self.position.x, self.position.y
         self.body.velocity_func = self.limit_velocity
+        # TODO set default circle size in settings
         self.shape = BODY_SHAPES[len(self.vertices)](
             self.body,
             self.vertices if len(self.vertices) > 1 else 10.0,
