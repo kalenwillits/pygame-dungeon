@@ -16,6 +16,7 @@ from views.game.tiles.dungeon_tiles import (
     PillarBase,
     PillarMid,
     PillarTop,
+    IsometricTile,
 )
 
 TILESET = {
@@ -36,6 +37,10 @@ TILESET = {
     15: PillarBase,
     16: PillarMid,
     17: PillarTop,
+}
+
+ISOMETRIC_TILESET = {
+    1: IsometricTile,
 }
 
 MAP = [
@@ -86,4 +91,12 @@ MAP_FOR_TEST = [
     [[13]],
     [[0]],
     [[14]],
+]
+
+ISOMETRIC_MAP = [
+    [[1], [1], [1], [1], [1], [1], [1]],
+    [[1], [1], [1], [1], [1], [1], [1]],
+    [[1], [1], [1], [1], [1], [1], [1]],
+    [[1], [1], [1], [1], [1], [1], [1]],
+    [[1], [1], [1], [1], [1], [1], [1]],
 ]

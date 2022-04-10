@@ -343,6 +343,37 @@ class PillarTop(Sprite):
         self.set_frame(165)
 
 
+ISOMETRIC_SHIFT = {
+    'top': [0, 4],
+    'left': [4, 0],
+}
+
+
+class IsometricTile(Body, Sprite):
+    draw_sprite = False
+    draw_polygon = True
+
+    def build(self):
+        self(
+            self.name,
+            body_type='static',
+            size=(16, 16),
+            vertices=[[0, -4], [8, 0], [0, 4], [-8, 0]]
+        )
+
+    def recalc_vertices(self):
+        self.vertices = [
+            [
+                vertex[0] + ISOMETRIC_SHIFT[self.anchor][0],
+                vertex[1] + ISOMETRIC_SHIFT[self.anchor][1]
+            ] for vertex in self.vertices
+        ]
+
+    def fit(self):
+        self.recalc_vertices()
+        super().fit()
+
+
 TILESET = {
     0: Node,
     1: Floor,
@@ -362,4 +393,9 @@ TILESET = {
     15: PillarBase,
     16: PillarMid,
     17: PillarTop,
+}
+
+
+ISOMETRIC_MAP = {
+    1: IsometricTile,
 }

@@ -3,7 +3,7 @@ from core.space import Space
 from components.map import Map
 from components.camera import Camera
 from views.game.player import Player
-from views.game.map import MAP, TILESET
+from views.game.map import ISOMETRIC_MAP, ISOMETRIC_TILESET
 from views.game.ui.heads_up_display import HeadsUpDisplay
 from views.game.chest import Chest
 
@@ -39,9 +39,9 @@ class Game(Node):
                             rows=32,
                             position=(90, 300),
                         ),
-                        tileset=TILESET,
+                        tileset=ISOMETRIC_TILESET,
                         tilesize=(32, 32),
-                        matrix=MAP,
+                        matrix=ISOMETRIC_MAP,
                         position=(0, 0),
                     ),
                     gravity=[0, 0],

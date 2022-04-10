@@ -26,7 +26,8 @@ class Settings(Node):
             ),
             Node(
                 'tilemap',
-                tilesize=(16, 16)
+                tilesize=(16, 16),
+                is_isometric=True,
             ),
             Node(
                 'animation',

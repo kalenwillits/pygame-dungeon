@@ -1,11 +1,17 @@
 from core.object import Object
 from core.node import Node
 
+ISOMETRIC_ANCHOR_MAP = {
+    0: 'top',
+    1: 'left',
+}
+
 
 class Map(Object):
     tilesize: tuple[int, int] = None
     tileset: dict[str, Node] = None
     matrix: list[list[str, ...]] = None
+    is_isometric: bool = None
 
     def build(self):
         self.initattr('tilesize', self.get_root().settings.tilemap.tilesize)
@@ -15,7 +21,14 @@ class Map(Object):
         super().fit()
         self.initattr('tileset', {})
         self.initattr('matrix', [])
+        self.initattr('is_isometric', self['/settings/tilemap/is_isometric'])
         self.build_map()
+
+    def get_tile_anchor(self, col_index) -> str:
+        if self.is_isometric:
+            return ISOMETRIC_ANCHOR_MAP[col_index % 2]
+        else:
+            return 'topleft'
 
     def build_map(self):
         for row_index, row in enumerate(self.matrix):
@@ -31,6 +44,7 @@ class Map(Object):
                         self.add_child(
                             tile_class(
                                 f'{tile_code}__{row_index}_{col_index}',
+                                anchor=self.get_tile_anchor(col_index),
                                 position=tile_position,
                             )
                         )

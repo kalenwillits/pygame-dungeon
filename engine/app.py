@@ -90,12 +90,30 @@ class App(Node):
 
             if hasattr(node, 'vertices'):
                 if node.vertices and node.draw_polygon or self.settings.globals.draw_polygon:
-                    pygame.draw.polygon(self.display, kwargs.get('polygon_color', self.style.color.polygon), [
-                        [
-                            vertex[0] + getattr(offset_rect, node.anchor)[0],
-                            vertex[1] + getattr(offset_rect, node.anchor)[1]
-                        ] for vertex in node.vertices
-                    ], width=kwargs.get('polygon_width', self.style.polygon.width))
+
+                    if node.anchor in ('center', 'topleft', 'topright', 'bottomleft', 'bottomright'):
+                        pygame.draw.polygon(self.display, kwargs.get('polygon_color', self.style.color.polygon), [
+                            [
+                                vertex[0] + getattr(offset_rect, node.anchor)[0],
+                                vertex[1] + getattr(offset_rect, node.anchor)[1]
+                            ] for vertex in node.vertices
+                        ], width=kwargs.get('polygon_width', self.style.polygon.width))
+
+                    elif node.anchor in ('left', 'right'):
+                        pygame.draw.polygon(self.display, kwargs.get('polygon_color', self.style.color.polygon), [
+                            [
+                                vertex[0] + getattr(offset_rect, node.anchor),
+                                vertex[1] + offset_rect.centery
+                            ] for vertex in node.vertices
+                        ], width=kwargs.get('polygon_width', self.style.polygon.width))
+
+                    elif node.anchor in ('top', 'bottom'):
+                        pygame.draw.polygon(self.display, kwargs.get('polygon_color', self.style.color.polygon), [
+                            [
+                                vertex[0] + offset_rect.centerx,
+                                vertex[1] + getattr(offset_rect, node.anchor)
+                            ] for vertex in node.vertices
+                        ], width=kwargs.get('polygon_width', self.style.polygon.width))
 
     def init(self):
         self.mixer.init(

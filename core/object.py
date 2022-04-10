@@ -31,6 +31,14 @@ class Object(Node):
         self.rect = Rect(kwargs.get('position', self.position), kwargs.get('size', self.size))
         super().__call__(name, *children, **kwargs)
 
+    def get_anchor(self, anchor: str) -> tuple[int, int]:
+        if anchor in ('center', 'topleft', 'bottomright', 'bottomleft', 'topright'):
+            return getattr(self.rect, anchor)
+        elif self.anchor in ('left', 'right'):
+            return getattr(self.rect, anchor), self.rect.centery
+        elif self.anchor in ('top', 'bottom'):
+            return self.rect.centerx, getattr(self.rect, anchor)
+
     @property
     def size(self) -> tuple[int, int]:
         return self.rect.size
