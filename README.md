@@ -13,4 +13,4 @@ python main.py;
 
 
 ### External
-This example uses (these creative commons asseets](https://0x72.itch.io/dungeontileset-ii)
+This example uses [these creative commons asseets](https://0x72.itch.io/dungeontileset-ii)
