@@ -1,7 +1,7 @@
 # Pygame Dungeon
 
 
-A tilemap dungeon system with simulated collisions using Pymunk. Crteated using a custom scene-graph system to acheive scalable game designs. Includes ysorting, UI elements, and players-colliding with walls.
+A tilemap dungeon system with simulated collisions using Pymunk. Created using a custom scene-graph system to acheive scalable game designs. Includes ysorting, UI elements, and players-colliding with walls.
 
 ### Usage:
 ```
